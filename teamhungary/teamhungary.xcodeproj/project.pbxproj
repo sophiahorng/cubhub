@@ -15,6 +15,10 @@
 		F55C53A32AFC4E7B00018B40 /* teamhungaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */; };
 		F55C53A52AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */; };
 		F55C53B22AFC4EEC00018B40 /* ContentView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53B12AFC4EEC00018B40 /* ContentView2.swift */; };
+		F5D3CE8B2AFD3B1800DBFF57 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D3CE8A2AFD3B1800DBFF57 /* AddEventView.swift */; };
+		F5D3CE8D2AFD419600DBFF57 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D3CE8C2AFD419600DBFF57 /* EventsView.swift */; };
+		F5D3CE8F2AFD423500DBFF57 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D3CE8E2AFD423500DBFF57 /* MapView.swift */; };
+		F5D3CE912AFD426100DBFF57 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5D3CE902AFD426100DBFF57 /* EventView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -46,6 +50,10 @@
 		F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITests.swift; sourceTree = "<group>"; };
 		F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		F55C53B12AFC4EEC00018B40 /* ContentView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView2.swift; sourceTree = "<group>"; };
+		F5D3CE8A2AFD3B1800DBFF57 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		F5D3CE8C2AFD419600DBFF57 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		F5D3CE8E2AFD423500DBFF57 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
+		F5D3CE902AFD426100DBFF57 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +106,10 @@
 			children = (
 				F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */,
 				F55C53892AFC4E7700018B40 /* ContentView.swift */,
+				F5D3CE8A2AFD3B1800DBFF57 /* AddEventView.swift */,
+				F5D3CE8E2AFD423500DBFF57 /* MapView.swift */,
+				F5D3CE902AFD426100DBFF57 /* EventView.swift */,
+				F5D3CE8C2AFD419600DBFF57 /* EventsView.swift */,
 				F55C53B12AFC4EEC00018B40 /* ContentView2.swift */,
 				F55C538B2AFC4E7A00018B40 /* Assets.xcassets */,
 				F55C538D2AFC4E7A00018B40 /* Preview Content */,
@@ -261,8 +273,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				F55C53B22AFC4EEC00018B40 /* ContentView2.swift in Sources */,
+				F5D3CE912AFD426100DBFF57 /* EventView.swift in Sources */,
+				F5D3CE8F2AFD423500DBFF57 /* MapView.swift in Sources */,
+				F5D3CE8D2AFD419600DBFF57 /* EventsView.swift in Sources */,
 				F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */,
 				F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */,
+				F5D3CE8B2AFD3B1800DBFF57 /* AddEventView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
