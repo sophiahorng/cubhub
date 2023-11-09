@@ -1,13 +1,13 @@
 //
-//  hungaryUITestsLaunchTests.swift
-//  hungaryUITests
+//  teamhungaryUITestsLaunchTests.swift
+//  teamhungaryUITests
 //
-//  Created by Nicole Men on 11/8/23.
+//  Created by Nicole Men on 11/9/23.
 //
 
 import XCTest
 
-final class hungaryUITestsLaunchTests: XCTestCase {
+final class teamhungaryUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
