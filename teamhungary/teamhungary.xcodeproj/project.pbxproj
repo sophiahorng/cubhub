@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		165D440EFBB3F502D043F6AB /* Pods_teamhungary_teamhungaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C2ADFE2A32A9D7AF2BC71E5 /* Pods_teamhungary_teamhungaryUITests.framework */; };
 		200E70C4502774F18C38B752 /* Pods_teamhungaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F8CBDB67759DBF96CDAF88B4 /* Pods_teamhungaryTests.framework */; };
+		241191022B0A33D900896AE2 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241191012B0A33D900896AE2 /* MyPageView.swift */; };
 		249E83092AFCFF85004A79ED /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 249E83082AFCFF85004A79ED /* Podfile */; };
 		48025AC9876600F4879D4FAB /* Pods_teamhungary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D423B0B024F35441EC84952D /* Pods_teamhungary.framework */; };
 		9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7DD192AFCD4A9005BF358 /* loginPage.swift */; };
@@ -24,7 +25,10 @@
 		F55C53992AFC4E7A00018B40 /* teamhungaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53982AFC4E7A00018B40 /* teamhungaryTests.swift */; };
 		F55C53A32AFC4E7B00018B40 /* teamhungaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */; };
 		F55C53A52AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */; };
-		F55C53B22AFC4EEC00018B40 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53B12AFC4EEC00018B40 /* MyPageView.swift */; };
+		F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02042B0993AF00709834 /* AddEventView.swift */; };
+		F5EC02072B0993D800709834 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02062B0993D800709834 /* EventView.swift */; };
+		F5EC02092B0993E100709834 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02082B0993E100709834 /* EventsView.swift */; };
+		F5EC020B2B0993E600709834 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC020A2B0993E600709834 /* MapView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +51,7 @@
 /* Begin PBXFileReference section */
 		0115E4BA0BD1DD8BBFD7A86A /* Pods-teamhungaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungaryTests.release.xcconfig"; path = "Target Support Files/Pods-teamhungaryTests/Pods-teamhungaryTests.release.xcconfig"; sourceTree = "<group>"; };
 		1C2ADFE2A32A9D7AF2BC71E5 /* Pods_teamhungary_teamhungaryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary_teamhungaryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		241191012B0A33D900896AE2 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		249E83082AFCFF85004A79ED /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		2732E01B897329952A153DD9 /* Pods-teamhungary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary.debug.xcconfig"; path = "Target Support Files/Pods-teamhungary/Pods-teamhungary.debug.xcconfig"; sourceTree = "<group>"; };
 		316A748FE2AD0CAB04A77BAA /* Pods-teamhungary-teamhungaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary-teamhungaryUITests.release.xcconfig"; path = "Target Support Files/Pods-teamhungary-teamhungaryUITests/Pods-teamhungary-teamhungaryUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -71,7 +76,10 @@
 		F55C539E2AFC4E7B00018B40 /* teamhungaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teamhungaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITests.swift; sourceTree = "<group>"; };
 		F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F55C53B12AFC4EEC00018B40 /* MyPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
+		F5EC02042B0993AF00709834 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
+		F5EC02062B0993D800709834 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
+		F5EC02082B0993E100709834 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
+		F5EC020A2B0993E600709834 /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F8CBDB67759DBF96CDAF88B4 /* Pods_teamhungaryTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungaryTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -159,7 +167,11 @@
 				BFEF50162AFD238000245169 /* Lib */,
 				F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */,
 				F55C53892AFC4E7700018B40 /* ContentView.swift */,
-				F55C53B12AFC4EEC00018B40 /* MyPageView.swift */,
+				241191012B0A33D900896AE2 /* MyPageView.swift */,
+				F5EC02042B0993AF00709834 /* AddEventView.swift */,
+				F5EC02062B0993D800709834 /* EventView.swift */,
+				F5EC02082B0993E100709834 /* EventsView.swift */,
+				F5EC020A2B0993E600709834 /* MapView.swift */,
 				9DE7DD192AFCD4A9005BF358 /* loginPage.swift */,
 				F55C538B2AFC4E7A00018B40 /* Assets.xcassets */,
 				F55C538D2AFC4E7A00018B40 /* Preview Content */,
@@ -437,9 +449,13 @@
 			files = (
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
-				F55C53B22AFC4EEC00018B40 /* MyPageView.swift in Sources */,
+				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
+				F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */,
+				F5EC02092B0993E100709834 /* EventsView.swift in Sources */,
 				BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */,
 				F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */,
+				241191022B0A33D900896AE2 /* MyPageView.swift in Sources */,
+				F5EC020B2B0993E600709834 /* MapView.swift in Sources */,
 				F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
