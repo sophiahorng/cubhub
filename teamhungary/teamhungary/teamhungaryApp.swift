@@ -33,22 +33,19 @@ class teamhungaryApp: NSObject, UIApplicationDelegate {
 }
 
 @main
-      struct YourApp: App {
-  // register app delegate for Firebase setup
-  @UIApplicationDelegateAdaptor(teamhungaryApp.self) var delegate
-
-
-  var body: some Scene {
-    WindowGroup {
-      NavigationView {
-        ContentView()
-              .onOpenURL { url in
-                        GIDSignIn.sharedInstance.handle(url)
-                      }
-              
-      }
+struct YourApp: App {
+    // register app delegate for Firebase setup
+    @UIApplicationDelegateAdaptor(teamhungaryApp.self) var delegate
+    
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+                .onOpenURL { url in
+                    GIDSignIn.sharedInstance.handle(url)
+                }
+            
+        }
     }
-  }
 }
 
 

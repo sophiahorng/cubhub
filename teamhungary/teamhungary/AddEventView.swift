@@ -1,4 +1,3 @@
-/
 //  AddEventView.swift
 //  teamhungary
 //
