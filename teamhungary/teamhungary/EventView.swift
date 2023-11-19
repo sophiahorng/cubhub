@@ -16,29 +16,43 @@ struct user: Identifiable {
     let photo: String
 }
 struct EventView: View {
+    @Environment(\.presentationMode) var presentationMode
+    let event: Event
+    init(event: Event) {
+        self.event = event
+    }
     let images: [photo] = [photo(name: "photo"), photo(name: "photo"), photo(name: "photo"), photo(name: "photo")]
     let users: [user] = [user(name: "Name", photo: "photo"), user(name: "Name", photo: "photo")]
     var body: some View {
         TabView {
             VStack (spacing: 2) {
                 HStack {
-                    Button (action: {}) {
+                    Button (action: {
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
                         HStack {
                             Image(systemName: "chevron.backward")
                             Text("Back")
                         }.padding()
                     }
                     .frame(alignment: .leading)
-                    Text("Event 1")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .padding()
-                        .frame(maxWidth: .infinity, alignment: .center)
-
+                    Spacer()
+                    VStack {
+                        Text(event.eventName)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                            //.padding()
+                            //.frame(maxWidth: .infinity, alignment: .center)
+                        Text("on \(event.eventDate) at \(event.eventLocation)")
+                            .font(.subheadline)
+                            //.padding()
+                        
+                    }
+                    Spacer()
                     Button(action: {
                         
                     }) {
-                        Image(systemName: "message").padding(20)
+                        Text("Add").padding(20)
                     }
                     .frame(alignment: .trailing)
                 }
@@ -94,11 +108,11 @@ struct EventView: View {
                         }
                     }
                 }
-                Button(action: {
+                //Button(action: {
                     
-                }) {
-                    Text("Add to Calendar")
-                }.padding()
+                //}) {
+                //    Text("Add to Calendar")
+                //}.padding()
             }
             .navigationBarHidden(true)
             .tabItem {
@@ -124,7 +138,7 @@ struct EventView: View {
 
 struct EventView_Previews: PreviewProvider {
     static var previews: some View {
-        EventView()
+        EventView(event: Event(imageName: "photo", eventName: "Jazz Night", eventDate: "10/31", eventSubtitle: "#concert #jazz", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"))
     }
 }
 

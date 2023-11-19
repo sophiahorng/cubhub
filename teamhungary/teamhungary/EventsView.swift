@@ -13,14 +13,21 @@ struct Event: Identifiable {
     var eventName: String
     var eventDate: String
     var eventSubtitle: String
+    var eventLocation: String
+    var eventLon: Double
+    var eventLat: Double
+    var eventDescription: String
 }
 
 struct EventsView: View {
-    let events: [Event] = [
-        Event(imageName: "event1", eventName: "Event 1", eventDate: "10/31", eventSubtitle: "#concert #rap"),
-            Event(imageName: "event2", eventName: "Event 2", eventDate: "11/20", eventSubtitle: "#art #exhibit"),
-            Event(imageName: "event3", eventName: "Event 3", eventDate: "12/23", eventSubtitle: "#ballet #dance")
+    @State private var events: [Event] = [
+        Event(imageName: "photo", eventName: "Jazz Night", eventDate: "10/31", eventSubtitle: "#concert #jazz", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"),
+        Event(imageName: "photo", eventName: "Broadway Show Preview", eventDate: "11/20", eventSubtitle: "#broadway #musical #opera", eventLocation: "Theatre", eventLon: -73.9855, eventLat: 40.7580, eventDescription: "Preview of Broadway show Phantom of the Opera"),
+        Event(imageName: "photo", eventName: "Art Walk", eventDate: "12/23", eventSubtitle: "#art #nature #park", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventDescription: "Take a walk through Central Park to see  art pieces")
     ]
+    @State private var isAddEventViewPresented = false
+    
+    @State private var editMode: EditMode = .inactive
 
     var body: some View {
             TabView {
@@ -34,16 +41,21 @@ struct EventsView: View {
                         Spacer()
 
                         Button(action: {
-                            
+                            isAddEventViewPresented.toggle()
                         }) {
                             Image(systemName: "plus")
                                 .padding()
+                        }
+                        .sheet(isPresented: $isAddEventViewPresented) {
+                            AddEventView(events: $events, doneAction: {
+                                    isAddEventViewPresented.toggle()
+                                })
                         }
                     }
 
                     HStack {
                         Button(action: {
-                            // Filter action
+                            // Filter
                         }) {
                             Text("Filter by...")
                                 .padding()
@@ -51,29 +63,57 @@ struct EventsView: View {
                         }
                         Spacer()
                         Button(action: {
-                            // See map view action
+                            // Navigate to map view
                         }) {
                             Text("See Map View")
                                 .padding()
                                 .foregroundColor(.blue)
                         }
                     }
-                    List(events) { event in
-                        HStack {
-                            Image(systemName: event.imageName)
-                                .resizable()
-                                .frame(width: 50, height: 50)
-                                .clipShape(Circle())
-                                .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                .padding()
-
-                            VStack(alignment: .leading) {
-                                Text(event.eventName + " on " + event.eventDate)
-                                    .font(.headline)
-                                Text(event.eventSubtitle)
-                                    .font(.subheadline)
-                                    .foregroundColor(.gray)
+                    NavigationStack{
+                        List {
+                            ForEach(events) { event in
+                                //NavigationView{
+                                NavigationLink(destination: EventView(event: event)) {
+                                    HStack {
+                                        Image(systemName: event.imageName)
+                                            .resizable()
+                                            .frame(width: 50, height: 50)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                                            .padding()
+                                        
+                                        VStack(alignment: .leading) {
+                                            Text(event.eventName + " on " + event.eventDate)
+                                                .font(.headline)
+                                            Text(event.eventLocation)
+                                                .font(.subheadline)
+                                                .foregroundColor(.black)
+                                            Text(event.eventSubtitle)
+                                                .font(.subheadline)
+                                                .foregroundColor(.gray)
+                                        }
+                                        if editMode.isEditing {
+                                            Button(action: {
+                                                deleteEvent(event)
+                                            }) {
+                                                Image(systemName: "trash")
+                                                    .foregroundColor(.red)
+                                            }
+                                        }
+                                    }
+                                    //}
+                                }
                             }
+                            .onDelete { indexSet in
+                                events.remove(atOffsets: indexSet)
+                            }
+                        }
+                        
+                        .environment(\.editMode, $editMode)  // Bind EditMode to the environment
+                        .animation(.default, value: editMode)
+                        .onAppear {
+                            UITableView.appearance().allowsSelectionDuringEditing = true
                         }
                     }
 
@@ -98,7 +138,21 @@ struct EventsView: View {
                         Text("Account")
                     }
             }
+        
+            .background(
+                Image("Background")
+                    .resizable()
+                    .scaledToFill()
+                    .edgesIgnoringSafeArea(.all)
+            )
+        
         }
+    
+    func deleteEvent(_ event: Event) {
+        if let index = events.firstIndex(where: { $0.id == event.id }) {
+            events.remove(at: index)
+        }
+    }
 }
 
 struct EventsView_Previews: PreviewProvider {
