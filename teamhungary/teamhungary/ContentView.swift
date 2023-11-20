@@ -4,10 +4,23 @@ import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
 
+enum StackViewType {
+    case MyPageView
+    case MapView
+    case EventView
+    case EventsView
+}
+
 struct ContentView: View {
-    @State private var isSignedIn = false
     @State private var userData: UserData = UserData(url: nil, name: "", email: "")
     @State private var isAlert = false
+    @State private var isLogin = false
+    
+    @State private var isShownMyPageView = false
+    @State private var isShownMapView = false
+    @State private var isShownEventView = false
+    @State private var isShownEventsView = false
+    
     
     var body: some View {
         
@@ -40,12 +53,50 @@ struct ContentView: View {
                         Spacer()
                     } // HStack
                     Spacer().frame( height: 300 )
-                    
-                    HStack {
-                        Spacer().frame( width: 80 )
-                        GoogleSignInButton(action: handleSignInButton)
-                        Spacer().frame( width: 80 )
-                    } // HStack
+                    if self.isLogin == true {
+                        List {
+                            Button {
+                                self.isShownMyPageView.toggle()
+                            } label: {
+                                Text("Show My Page View")
+                            }
+                            .sheet(isPresented: $isShownMyPageView) {
+                                MyPageView(userData: $userData, isLogin: $isLogin)
+                            }
+                            Button {
+                                self.isShownMapView.toggle()
+                            } label: {
+                                Text("Show MapView")
+                            }
+                            .sheet(isPresented: $isShownMapView) {
+                                MapView()
+                            }
+                            Button {
+                                self.isShownEventView.toggle()
+                            } label: {
+                                Text("Show Event View")
+                            }
+                            .sheet(isPresented: $isShownEventView) {
+                                EventsView()
+                            }
+                            Button {
+                                self.isShownEventView.toggle()
+                            } label: {
+                                Text("Show Events View")
+                            }
+                            .sheet(isPresented: $isShownEventView) {
+                                EventView()
+                            }
+                        }
+                        .background(.clear)
+                        .scrollContentBackground(.hidden)
+                    } else {
+                        HStack {
+                            Spacer().frame( width: 80 )
+                            GoogleSignInButton(action: handleSignInButton)
+                            Spacer().frame( width: 80 )
+                        } // HStack
+                    }
                     Spacer().frame( height: 200 )
                     VStack{
                         HStack{
@@ -67,9 +118,6 @@ struct ContentView: View {
                     } // VStack
                 } // VStack
             } // ZStack
-            .navigationDestination(isPresented: $isSignedIn) {
-                MyPageView(userData: $userData)
-            }
         } // NavigationStack
         .onAppear {
             self.checkState()
@@ -85,6 +133,7 @@ struct ContentView: View {
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             guard error != nil || user == nil else {
                 print("Not Sign In")
+                self.isLogin = false
                 return
             }
             
@@ -93,8 +142,7 @@ struct ContentView: View {
             }
             
             userData = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
-            isSignedIn = true
-            
+            self.isLogin = true
         }
     }
     
@@ -113,7 +161,7 @@ struct ContentView: View {
                 }
                 
                 userData = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
-                isSignedIn = true
+                self.isLogin = true
             }
         
     }
