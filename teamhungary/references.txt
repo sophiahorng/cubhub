@@ -1,0 +1,6 @@
+References:
+https://developer.apple.com/xcode/swiftui/
+https://guides.cocoapods.org/using/using-cocoapods.html
+https://www.youtube.com/watch?v=b1oC7sLIgpI
+https://xcodegpt.com
+https://cocoacasts.com/swiftui-fundamentals-what-is-swiftui
