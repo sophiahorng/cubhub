@@ -44,3 +44,4 @@ struct MapView_Previews: PreviewProvider {
             .edgesIgnoringSafeArea(.all)
     }
 }
+

@@ -15,6 +15,7 @@ struct ContentView: View {
     @State private var userData: UserData = UserData(url: nil, name: "", email: "")
     @State private var isAlert = false
     @State private var isLogin = false
+
     
     @State private var isShownMyPageView = false
     @State private var isShownMapView = false

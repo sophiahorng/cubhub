@@ -1,3 +1,4 @@
+//
 //  AddEventView.swift
 //  teamhungary
 //
@@ -76,4 +77,3 @@ struct AddEventView_Previews: PreviewProvider {
         AddEventView()
     }
 }
-

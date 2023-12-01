@@ -106,4 +106,3 @@ struct EventsView_Previews: PreviewProvider {
         EventsView()
     }
 }
-
