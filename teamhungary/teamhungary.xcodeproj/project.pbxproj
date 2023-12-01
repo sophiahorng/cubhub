@@ -16,6 +16,7 @@
 		BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF50172AFD238000245169 /* BeofreUI.swift */; };
 		BFEF501B2AFD238F00245169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */; };
 		BFEF50202AFD29DC00245169 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501F2AFD29DC00245169 /* bg.png */; };
+		F553CF902B1A8AC500CB62BA /* SQLiteDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F553CF8F2B1A8AC500CB62BA /* SQLiteDatabaseManager.swift */; };
 		F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */; };
 		F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53892AFC4E7700018B40 /* ContentView.swift */; };
 		F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F55C538B2AFC4E7A00018B40 /* Assets.xcassets */; };
@@ -63,6 +64,7 @@
 		BFEF501F2AFD29DC00245169 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		D423B0B024F35441EC84952D /* Pods_teamhungary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F53519D3650FF84137EBF139 /* Pods-teamhungary-teamhungaryUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary-teamhungaryUITests.debug.xcconfig"; path = "Target Support Files/Pods-teamhungary-teamhungaryUITests/Pods-teamhungary-teamhungaryUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		F553CF8F2B1A8AC500CB62BA /* SQLiteDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLiteDatabaseManager.swift; sourceTree = "<group>"; };
 		F55C53842AFC4E7700018B40 /* teamhungary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teamhungary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryApp.swift; sourceTree = "<group>"; };
 		F55C53892AFC4E7700018B40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				BFEF50162AFD238000245169 /* Lib */,
 				F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */,
 				F55C53892AFC4E7700018B40 /* ContentView.swift */,
+				F553CF8F2B1A8AC500CB62BA /* SQLiteDatabaseManager.swift */,
 				F55C53B12AFC4EEC00018B40 /* ContentView2.swift */,
 				F5EC02042B0993AF00709834 /* AddEventView.swift */,
 				F5EC02062B0993D800709834 /* EventView.swift */,
@@ -448,6 +451,7 @@
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
 				F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */,
 				F5EC02092B0993E100709834 /* EventsView.swift in Sources */,
+				F553CF902B1A8AC500CB62BA /* SQLiteDatabaseManager.swift in Sources */,
 				F55C53B22AFC4EEC00018B40 /* ContentView2.swift in Sources */,
 				BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */,
 				F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */,

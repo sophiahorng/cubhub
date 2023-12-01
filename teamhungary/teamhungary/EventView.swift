@@ -41,6 +41,8 @@ struct EventView: View {
                         Text(event.eventName)
                             .font(.largeTitle)
                             .fontWeight(.bold)
+                            .minimumScaleFactor(0.5)
+                            .lineLimit(1)
                             //.padding()
                             //.frame(maxWidth: .infinity, alignment: .center)
                         Text("on \(event.eventDate) at \(event.eventLocation)")
