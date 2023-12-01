@@ -86,7 +86,7 @@ struct ContentView: View {
                                 Text("Show Events View")
                             }
                             .sheet(isPresented: $isShownEventView) {
-                                EventView()
+//                                EventView()
                             }
                         }
                         .background(.clear)
