@@ -119,7 +119,7 @@ struct ContentView: View {
                     } // VStack
                 } // VStack
                 NavigationLink(
-                                    destination: DefaultView(userData: userData, isLogin: isLogin),
+                    destination: DefaultView(userData: userData, isLogin: isLogin).navigationBarBackButtonHidden(true),
                                     isActive: $isLogin,
                                     label: {
                                         EmptyView()
