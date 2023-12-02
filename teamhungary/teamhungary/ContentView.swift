@@ -119,7 +119,7 @@ struct ContentView: View {
                     } // VStack
                 } // VStack
                 NavigationLink(
-                                    destination: EventsView(),
+                                    destination: DefaultView(userData: userData, isLogin: isLogin),
                                     isActive: $isLogin,
                                     label: {
                                         EmptyView()

@@ -30,7 +30,7 @@ struct EventsView: View {
     @State private var editMode: EditMode = .inactive
 
     var body: some View {
-            TabView {
+//            TabView {
                 VStack {
                     HStack {
                         Text("Events")
@@ -120,31 +120,31 @@ struct EventsView: View {
                     Spacer()
 
                 }
-                .navigationBarHidden(true)
-                .tabItem {
-                    Image(systemName: "list.bullet")
-                    Text("Events")
-                }
-
-                Text("My Plans")
-                    .tabItem {
-                        Image(systemName: "calendar")
-                        Text("My Plans")
-                    }
-
-                Text("Account")
-                    .tabItem {
-                        Image(systemName: "person")
-                        Text("Account")
-                    }
-            }
-        
-            .background(
-                Image("Background")
-                    .resizable()
-                    .scaledToFill()
-                    .edgesIgnoringSafeArea(.all)
-            )
+//                .navigationBarHidden(true)
+//                .tabItem {
+//                    Image(systemName: "list.bullet")
+//                    Text("Events")
+//                }
+//
+//                Text("My Plans")
+//                    .tabItem {
+//                        Image(systemName: "calendar")
+//                        Text("My Plans")
+//                    }
+//
+//                Text("Account")
+//                    .tabItem {
+//                        Image(systemName: "person")
+//                        Text("Account")
+//                    }
+//            }
+//        
+//            .background(
+//                Image("Background")
+//                    .resizable()
+//                    .scaledToFill()
+//                    .edgesIgnoringSafeArea(.all)
+//            )
         
         }
     
