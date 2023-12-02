@@ -21,7 +21,7 @@
 		F511A9F02B1AB693009078A5 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F511A9EF2B1AB693009078A5 /* SQLite.framework */; };
 		F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */; };
 		F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F32B1AC0D2009078A5 /* DefaultView.swift */; };
-		F511A9F62B1AC29F009078A5 /* MyEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F52B1AC29F009078A5 /* MyEventsView.swift */; };
+		F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F52B1AC29F009078A5 /* MyPlansView.swift */; };
 		F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */; };
 		F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53892AFC4E7700018B40 /* ContentView.swift */; };
 		F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F55C538B2AFC4E7A00018B40 /* Assets.xcassets */; };
@@ -73,7 +73,7 @@
 		F511A9EF2B1AB693009078A5 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLDatabaseManager.swift; sourceTree = "<group>"; };
 		F511A9F32B1AC0D2009078A5 /* DefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
-		F511A9F52B1AC29F009078A5 /* MyEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyEventsView.swift; sourceTree = "<group>"; };
+		F511A9F52B1AC29F009078A5 /* MyPlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlansView.swift; sourceTree = "<group>"; };
 		F55C53842AFC4E7700018B40 /* teamhungary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teamhungary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryApp.swift; sourceTree = "<group>"; };
 		F55C53892AFC4E7700018B40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -179,7 +179,7 @@
 				F55C53892AFC4E7700018B40 /* ContentView.swift */,
 				F511A9F32B1AC0D2009078A5 /* DefaultView.swift */,
 				241191012B0A33D900896AE2 /* MyPageView.swift */,
-				F511A9F52B1AC29F009078A5 /* MyEventsView.swift */,
+				F511A9F52B1AC29F009078A5 /* MyPlansView.swift */,
 				F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */,
 				F5EC02042B0993AF00709834 /* AddEventView.swift */,
 				F5EC02062B0993D800709834 /* EventView.swift */,
@@ -460,7 +460,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F511A9F62B1AC29F009078A5 /* MyEventsView.swift in Sources */,
+				F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */,
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,

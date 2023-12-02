@@ -18,16 +18,16 @@ struct DefaultView: View {
                 EventsView()
             }
             .tabItem {
-                Label("Events", systemImage: "calendar")
+                Label("Events", systemImage: "list.bullet")
             }
             
             
             // MyEventsView
             NavigationView {
-                MyEventsView()
+                MyPlansView()
             }
             .tabItem {
-                Label("My Events", systemImage: "star")
+                Label("My Plans", systemImage: "star")
             }
             
             
@@ -36,7 +36,7 @@ struct DefaultView: View {
                 MyPageView(userData: $userData, isLogin: $isLogin)
             }
             .tabItem {
-                Label("My Page", systemImage: "person")
+                Label("Profile", systemImage: "person")
             }
         }
     }

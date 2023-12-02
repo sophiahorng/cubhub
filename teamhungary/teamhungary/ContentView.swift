@@ -130,10 +130,10 @@ struct ContentView: View {
         .onAppear {
             self.checkState()
         }
-        .alert(LocalizedStringKey("login fail"), isPresented: $isAlert) {
+        .alert(LocalizedStringKey("Login Failed"), isPresented: $isAlert) {
             Button("OK", role: .cancel) { print("tap ok") }
         } message: {
-            Text("try again")
+            Text("Try Again")
         }
     }
     
