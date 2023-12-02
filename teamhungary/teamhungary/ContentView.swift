@@ -54,50 +54,50 @@ struct ContentView: View {
                         Spacer()
                     } // HStack
                     Spacer().frame( height: 300 )
-                    if self.isLogin == true {
-                        List {
-                            Button {
-                                self.isShownMyPageView.toggle()
-                            } label: {
-                                Text("Show My Page View")
-                            }
-                            .sheet(isPresented: $isShownMyPageView) {
-                                MyPageView(userData: $userData, isLogin: $isLogin)
-                            }
-                            Button {
-                                self.isShownMapView.toggle()
-                            } label: {
-                                Text("Show MapView")
-                            }
-                            .sheet(isPresented: $isShownMapView) {
-                                MapView()
-                            }
-                            Button {
-                                self.isShownEventView.toggle()
-                            } label: {
-                                Text("Show Event View")
-                            }
-                            .sheet(isPresented: $isShownEventView) {
-                                EventsView()
-                            }
-                            Button {
-                                self.isShownEventView.toggle()
-                            } label: {
-                                Text("Show Events View")
-                            }
-                            .sheet(isPresented: $isShownEventView) {
-//                                EventView()
-                            }
-                        }
-                        .background(.clear)
-                        .scrollContentBackground(.hidden)
-                    } else {
+//                    if self.isLogin == true {
+//                        List {
+//                            Button {
+//                                self.isShownMyPageView.toggle()
+//                            } label: {
+//                                Text("Show My Page View")
+//                            }
+//                            .sheet(isPresented: $isShownMyPageView) {
+//                                MyPageView(userData: $userData, isLogin: $isLogin)
+//                            }
+//                            Button {
+//                                self.isShownMapView.toggle()
+//                            } label: {
+//                                Text("Show MapView")
+//                            }
+//                            .sheet(isPresented: $isShownMapView) {
+//                                MapView()
+//                            }
+//                            Button {
+//                                self.isShownEventView.toggle()
+//                            } label: {
+//                                Text("Show Event View")
+//                            }
+//                            .sheet(isPresented: $isShownEventView) {
+//                                EventsView()
+//                            }
+//                            Button {
+//                                self.isShownEventView.toggle()
+//                            } label: {
+//                                Text("Show Events View")
+//                            }
+//                            .sheet(isPresented: $isShownEventView) {
+////                                EventView()
+//                            }
+//                        }
+//                        .background(.clear)
+//                        .scrollContentBackground(.hidden)
+//                    } else {
                         HStack {
                             Spacer().frame( width: 80 )
                             GoogleSignInButton(action: handleSignInButton)
                             Spacer().frame( width: 80 )
                         } // HStack
-                    }
+//                    }
                     Spacer().frame( height: 200 )
                     VStack{
                         HStack{
@@ -118,6 +118,13 @@ struct ContentView: View {
                         } // HStack
                     } // VStack
                 } // VStack
+                NavigationLink(
+                                    destination: EventsView(),
+                                    isActive: $isLogin,
+                                    label: {
+                                        EmptyView()
+                                    }
+                                )
             } // ZStack
         } // NavigationStack
         .onAppear {

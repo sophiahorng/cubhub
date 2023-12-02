@@ -6,7 +6,7 @@ import FirebaseCore
 import GoogleSignIn
  
 class teamhungaryApp: NSObject, UIApplicationDelegate {
-    
+    let databaseManager = DatabaseManager.shared
     
     var window: UIWindow?
     func application(_ application: UIApplication,

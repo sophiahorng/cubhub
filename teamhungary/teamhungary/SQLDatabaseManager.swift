@@ -34,8 +34,7 @@ class DatabaseManager {
         // Implement table creation logic here
         let users = Table("users")
         let id = Expression<Int>("id")
-        let firstname = Expression<String>("first_name")
-        let lastname = Expression<String>("last_name")
+        let name = Expression<String>("name")
         let email = Expression<String>("email")
         let gradyear = Expression<String>("graduation_year")
         let school = Expression<String>("school")
@@ -44,8 +43,7 @@ class DatabaseManager {
 
         try db?.run(users.create { table in
             table.column(id, primaryKey: .autoincrement)
-            table.column(firstname)
-            table.column(lastname)
+            table.column(name)
             table.column(email, unique: true)
             table.column(gradyear, check: gradyear.like("20[2-9][0-9]"))
             table.column(school)
