@@ -20,10 +20,21 @@ struct MyPageView: View {
                     .edgesIgnoringSafeArea(.all)
                 
                 VStack (spacing: 30) {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            
+                        }) {
+                            Text("Edit Profile").padding(40).foregroundStyle(.red)
+                        }
+                        .frame(alignment: .trailing)
+                    }
+                    
+                    
                     AsyncImage(url: userData.url)
                         .imageScale(.small)
                         .frame(width: 180, height: 180, alignment: .center)
-                        .padding(EdgeInsets(top: 60, leading: 0, bottom: 0, trailing: 0))
+                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     Text(userData.name)
                     Text(userData.email)
                     Spacer()
@@ -57,4 +68,10 @@ struct MyPageView: View {
         dismiss()
     }
 
+}
+
+struct MyPageView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyPageView(userData: .constant(UserData(url: nil, name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
+    }
 }
