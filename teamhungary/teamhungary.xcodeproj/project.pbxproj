@@ -18,6 +18,7 @@
 		BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF50172AFD238000245169 /* BeofreUI.swift */; };
 		BFEF501B2AFD238F00245169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */; };
 		BFEF50202AFD29DC00245169 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501F2AFD29DC00245169 /* bg.png */; };
+		D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F2B3C72B1AD18B00E73B33 /* setupView.swift */; };
 		F511A9F02B1AB693009078A5 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F511A9EF2B1AB693009078A5 /* SQLite.framework */; };
 		F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */; };
 		F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F32B1AC0D2009078A5 /* DefaultView.swift */; };
@@ -69,6 +70,7 @@
 		BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFEF501E2AFD274200245169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BFEF501F2AFD29DC00245169 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		D0F2B3C72B1AD18B00E73B33 /* setupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setupView.swift; sourceTree = "<group>"; };
 		D877E8DD260A6D903C5A0F02 /* Pods_teamhungary_teamhungaryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary_teamhungaryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F511A9EF2B1AB693009078A5 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLDatabaseManager.swift; sourceTree = "<group>"; };
@@ -186,6 +188,7 @@
 				F5EC02082B0993E100709834 /* EventsView.swift */,
 				F5EC020A2B0993E600709834 /* MapView.swift */,
 				9DE7DD192AFCD4A9005BF358 /* loginPage.swift */,
+				D0F2B3C72B1AD18B00E73B33 /* setupView.swift */,
 				F55C538B2AFC4E7A00018B40 /* Assets.xcassets */,
 				F55C538D2AFC4E7A00018B40 /* Preview Content */,
 				A5B9A43D2B05292D00408F1C /* UserData.swift */,
@@ -462,6 +465,7 @@
 			files = (
 				F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */,
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
+				D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
 				F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */,
