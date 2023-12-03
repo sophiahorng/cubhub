@@ -11,9 +11,7 @@ class teamhungaryApp: NSObject, UIApplicationDelegate {
     var window: UIWindow?
     func application(_ application: UIApplication,
                    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-      
-        
-        
+      FirebaseApp.configure()
       if let rootViewController = self.window?.rootViewController {
                   
           GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)

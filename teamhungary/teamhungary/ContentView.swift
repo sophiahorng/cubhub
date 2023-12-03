@@ -154,31 +154,6 @@ struct ContentView: View {
             self.isLogin = true
         }
     }
-    
-    func uploadProfilePicture(_ imageURL: URL?, userID: String) {
-        // Safely unwrap the optional URL
-        guard let imageURL = imageURL else {
-            print("Error: Profile picture URL is nil")
-            return
-        }
-
-        let storageRef = Storage.storage().reference()
-        let profilePictureRef = storageRef.child("profilePictures/\(userID).jpg")
-
-        // Convert the image URL to data
-        if let imageData = try? Data(contentsOf: imageURL) {
-            // Upload the image data to Firebase Storage
-            profilePictureRef.putData(imageData, metadata: nil) { _, error in
-                if let error = error {
-                    print("Error uploading profile picture: \(error.localizedDescription)")
-                } else {
-                    print("Profile picture uploaded successfully!")
-                }
-            }
-        } else {
-            print("Error: Unable to convert image URL to data")
-        }
-    }
 
 
     
@@ -198,7 +173,7 @@ struct ContentView: View {
             // Use optional binding to safely unwrap the URL
             if let imageURL = profile.imageURL(withDimension: 180) {
                 // Upload profile picture to Firebase Storage
-                uploadProfilePicture(imageURL, userID: result.user.userID ?? "")
+                FirebaseUtilities.uploadProfilePicture(imageURL, userID: result.user.userID ?? "")
 
                 userData = UserData(url: imageURL, name: profile.name, email: profile.email)
                 self.isLogin = true
