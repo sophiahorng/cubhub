@@ -4,6 +4,7 @@ import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
 import FirebaseStorage
+import FirebaseFirestore
 
 enum StackViewType {
     case MyPageView
@@ -16,7 +17,7 @@ struct ContentView: View {
     @State private var userData: UserData = UserData(url: nil, name: "", email: "")
     @State private var isAlert = false
     @State private var isLogin = false
-
+    
     
     @State private var isShownMyPageView = false
     @State private var isShownMapView = false
@@ -55,50 +56,50 @@ struct ContentView: View {
                         Spacer()
                     } // HStack
                     Spacer().frame( height: 300 )
-//                    if self.isLogin == true {
-//                        List {
-//                            Button {
-//                                self.isShownMyPageView.toggle()
-//                            } label: {
-//                                Text("Show My Page View")
-//                            }
-//                            .sheet(isPresented: $isShownMyPageView) {
-//                                MyPageView(userData: $userData, isLogin: $isLogin)
-//                            }
-//                            Button {
-//                                self.isShownMapView.toggle()
-//                            } label: {
-//                                Text("Show MapView")
-//                            }
-//                            .sheet(isPresented: $isShownMapView) {
-//                                MapView()
-//                            }
-//                            Button {
-//                                self.isShownEventView.toggle()
-//                            } label: {
-//                                Text("Show Event View")
-//                            }
-//                            .sheet(isPresented: $isShownEventView) {
-//                                EventsView()
-//                            }
-//                            Button {
-//                                self.isShownEventView.toggle()
-//                            } label: {
-//                                Text("Show Events View")
-//                            }
-//                            .sheet(isPresented: $isShownEventView) {
-////                                EventView()
-//                            }
-//                        }
-//                        .background(.clear)
-//                        .scrollContentBackground(.hidden)
-//                    } else {
-                        HStack {
-                            Spacer().frame( width: 80 )
-                            GoogleSignInButton(action: handleSignInButton)
-                            Spacer().frame( width: 80 )
-                        } // HStack
-//                    }
+                    //                    if self.isLogin == true {
+                    //                        List {
+                    //                            Button {
+                    //                                self.isShownMyPageView.toggle()
+                    //                            } label: {
+                    //                                Text("Show My Page View")
+                    //                            }
+                    //                            .sheet(isPresented: $isShownMyPageView) {
+                    //                                MyPageView(userData: $userData, isLogin: $isLogin)
+                    //                            }
+                    //                            Button {
+                    //                                self.isShownMapView.toggle()
+                    //                            } label: {
+                    //                                Text("Show MapView")
+                    //                            }
+                    //                            .sheet(isPresented: $isShownMapView) {
+                    //                                MapView()
+                    //                            }
+                    //                            Button {
+                    //                                self.isShownEventView.toggle()
+                    //                            } label: {
+                    //                                Text("Show Event View")
+                    //                            }
+                    //                            .sheet(isPresented: $isShownEventView) {
+                    //                                EventsView()
+                    //                            }
+                    //                            Button {
+                    //                                self.isShownEventView.toggle()
+                    //                            } label: {
+                    //                                Text("Show Events View")
+                    //                            }
+                    //                            .sheet(isPresented: $isShownEventView) {
+                    ////                                EventView()
+                    //                            }
+                    //                        }
+                    //                        .background(.clear)
+                    //                        .scrollContentBackground(.hidden)
+                    //                    } else {
+                    HStack {
+                        Spacer().frame( width: 80 )
+                        GoogleSignInButton(action: handleSignInButton)
+                        Spacer().frame( width: 80 )
+                    } // HStack
+                    //                    }
                     Spacer().frame( height: 200 )
                     VStack{
                         HStack{
@@ -121,11 +122,11 @@ struct ContentView: View {
                 } // VStack
                 NavigationLink(
                     destination: DefaultView(userData: userData, isLogin: isLogin).navigationBarBackButtonHidden(true),
-                                    isActive: $isLogin,
-                                    label: {
-                                        EmptyView()
-                                    }
-                                )
+                    isActive: $isLogin,
+                    label: {
+                        EmptyView()
+                    }
+                )
             } // ZStack
         } // NavigationStack
         .onAppear {
@@ -154,12 +155,12 @@ struct ContentView: View {
             self.isLogin = true
         }
     }
-
-
+    
+    
     
     func handleSignInButton() {
         guard let presentingViewController = UIApplication.shared.windows.first?.rootViewController else { return }
-
+        
         GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { signInResult, error in
             guard let result = signInResult else {
                 isAlert = true
@@ -169,12 +170,20 @@ struct ContentView: View {
                 isAlert = true
                 return
             }
-
+            
             // Use optional binding to safely unwrap the URL
             if let imageURL = profile.imageURL(withDimension: 180) {
                 // Upload profile picture to Firebase Storage
                 FirebaseUtilities.uploadProfilePicture(imageURL, userID: result.user.userID ?? "")
-
+                
+                // Add user data to Firestore
+                FirebaseUtilities.addUsertoFirestore(
+                    uni: result.user.userID ?? "",
+                    name: profile.name,
+                    email: profile.email,
+                    profilePic: imageURL.absoluteString
+                )
+                
                 userData = UserData(url: imageURL, name: profile.name, email: profile.email)
                 self.isLogin = true
             } else {
@@ -183,6 +192,4 @@ struct ContentView: View {
             }
         }
     }
-
-
 }
