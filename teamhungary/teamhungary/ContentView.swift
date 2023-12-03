@@ -3,6 +3,7 @@ import UIKit
 import SwiftUI
 import GoogleSignIn
 import GoogleSignInSwift
+import FirebaseStorage
 
 enum StackViewType {
     case MyPageView
@@ -154,23 +155,59 @@ struct ContentView: View {
         }
     }
     
+    func uploadProfilePicture(_ imageURL: URL?, userID: String) {
+        // Safely unwrap the optional URL
+        guard let imageURL = imageURL else {
+            print("Error: Profile picture URL is nil")
+            return
+        }
+
+        let storageRef = Storage.storage().reference()
+        let profilePictureRef = storageRef.child("profilePictures/\(userID).jpg")
+
+        // Convert the image URL to data
+        if let imageData = try? Data(contentsOf: imageURL) {
+            // Upload the image data to Firebase Storage
+            profilePictureRef.putData(imageData, metadata: nil) { _, error in
+                if let error = error {
+                    print("Error uploading profile picture: \(error.localizedDescription)")
+                } else {
+                    print("Profile picture uploaded successfully!")
+                }
+            }
+        } else {
+            print("Error: Unable to convert image URL to data")
+        }
+    }
+
+
+    
     func handleSignInButton() {
         guard let presentingViewController = UIApplication.shared.windows.first?.rootViewController else { return }
-        
-        GIDSignIn.sharedInstance.signIn(
-            withPresenting: presentingViewController ) { signInResult, error in
-                guard let result = signInResult else {
-                    isAlert = true
-                    return
-                }
-                guard let profile = result.user.profile else {
-                    isAlert = true
-                    return
-                }
-                
-                userData = UserData(url: profile.imageURL(withDimension: 180), name: profile.name, email: profile.email)
-                self.isLogin = true
+
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingViewController) { signInResult, error in
+            guard let result = signInResult else {
+                isAlert = true
+                return
             }
-        
+            guard let profile = result.user.profile else {
+                isAlert = true
+                return
+            }
+
+            // Use optional binding to safely unwrap the URL
+            if let imageURL = profile.imageURL(withDimension: 180) {
+                // Upload profile picture to Firebase Storage
+                uploadProfilePicture(imageURL, userID: result.user.userID ?? "")
+
+                userData = UserData(url: imageURL, name: profile.name, email: profile.email)
+                self.isLogin = true
+            } else {
+                // Handle the case where imageURL is nil
+                print("Error: Profile picture URL is nil")
+            }
+        }
     }
+
+
 }

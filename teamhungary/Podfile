@@ -8,6 +8,7 @@ pod 'GoogleSignIn'
 pod 'FirebaseCore'
  
 pod 'FirebaseAuth'
+pod 'Firebase/Storage'
 pod 'GoogleSignInSwiftSupport'
 pod 'SQLite.swift'
   # Pods for teamhungary
