@@ -16,6 +16,9 @@ struct AddEventView: View {
     @State private var newEventLon = 0.0
     @State private var newEventLat = 0.0
     @State private var newEventDescription = ""
+    
+    @State private var isSearchAddressViewActive = false
+    
     var doneAction: () -> Void
     
     var body: some View {
@@ -77,14 +80,28 @@ struct AddEventView: View {
                 .padding()
                 //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
                 //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+            
+            HStack {
+                TextField("Event Location", text: $newEventLocation)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
 
-            TextField("Event Location", text: $newEventLocation)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .multilineTextAlignment(.center)
-                .padding()
-                //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
-                //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+                Button(action: {
+                    isSearchAddressViewActive = true
+                }) {
+                    Text("search")
+                }
+                .sheet(isPresented: $isSearchAddressViewActive) {
+                    SearchAddressView()
+                }
+                
+            }
+            .frame(width: 300)
+            .multilineTextAlignment(.center)
+            .padding()
+            //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+            //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+
+
             
             TextField("Hashtags", text: $newEventSubtitle)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

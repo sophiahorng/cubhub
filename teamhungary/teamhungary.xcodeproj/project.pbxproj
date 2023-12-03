@@ -14,6 +14,9 @@
 		71F0C4FA3152E60927F07788 /* Pods_teamhungary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */; };
 		9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7DD192AFCD4A9005BF358 /* loginPage.swift */; };
 		A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B9A43D2B05292D00408F1C /* UserData.swift */; };
+		A5B9A4462B1C48A300408F1C /* NewMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B9A4452B1C48A300408F1C /* NewMapView.swift */; };
+		A5B9A4482B1C570D00408F1C /* NewMapDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B9A4472B1C570D00408F1C /* NewMapDetailView.swift */; };
+		A5B9A44A2B1C6EE700408F1C /* SearchAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B9A4492B1C6EE700408F1C /* SearchAddressView.swift */; };
 		BFEF50182AFD238000245169 /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = BFEF50162AFD238000245169 /* Lib */; };
 		BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF50172AFD238000245169 /* BeofreUI.swift */; };
 		BFEF501B2AFD238F00245169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */; };
@@ -64,6 +67,9 @@
 		9DE7DD192AFCD4A9005BF358 /* loginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = loginPage.swift; sourceTree = "<group>"; };
 		A115077D83A52EF61EDC3401 /* Pods-teamhungaryTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungaryTests.debug.xcconfig"; path = "Target Support Files/Pods-teamhungaryTests/Pods-teamhungaryTests.debug.xcconfig"; sourceTree = "<group>"; };
 		A5B9A43D2B05292D00408F1C /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		A5B9A4452B1C48A300408F1C /* NewMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapView.swift; sourceTree = "<group>"; };
+		A5B9A4472B1C570D00408F1C /* NewMapDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewMapDetailView.swift; sourceTree = "<group>"; };
+		A5B9A4492B1C6EE700408F1C /* SearchAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchAddressView.swift; sourceTree = "<group>"; };
 		B48BBBF1792742DFF59DF55A /* Pods-teamhungary-teamhungaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary-teamhungaryUITests.release.xcconfig"; path = "Target Support Files/Pods-teamhungary-teamhungaryUITests/Pods-teamhungary-teamhungaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BFEF50162AFD238000245169 /* Lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Lib; sourceTree = "<group>"; };
 		BFEF50172AFD238000245169 /* BeofreUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeofreUI.swift; sourceTree = "<group>"; };
@@ -192,6 +198,9 @@
 				F55C538B2AFC4E7A00018B40 /* Assets.xcassets */,
 				F55C538D2AFC4E7A00018B40 /* Preview Content */,
 				A5B9A43D2B05292D00408F1C /* UserData.swift */,
+				A5B9A4452B1C48A300408F1C /* NewMapView.swift */,
+				A5B9A4472B1C570D00408F1C /* NewMapDetailView.swift */,
+				A5B9A4492B1C6EE700408F1C /* SearchAddressView.swift */,
 			);
 			path = teamhungary;
 			sourceTree = "<group>";
@@ -466,10 +475,12 @@
 				F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */,
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
 				D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */,
+				A5B9A44A2B1C6EE700408F1C /* SearchAddressView.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
 				F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */,
 				F5EC02092B0993E100709834 /* EventsView.swift in Sources */,
+				A5B9A4482B1C570D00408F1C /* NewMapDetailView.swift in Sources */,
 				BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */,
 				F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */,
 				241191022B0A33D900896AE2 /* MyPageView.swift in Sources */,
@@ -477,6 +488,7 @@
 				F5EC020B2B0993E600709834 /* MapView.swift in Sources */,
 				F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */,
 				F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */,
+				A5B9A4462B1C48A300408F1C /* NewMapView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
