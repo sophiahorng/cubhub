@@ -9,9 +9,9 @@
 import SwiftUI
 
 struct User: Identifiable{
-    var id: ObjectIdentifier
+    var id: ObjectIdentifier?
     
-    var imageName : String
+    var imageName: String
     var userName: String
     var userMajor: String
     var userGradYear: String
@@ -20,65 +20,75 @@ struct User: Identifiable{
 
 struct setupView: View {
     
-    @State var users: [User] = [User(id: <#ObjectIdentifier#>, imageName: "photo", userName: "Roaree", userMajor: "Computer Science", userGradYear: "2025", userBio: "Roaree the Lion")]
-    @State private var userName = ""
-    @State private var userMajor = ""
-    @State private var userGradYear = ""
-    @State private var userBio = ""
+    @State var user: User = User(id: nil, imageName: "photo", userName: "Roaree", userMajor: "Computer Science", userGradYear: "2025", userBio: "Roaree the Lion")
+    @State private var userName: String
+    @State private var userMajor: String
+    @State private var userGradYear: String
+    @State private var userBio: String
     var saveProfile:() -> Void
+    
+    init(user: User) {
+        self.user = user
+        self.userName = user.userName
+        self.userMajor = user.userMajor
+        self.userGradYear = user.userGradYear
+        self.userBio = user.userBio
+        self.saveProfile = {}
+    }
     
     var body: some View {
         ZStack {
-            Image("BG")
+            Image("loginPage")
                 .resizable()
-                .scaledToFill()
+                .aspectRatio(contentMode: .fill)
                 .edgesIgnoringSafeArea(.all)
-            VStack(spacing: 30) {
-                Spacer()
-                Spacer()
-                Image(systemName: "photo")
-                    .resizable()
-                    .frame(width: 170, height: 170)
-                    .clipShape(Circle())
-                    .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
-                    .padding()
-                
-                TextField("Name", text: $userName)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                TextField("Major", text: $userMajor)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                TextField("Graduation Year", text: $userGradYear)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                
-                ScrollView{
+            
+            ScrollView {
+                VStack(spacing: 30) {
+                    Spacer()
+                    Spacer()
+                    Image(systemName: "photo")
+                        .resizable()
+                        .frame(width: 170, height: 170)
+                        .clipShape(Circle())
+                        .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
+                        .padding()
+                    
+                    TextField("Name", text: $userName)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                    
+                    TextField("Major", text: $userMajor)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                        
+                    
+                    TextField("Graduation Year", text: $userGradYear)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                    
                     TextField("Bio", text: $userBio)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 300)
                         .multilineTextAlignment(.center)
                         .padding()
-                }
-                HStack{
-                    Spacer()
+                    
                     Button(action: {
                         let newUser = User(
-                            id: <#ObjectIdentifier#>, imageName: "photo",
+                            id: nil, imageName: "photo",
                             userName: userName,
                             userMajor: userMajor,
                             userGradYear: userGradYear,
                             userBio: userBio
                         )
-                        users.append(newUser)
+                        user = newUser
                         userName = ""
                         userMajor = ""
                         userGradYear = ""
@@ -89,6 +99,7 @@ struct setupView: View {
                     }
                 }
             }
+            
         }
     }
     
@@ -97,8 +108,8 @@ struct setupView: View {
 
 struct setupView_Preview: PreviewProvider{
     static var previews: some View{
-        let practiceUser: [User] = []
-        return setupView(users: practiceUser, saveProfile: {})
+        let practiceUser: User = User(id: nil, imageName: "", userName: "jasmine", userMajor: "cs", userGradYear: "2025", userBio: "hi")
+        return setupView(user: practiceUser)
     }
 }
 
