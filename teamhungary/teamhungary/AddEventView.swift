@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseStorage
+import FirebaseFirestore
 
 struct AddEventView: View {
     @Binding var events: [Event]
@@ -28,8 +30,19 @@ struct AddEventView: View {
                 Spacer()
 
                 Button(action: {
-                    
-                    // Add the new event to the events array
+                    // Add the new event to the Firebase database using FirebaseUtilities
+                    FirebaseUtilities.addEventToFirestore(
+                        uid: UUID().uuidString, // You can generate a unique ID for the event, or use any unique identifier
+                        name: newEventName,
+                        datetime: Timestamp(), // Use the current timestamp or set the date and time accordingly
+                        address: newEventLocation,
+                        locationName: "",
+                        lat: newEventLat,
+                        lon: newEventLon,
+                        attendees: []
+                    )
+
+                    // Optionally, you can also add the new event to the local events array if needed
                     let newEvent = Event(
                         imageName: "photo",
                         eventName: newEventName,
@@ -41,6 +54,8 @@ struct AddEventView: View {
                         eventDescription: newEventDescription
                     )
                     events.append(newEvent)
+
+                    // Clear the input fields
                     newEventName = ""
                     newEventDate = ""
                     newEventSubtitle = ""
