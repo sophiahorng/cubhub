@@ -6,8 +6,24 @@
 //
 
 import SwiftUI
-import CoreLocation
-import Combine
+
+struct GoogleGeocodingResponse: Decodable {
+    var results: [Location] = []
+}
+
+struct Location: Decodable, Hashable {
+    var formatted_address: String
+    var geometry: Geometry
+
+    struct Geometry: Decodable, Hashable {
+        var location: Coordinates
+
+        struct Coordinates: Decodable, Hashable {
+            var lat: Double
+            var lng: Double
+        }
+    }
+}
 
 struct SearchAddressView: View {
     
@@ -18,13 +34,10 @@ struct SearchAddressView: View {
     @Environment(\.dismiss) private var dismiss
     
     @State private var addressInput: String = ""
-    @State private var locations: [CLPlacemark] = []
+    @State private var locations: [Location] = []
     @State private var errorMessage: String = ""
     @State private var showAlert: Bool = false
-    @State private var selectedItem: CLPlacemark?
-//
-    var geocoder = CLGeocoder()
-
+    
     var body: some View {
         
         VStack(spacing: 30) {
@@ -59,29 +72,12 @@ struct SearchAddressView: View {
                 }
 
                 List(locations, id: \.self) { location in
-                    /*
-                     // address dictionary properties
-                     @property (nonatomic, readonly, copy, nullable) NSString *name; // eg. Apple Inc.
-                     @property (nonatomic, readonly, copy, nullable) NSString *thoroughfare; // street name, eg. Infinite Loop
-                     @property (nonatomic, readonly, copy, nullable) NSString *subThoroughfare; // eg. 1
-                     @property (nonatomic, readonly, copy, nullable) NSString *locality; // city, eg. Cupertino
-                     @property (nonatomic, readonly, copy, nullable) NSString *subLocality; // neighborhood, common name, eg. Mission District
-                     @property (nonatomic, readonly, copy, nullable) NSString *administrativeArea; // state, eg. CA
-                     @property (nonatomic, readonly, copy, nullable) NSString *subAdministrativeArea; // county, eg. Santa Clara
-                     @property (nonatomic, readonly, copy, nullable) NSString *postalCode; // zip code, eg. 95014
-                     @property (nonatomic, readonly, copy, nullable) NSString *ISOcountryCode; // eg. US
-                     @property (nonatomic, readonly, copy, nullable) NSString *country; // eg. United States
-                     @property (nonatomic, readonly, copy, nullable) NSString *inlandWater; // eg. Lake Tahoe
-                     @property (nonatomic, readonly, copy, nullable) NSString *ocean; // eg. Pacific Ocean
-                     */
-                    
 
-                    let address = "\(location.thoroughfare ?? "") \(location.locality ?? "") \(location.administrativeArea ?? "") \(location.postalCode ?? "") \(location.country ?? "")"
-                    Text(address)
+                    Text(location.formatted_address)
                         .onTapGesture {
-                            self.dynamicText = address
-                            self.latitude = location.location?.coordinate.latitude ?? 0.0
-                            self.longitude = location.location?.coordinate.longitude ?? 0.0
+                            self.dynamicText = location.formatted_address
+                            self.latitude = location.geometry.location.lat
+                            self.longitude = location.geometry.location.lng
                             dismiss()
                         }
 
@@ -98,12 +94,38 @@ struct SearchAddressView: View {
     }
 
     private func searchAddress() {
-        geocoder.geocodeAddressString(addressInput) { placemarks, error in
-            if let error = error {
-                errorMessage = error.localizedDescription
-            } else {
-                locations = placemarks ?? []
-            }
+        let apiKey = "AIzaSyDG8KPuQyuTVC9sOh87zZqKU0gKdQD_zWA"
+
+        // https://developers.google.com/maps/documentation/places/web-service/search-text?hl=en
+        let urlString = "https://maps.googleapis.com/maps/api/place/textsearch/json?query=\(addressInput)&key=\(apiKey)"
+        guard let url = URL(string: urlString) else {
+            return
         }
+        
+        URLSession.shared.dataTask(with: url) { data, response, error in
+            guard let data = data, error == nil else {
+                showAlert(message: "Failed to fetch data: \(error?.localizedDescription ?? "Unknown error")")
+                return
+            }
+
+            do {
+                let response = try JSONDecoder().decode(GoogleGeocodingResponse.self, from: data)
+                DispatchQueue.main.async {
+                    self.locations = response.results
+
+                    if self.locations.isEmpty {
+                        self.showAlert(message: "No results found.")
+                    }
+                }
+            } catch {
+                showAlert(message: "Error decoding JSON: \(error.localizedDescription)")
+            }
+        }.resume()
     }
+    
+    private func showAlert(message: String) {
+        errorMessage = message
+        showAlert = true
+    }
+
 }
