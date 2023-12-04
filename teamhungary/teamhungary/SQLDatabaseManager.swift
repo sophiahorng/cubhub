@@ -16,16 +16,16 @@ class FirebaseUtilities {
         // Adjust the path to create a user-specific folder
         let storageRef = storage.reference().child("users/\(userID)/profilePicture.jpg")
         // Upload image data to Firebase Storage
-        let uploadTask = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+        let _uploadTask = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
           guard let metadata = metadata else {
             // Uh-oh, an error occurred!
             return
           }
           // Metadata contains file metadata such as size, content-type.
-          let size = metadata.size
+          let _size = metadata.size
           // You can also access to download URL after upload.
           storageRef.downloadURL { (url, error) in
-            guard let downloadURL = url else {
+            guard let _downloadURL = url else {
               // Uh-oh, an error occurred!
               return
             }
@@ -204,8 +204,7 @@ class FirebaseUtilities {
 //            }
 //        }
 //    }
-    
-    
+
     static func deleteAttendeesFromEvent(eventID: String) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)

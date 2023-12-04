@@ -18,6 +18,7 @@ struct AddEventView: View {
     @State private var newEventLon = 0.0
     @State private var newEventLat = 0.0
     @State private var newEventDescription = ""
+    @State var userData: UserData
     var doneAction: () -> Void
     
     var body: some View {
@@ -39,21 +40,21 @@ struct AddEventView: View {
                         locationName: "",
                         lat: newEventLat,
                         lon: newEventLon,
-                        attendees: []
+                        attendees: [userData.uid]
                     )
 
                     // Optionally, you can also add the new event to the local events array if needed
-                    let newEvent = Event(
-                        imageName: "photo",
-                        eventName: newEventName,
-                        eventDate: newEventDate,
-                        eventSubtitle: newEventSubtitle,
-                        eventLocation: newEventLocation,
-                        eventLon: newEventLon,
-                        eventLat: newEventLat,
-                        eventDescription: newEventDescription
-                    )
-                    events.append(newEvent)
+//                    let newEvent = Event(
+//                        imageName: "photo",
+//                        eventName: newEventName,
+//                        eventDate: newEventDate,
+//                        eventSubtitle: newEventSubtitle,
+//                        eventLocation: newEventLocation,
+//                        eventLon: newEventLon,
+//                        eventLat: newEventLat,
+//                        eventDescription: newEventDescription
+//                    )
+//                    events.append(newEvent)
 
                     // Clear the input fields
                     newEventName = ""
@@ -131,10 +132,10 @@ struct AddEventView: View {
     }
 }
 
-struct AddEventView_Previews: PreviewProvider {
-    static var previews: some View {
-        let dummyEvents: [Event] = []
-
-        return AddEventView(events: .constant(dummyEvents), doneAction: {})
-    }
-}
+//struct AddEventView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        let dummyEvents: [Event] = []
+//
+//        return AddEventView(events: .constant(dummyEvents), doneAction: {})
+//    }
+//}

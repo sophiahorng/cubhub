@@ -129,6 +129,7 @@ struct ContentView: View {
             
             let credential = GoogleAuthProvider.credential(withIDToken: user?.idToken?.tokenString ?? "",
                                                            accessToken: user?.accessToken.tokenString ?? "")
+            var uid = ""
             // Authenticate with Firebase using the credential
             Auth.auth().signIn(with: credential) { authResult, error in
                 if error != nil {
@@ -140,11 +141,10 @@ struct ContentView: View {
                         self.isAlert = true
                         return
                     }
-                    self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
                 }
             }
-            userData = UserData(url: profile.imageURL(withDimension: 180), uid: "", name: profile.name, email: profile.email)
             DispatchQueue.main.async {
+                self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
                 self.isLogin = true
             }
         }
@@ -181,7 +181,7 @@ struct ContentView: View {
                 return
             }
             
-            self.isLogin = true
+//            self.isLogin = true
             let googleUser = result.user
             
             let credential = GoogleAuthProvider.credential(withIDToken: googleUser.idToken?.tokenString ?? "",
@@ -192,12 +192,15 @@ struct ContentView: View {
                     self.isAlert = true
                     return
                 } else {
-                    var uid = authResult?.user.uid ?? ""
+                    let uid = authResult?.user.uid ?? ""
                     if uid.isEmpty{
                         self.isAlert = true
                         return
                     }
-                    self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
+                    DispatchQueue.main.async {
+                        userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
+                        self.isLogin = true
+                    }
                     FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email)
                     if let imageURL = userData.url {
                         let task = URLSession.shared.dataTask(with: imageURL) { data, response, error in

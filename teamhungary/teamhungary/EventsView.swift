@@ -26,7 +26,7 @@ struct EventsView: View {
         Event(imageName: "photo", eventName: "Art Walk", eventDate: "12/23", eventSubtitle: "#art #nature #park", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventDescription: "Take a walk through Central Park to see  art pieces")
     ]
     @State private var isAddEventViewPresented = false
-    
+    @State var userData: UserData
     @State private var editMode: EditMode = .inactive
 
     var body: some View {
@@ -47,7 +47,7 @@ struct EventsView: View {
                                 .padding()
                         }
                         .sheet(isPresented: $isAddEventViewPresented) {
-                            AddEventView(events: $events, doneAction: {
+                            AddEventView(events: $events, userData: userData, doneAction: {
                                     isAddEventViewPresented.toggle()
                                 })
                         }
@@ -155,8 +155,8 @@ struct EventsView: View {
     }
 }
 
-struct EventsView_Previews: PreviewProvider {
-    static var previews: some View {
-        EventsView()
-    }
-}
+//struct EventsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EventsView()
+//    }
+//}
