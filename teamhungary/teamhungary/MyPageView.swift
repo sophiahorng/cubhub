@@ -69,8 +69,8 @@ struct MyPageView: View {
 
 }
 
-struct MyPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyPageView(userData: .constant(UserData(url: nil, name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
-    }
-}
+//struct MyPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageView(userData: .constant(UserData(url: nil, name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
+//    }
+//}

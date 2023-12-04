@@ -9,25 +9,24 @@ class teamhungaryApp: NSObject, UIApplicationDelegate {
 //    let databaseManager = DatabaseManager.shared
     
     var window: UIWindow?
-    func application(_ application: UIApplication,
-                   didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-      FirebaseApp.configure()
-      if let rootViewController = self.window?.rootViewController {
-                  
-          GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
-              }
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]? = nil) -> Bool {
+        // Configure Firebase here
+        FirebaseApp.configure()
 
+        // Google Sign-In configuration and restoration of previous sign-in state
+        if let rootViewController = self.window?.rootViewController {
+            GIDSignIn.sharedInstance.signIn(withPresenting: rootViewController)
+        }
 
-      GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
-         if error != nil || user == nil {
-           // Show the app's signed-out state.
-         } else {
-           // Show the app's signed-in state.
-         }
-       }
+        GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
+            if error != nil || user == nil {
+                // Show the app's signed-out state.
+            } else {
+            }
+        }
 
-    return true
-  }
+        return true
+    }
 }
 
 @main

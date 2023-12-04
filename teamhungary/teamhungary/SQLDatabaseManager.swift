@@ -11,34 +11,46 @@ import FirebaseStorage
 
 class FirebaseUtilities {
     
-    static func uploadProfilePicture(_ imageURL: URL?, userID: String) {
-        guard let imageURL = imageURL else {
-            print("Error: Profile picture URL is nil")
+    static func uploadProfilePicture(imageData: Data, userID: String, completion: @escaping (String?) -> Void) {
+        let storage = Storage.storage()
+        // Adjust the path to create a user-specific folder
+        let storageRef = storage.reference().child("users/\(userID)/profilePicture.jpg")
+        // Upload image data to Firebase Storage
+        let uploadTask = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+          guard let metadata = metadata else {
+            // Uh-oh, an error occurred!
             return
-        }
-
-        let storageRef = Storage.storage().reference()
-        let profilePictureRef = storageRef.child("profilePictures/\(userID).jpg")
-
-        if let imageData = try? Data(contentsOf: imageURL) {
-            profilePictureRef.putData(imageData, metadata: nil) { _, error in
-                if let error = error {
-                    print("Error uploading profile picture: \(error.localizedDescription)")
-                } else {
-                    // Get the download URL and save it to Firestore
-                    profilePictureRef.downloadURL { url, error in
-                        guard let downloadURL = url, error == nil else {
-                            print("Error getting download URL: \(error?.localizedDescription ?? "")")
-                            return
-                        }
-                        saveProfilePictureURL(downloadURL.absoluteString, for: userID)
-                    }
-                }
+          }
+          // Metadata contains file metadata such as size, content-type.
+          let size = metadata.size
+          // You can also access to download URL after upload.
+          storageRef.downloadURL { (url, error) in
+            guard let downloadURL = url else {
+              // Uh-oh, an error occurred!
+              return
             }
-        } else {
-            print("Error: Unable to convert image URL to data")
+          }
         }
+//        storageRef.putData(imageData, metadata: nil) { metadata, error in
+//            if let error = error {
+//                print("Error uploading image to Firebase Storage: \(error.localizedDescription)")
+//                completion(nil)
+//                return
+//            }
+//
+//            // Get the download URL
+//            storageRef.downloadURL { url, error in
+//                if let downloadURL = url {
+//                    print("Image uploaded successfully. Download URL: \(downloadURL)")
+//                    completion(downloadURL.absoluteString)
+//                } else {
+//                    print("Error getting download URL: \(error?.localizedDescription ?? "")")
+//                    completion(nil)
+//                }
+//            }
+//        }
     }
+
 
     
     static func saveProfilePictureURL(_ url: String, for userID: String) {
@@ -70,11 +82,11 @@ class FirebaseUtilities {
         }
     }
 
-    static func addUsertoFirestore(uni: String, name: String, email: String, graduationYear: String = "", school: String = "", igProfile: String = "",  profilePic: String = "") {
+    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", igProfile: String = "",  profilePic: String = "") {
         let db = Firestore.firestore()
-        let userRef = db.collection("users").document(uni)
+        let userRef = db.collection("users").document(uid)
 
-        var userInfo: [String: Any] = [
+        let userInfo: [String: Any] = [
             "name": name,
             "email": email,
             "graduation_year": graduationYear,
@@ -84,7 +96,6 @@ class FirebaseUtilities {
         ]
 
 //        userInfo["displayName"] = name
-
         userRef.setData(userInfo) { error in
             if let error = error {
                 print("Error adding user to Firestore: \(error.localizedDescription)")
