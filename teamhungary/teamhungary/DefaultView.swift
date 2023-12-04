@@ -15,7 +15,7 @@ struct DefaultView: View {
         TabView {
             // EventsView
             NavigationView {
-                EventsView()
+                EventsView(userData: userData)
             }
             .tabItem {
                 Label("Events", systemImage: "list.bullet")
@@ -24,7 +24,7 @@ struct DefaultView: View {
             
             // MyEventsView
             NavigationView {
-                MyPlansView()
+                MyPlansView(userData: userData)
             }
             .tabItem {
                 Label("My Plans", systemImage: "star")
@@ -41,3 +41,4 @@ struct DefaultView: View {
         }
     }
 }
+
