@@ -62,13 +62,14 @@ struct EventsView: View {
                                 .foregroundColor(.blue)
                         }
                         Spacer()
-                        Button(action: {
-                            // Navigate to map view
-                        }) {
-                            Text("See Map View")
-                                .padding()
-                                .foregroundColor(.blue)
-                        }
+                        // MapView
+                        NavigationStack {
+                            NavigationLink(destination: NewMapView(events: events)) {
+                                Text("See Map View")
+                                    .padding()
+                                    .foregroundColor(.blue)
+                            }
+                        } // NavigationStack end
                     }
                     NavigationStack{
                         List {
