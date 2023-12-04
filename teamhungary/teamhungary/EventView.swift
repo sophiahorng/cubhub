@@ -100,12 +100,7 @@ struct EventView: View {
                             Text("See More")
                                 .foregroundColor(.blue)
                         }
-                        Button(action: {
-                            // Filter action
-                        }) {
-                            Text("Invite Someone")
-                                .foregroundColor(.blue)
-                        }
+                        
                     }
                 }
                 //Button(action: {

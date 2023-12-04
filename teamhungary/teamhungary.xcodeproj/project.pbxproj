@@ -17,6 +17,8 @@
 		BFEF50182AFD238000245169 /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = BFEF50162AFD238000245169 /* Lib */; };
 		BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF50172AFD238000245169 /* BeofreUI.swift */; };
 		BFEF50202AFD29DC00245169 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501F2AFD29DC00245169 /* bg.png */; };
+		D05DDCC12B1DA7E9003AE619 /* attendeesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05DDCC02B1DA7E9003AE619 /* attendeesView.swift */; };
+		D05DDCC32B1DA813003AE619 /* attendeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D05DDCC22B1DA813003AE619 /* attendeeView.swift */; };
 		D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F2B3C72B1AD18B00E73B33 /* setupView.swift */; };
 		F50C3C302B1D39D9003FCA15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */; };
 		F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */; };
@@ -68,6 +70,8 @@
 		BFEF50172AFD238000245169 /* BeofreUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeofreUI.swift; sourceTree = "<group>"; };
 		BFEF501E2AFD274200245169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BFEF501F2AFD29DC00245169 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
+		D05DDCC02B1DA7E9003AE619 /* attendeesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = attendeesView.swift; sourceTree = "<group>"; };
+		D05DDCC22B1DA813003AE619 /* attendeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = attendeeView.swift; sourceTree = "<group>"; };
 		D0F2B3C72B1AD18B00E73B33 /* setupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setupView.swift; sourceTree = "<group>"; };
 		D877E8DD260A6D903C5A0F02 /* Pods_teamhungary_teamhungaryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary_teamhungaryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -181,6 +185,8 @@
 				F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */,
 				F5EC02042B0993AF00709834 /* AddEventView.swift */,
 				F5EC02062B0993D800709834 /* EventView.swift */,
+				D05DDCC02B1DA7E9003AE619 /* attendeesView.swift */,
+				D05DDCC22B1DA813003AE619 /* attendeeView.swift */,
 				F5EC02082B0993E100709834 /* EventsView.swift */,
 				F5EC020A2B0993E600709834 /* MapView.swift */,
 				9DE7DD192AFCD4A9005BF358 /* loginPage.swift */,
@@ -461,6 +467,7 @@
 			files = (
 				F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */,
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
+				D05DDCC32B1DA813003AE619 /* attendeeView.swift in Sources */,
 				D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
@@ -470,6 +477,7 @@
 				F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */,
 				241191022B0A33D900896AE2 /* MyPageView.swift in Sources */,
 				F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */,
+				D05DDCC12B1DA7E9003AE619 /* attendeesView.swift in Sources */,
 				F5EC020B2B0993E600709834 /* MapView.swift in Sources */,
 				F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */,
 				F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */,
