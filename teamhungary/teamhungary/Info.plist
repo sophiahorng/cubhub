@@ -11,11 +11,11 @@
 			<string>CFBundleURLSchemes</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.googleusercontent.apps.721172424038-n4fbnjrf7vi5l260vbkduf6dbnk1s8bf</string>
+				<string>com.googleusercontent.apps.480931982861-7egt32cug8u2qenb28ofdhmgpopdui4t</string>
 			</array>
 		</dict>
 	</array>
 	<key>GIDClientID</key>
-	<string>721172424038-n4fbnjrf7vi5l260vbkduf6dbnk1s8bf.apps.googleusercontent.com</string>
+	<string>480931982861-7egt32cug8u2qenb28ofdhmgpopdui4t.apps.googleusercontent.com</string>
 </dict>
 </plist>

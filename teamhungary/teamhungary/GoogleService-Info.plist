@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>721172424038-n4fbnjrf7vi5l260vbkduf6dbnk1s8bf.apps.googleusercontent.com</string>
+	<string>480931982861-7egt32cug8u2qenb28ofdhmgpopdui4t.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.721172424038-n4fbnjrf7vi5l260vbkduf6dbnk1s8bf</string>
+	<string>com.googleusercontent.apps.480931982861-7egt32cug8u2qenb28ofdhmgpopdui4t</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDKBXjCcJrnFkBHRndyswtti-bIAeOICYI</string>
+	<string>AIzaSyBa-Gkx7_6pMYHD68WsX_rJ18lC2juIKAc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>721172424038</string>
+	<string>480931982861</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>edu.columbia.teamhungary</string>
+	<string>teamhungary.cubhub</string>
 	<key>PROJECT_ID</key>
-	<string>seungyoonp-1699539019839</string>
+	<string>cubhub-9f332</string>
 	<key>STORAGE_BUCKET</key>
-	<string>seungyoonp-1699539019839.appspot.com</string>
+	<string>cubhub-9f332.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:721172424038:ios:0516ef86e35863140c14a7</string>
+	<string>1:480931982861:ios:5236e09d064b6519692f44</string>
 </dict>
 </plist>

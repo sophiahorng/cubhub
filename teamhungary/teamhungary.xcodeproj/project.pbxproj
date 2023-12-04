@@ -16,10 +16,9 @@
 		A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5B9A43D2B05292D00408F1C /* UserData.swift */; };
 		BFEF50182AFD238000245169 /* Lib in Resources */ = {isa = PBXBuildFile; fileRef = BFEF50162AFD238000245169 /* Lib */; };
 		BFEF50192AFD238000245169 /* BeofreUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFEF50172AFD238000245169 /* BeofreUI.swift */; };
-		BFEF501B2AFD238F00245169 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */; };
 		BFEF50202AFD29DC00245169 /* bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEF501F2AFD29DC00245169 /* bg.png */; };
 		D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F2B3C72B1AD18B00E73B33 /* setupView.swift */; };
-		F511A9F02B1AB693009078A5 /* SQLite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F511A9EF2B1AB693009078A5 /* SQLite.framework */; };
+		F50C3C302B1D39D9003FCA15 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */; };
 		F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */; };
 		F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F32B1AC0D2009078A5 /* DefaultView.swift */; };
 		F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F52B1AC29F009078A5 /* MyPlansView.swift */; };
@@ -67,12 +66,11 @@
 		B48BBBF1792742DFF59DF55A /* Pods-teamhungary-teamhungaryUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary-teamhungaryUITests.release.xcconfig"; path = "Target Support Files/Pods-teamhungary-teamhungaryUITests/Pods-teamhungary-teamhungaryUITests.release.xcconfig"; sourceTree = "<group>"; };
 		BFEF50162AFD238000245169 /* Lib */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Lib; sourceTree = "<group>"; };
 		BFEF50172AFD238000245169 /* BeofreUI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BeofreUI.swift; sourceTree = "<group>"; };
-		BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		BFEF501E2AFD274200245169 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		BFEF501F2AFD29DC00245169 /* bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bg.png; sourceTree = "<group>"; };
 		D0F2B3C72B1AD18B00E73B33 /* setupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = setupView.swift; sourceTree = "<group>"; };
 		D877E8DD260A6D903C5A0F02 /* Pods_teamhungary_teamhungaryUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary_teamhungaryUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		F511A9EF2B1AB693009078A5 /* SQLite.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = SQLite.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLDatabaseManager.swift; sourceTree = "<group>"; };
 		F511A9F32B1AC0D2009078A5 /* DefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
 		F511A9F52B1AC29F009078A5 /* MyPlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlansView.swift; sourceTree = "<group>"; };
@@ -98,7 +96,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F511A9F02B1AB693009078A5 /* SQLite.framework in Frameworks */,
 				71F0C4FA3152E60927F07788 /* Pods_teamhungary.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +135,6 @@
 		E774DD82A35F88A6EF73CE05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F511A9EF2B1AB693009078A5 /* SQLite.framework */,
 				4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */,
 				D877E8DD260A6D903C5A0F02 /* Pods_teamhungary_teamhungaryUITests.framework */,
 				FE31907B23CAF4038DAD794F /* Pods_teamhungaryTests.framework */,
@@ -174,7 +170,7 @@
 			children = (
 				BFEF501F2AFD29DC00245169 /* bg.png */,
 				BFEF501E2AFD274200245169 /* Info.plist */,
-				BFEF501A2AFD238F00245169 /* GoogleService-Info.plist */,
+				F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */,
 				BFEF50172AFD238000245169 /* BeofreUI.swift */,
 				BFEF50162AFD238000245169 /* Lib */,
 				F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */,
@@ -333,9 +329,9 @@
 				249E83092AFCFF85004A79ED /* Podfile in Resources */,
 				F55C538F2AFC4E7A00018B40 /* Preview Assets.xcassets in Resources */,
 				BFEF50202AFD29DC00245169 /* bg.png in Resources */,
-				BFEF501B2AFD238F00245169 /* GoogleService-Info.plist in Resources */,
 				BFEF50182AFD238000245169 /* Lib in Resources */,
 				F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */,
+				F50C3C302B1D39D9003FCA15 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -650,7 +646,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.columbia.teamhungary;
+				PRODUCT_BUNDLE_IDENTIFIER = teamhungary.cubhub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -682,7 +678,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = edu.columbia.teamhungary;
+				PRODUCT_BUNDLE_IDENTIFIER = teamhungary.cubhub;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_EMIT_LOC_STRINGS = YES;
