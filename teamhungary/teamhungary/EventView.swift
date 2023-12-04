@@ -4,7 +4,6 @@
 //
 //  Created by Sophia Horng on 11/9/23.
 //
-
 import SwiftUI
 struct photo: Identifiable {
     let id = UUID()
@@ -114,13 +113,11 @@ struct EventView: View {
                 Image(systemName: "list.bullet")
                 Text("Events")
             }
-
             Text("My Plans")
                 .tabItem {
                     Image(systemName: "calendar")
                     Text("My Plans")
                 }
-
             Text("Account")
                 .tabItem {
                     Image(systemName: "person")
@@ -130,9 +127,8 @@ struct EventView: View {
     }
     
 }
-
 struct EventView_Previews: PreviewProvider {
     static var previews: some View {
-        EventView(event: Event(imageName: "photo", eventName: "Jazz Night", eventDate: "10/31", eventSubtitle: "#concert #jazz", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"))
+        EventView(event: Event(eventName: "Jazz Night", eventDate: "10/31",/* eventSubtitle: "#concert #jazz", */ eventAddress: "411 W 116th St, New York, NY 10027",eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventOwner: "", attendees: []/*, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"*/))
     }
 }

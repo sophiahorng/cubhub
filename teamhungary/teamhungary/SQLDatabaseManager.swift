@@ -4,11 +4,9 @@
 //
 //  Created by Sophia Horng on 12/1/23.
 //
-
 import Foundation
 import FirebaseFirestore
 import FirebaseStorage
-
 class FirebaseUtilities {
     
     static func uploadProfilePicture(imageData: Data, userID: String, completion: @escaping (String?) -> Void) {
@@ -16,16 +14,16 @@ class FirebaseUtilities {
         // Adjust the path to create a user-specific folder
         let storageRef = storage.reference().child("users/\(userID)/profilePicture.jpg")
         // Upload image data to Firebase Storage
-        let _uploadTask = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
-          guard let metadata = metadata else {
+        _ = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
+            guard metadata != nil else {
             // Uh-oh, an error occurred!
             return
           }
           // Metadata contains file metadata such as size, content-type.
-          let _size = metadata.size
+//          let _size = metadata.size
           // You can also access to download URL after upload.
           storageRef.downloadURL { (url, error) in
-            guard let _downloadURL = url else {
+              guard url != nil else {
               // Uh-oh, an error occurred!
               return
             }
@@ -50,13 +48,10 @@ class FirebaseUtilities {
 //            }
 //        }
     }
-
-
     
     static func saveProfilePictureURL(_ url: String, for userID: String) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userID)
-
         userRef.updateData(["profilePictureURL": url]) { error in
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
@@ -65,12 +60,10 @@ class FirebaseUtilities {
             }
         }
     }
-
     
     static func retrieveProfilePictureURL(for userID: String, completion: @escaping (String?) -> Void) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userID)
-
         userRef.getDocument { document, error in
             if let document = document, document.exists {
                 let profilePictureURL = document.get("profilePictureURL") as? String
@@ -81,11 +74,13 @@ class FirebaseUtilities {
             }
         }
     }
-
     static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", igProfile: String = "",  profilePic: String = "") {
+        if email.suffix(13) != "@columbia.edu" {
+            print("User is not in Columbia domain")
+            return
+        }
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(uid)
-
         let userInfo: [String: Any] = [
             "name": name,
             "email": email,
@@ -94,72 +89,184 @@ class FirebaseUtilities {
             "ig_profile": igProfile,
             "profile_pic": profilePic
         ]
-
-//        userInfo["displayName"] = name
-        userRef.setData(userInfo) { error in
-            if let error = error {
-                print("Error adding user to Firestore: \(error.localizedDescription)")
+        userRef.getDocument{ (document, error) in
+            if let document = document, document.exists {
+                print("User already exists in database")
+                return
             } else {
-                print("User added to Firestore successfully!")
+                userRef.setData(userInfo) { error in
+                    if let error = error {
+                        print("Error adding user to Firestore: \(error.localizedDescription)")
+                    } else {
+                        print("User added to Firestore successfully!")
+                    }
+                }
             }
         }
+//        userInfo["displayName"] = name
+    
     }
     
-    static func addEventToFirestore(uid: String, image: UIImage? = nil, name: String, datetime: Timestamp, address: String = "", locationName: String = "", lat: Double = 0.0, lon: Double = 0.0, attendees: [String] = []) {
+    static func addEventToFirestore(event: Event) {
         let db = Firestore.firestore()
-        let eventRef = db.collection("events").document(uid)
-        
-        if let image = image {
-            // TODO: IMAGE UPLOAD
-        }
-
-        var eventInfo: [String: Any] = [
-            "name": name,
-            "date_time": datetime,
-            "address": address,
-            "location_name": locationName,
-            "lat": lat,
-            "lon": lon
+        let eventRef = db.collection("events").document(event.id.uuidString)
+        let eventInfo: [String: Any] = [
+            "name": event.eventName,
+            "date_time": event.eventDate,
+            "address": event.eventAddress,
+            "location_name": event.eventLocation,
+            "lat": event.eventLat,
+            "lon": event.eventLon,
+            "ownerID": event.eventOwner,
+            "attendees": [event.eventOwner]
         ]
-
-        // Set the attendees field
-        eventInfo["attendees"] = attendees
-
         eventRef.setData(eventInfo) { error in
             if let error = error {
                 print("Error adding event to Firestore: \(error.localizedDescription)")
             } else {
                 print("Event added to Firestore successfully!")
-
                 // Add attendees to the subcollection
-                for attendeeID in attendees {
-                    addAttendeeToEvent(eventID: uid, userID: attendeeID)
+                for attendeeID in event.attendees {
+                    addAttendeeToEvent(eventID: event.id.uuidString, userID: attendeeID)
                 }
             }
         }
     }
-
-    static func addAttendeeToEvent(eventID: String, userID: String) {
+    static func retrieveUserFromFirestore(userID: String, completion: @escaping (UserData?) -> Void) {
         let db = Firestore.firestore()
-        let eventRef = db.collection("events").document(eventID)
-        let attendeesCollectionRef = eventRef.collection("attendees")
-        
-        let attendeeData: [String: Any] = [
-            "userRef": db.collection("users").document(userID)
-        ]
-
-        attendeesCollectionRef.addDocument(data: attendeeData) { error in
-            if let error = error {
-                print("Error adding attendee to event subcollection: \(error.localizedDescription)")
+        let userRef = db.collection("users").document(userID)
+        userRef.getDocument{ (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    let name = data["name"]
+                    let email = data["email"]
+                    let gradYear = data["graduation_year"]
+                    let igprof = data["ig_profile"]
+                    let pfp = data["profile_pic"]
+                    let school = data["school"]
+                    let user = UserData(url: pfp as? URL, uid: userID, name: name as! String, email: email as! String, gradYear: gradYear as! String, igprof: igprof as! String, school: school as! String)
+                    completion(user)
+                } else {
+                    completion(nil)
+                }
             } else {
-                print("Attendee added to event subcollection successfully!")
+                completion(nil)
             }
         }
     }
-
-    static func deleteEventFromFirestore(eventID: String) {
+    static func retrieveAttendeesFromEvent(eventID: UUID) -> [String]{
+        let db = Firestore.firestore()
+        let eventRef = db.collection("events").document(eventID.uuidString)
+        var attendeeUserIDs: [String] = []
+        
+        eventRef.getDocument{ (document, error) in
+            if let attendees = document?["attendees"] as? [DocumentReference] {
+                // Iterate over the attendees array
+                for attendeeRef in attendees {
+                    // Get the document ID (user ID) from the reference
+                    let userID = attendeeRef.documentID
+                    // Add it to the attendeeUserIDs array
+                    attendeeUserIDs.append(userID)
+                }
+            }
+        }
+        return attendeeUserIDs
+    }
+    
+    static func retrieveEventFromFirstore(eventID: UUID, completion: @escaping (Event?) -> Void) {
+        let db = Firestore.firestore()
+        let eventRef = db.collection("events").document(eventID.uuidString)
+        eventRef.getDocument{ (document, error) in
+            if let document = document, document.exists {
+                let data = document.data()
+                if let data = data {
+                    let name = data["name"] as? String ?? ""
+                    let location_name = data["location_name"] as? String ?? ""
+                    let address = data["address"] as? String ?? ""
+                    let date_time = data["date_time"] as? String ?? ""
+                    let lat = data["profile_pic"] as? Double ?? 0
+                    let lon = data["school"] as? Double ?? 0
+                    let ownerID = data["ownerID"] as? String ?? ""
+                    let attendees = retrieveAttendeesFromEvent(eventID: eventID)
+                                
+                    let event = Event(id: eventID, eventName: name, eventDate: date_time, eventAddress: address, eventLocation: location_name, eventLon: lon, eventLat: lat, eventOwner: ownerID, attendees: attendees)
+                    completion(event)
+                } else {
+                    completion(nil)
+                }
+            } else {
+                print("Event not found")
+                completion(nil)
+            }
+        }
+    }
+    
+    static func addAttendeeToEvent(eventID: String, userID: String) {
+        guard !userID.isEmpty else {
+                print("Invalid userID")
+                return
+            }
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
+        let attendeesCollectionRef = eventRef.collection("attendees")
+        let userRef = db.collection("users").document(userID)
+        userRef.getDocument { (document, error) in
+            if let document = document, document.exists {
+                let attendeeRef = attendeesCollectionRef.document(userID)
+                attendeeRef.getDocument { (attendeeDocument, attendeeError) in
+                    if let attendeeDocument = attendeeDocument, attendeeDocument.exists {
+                        print("User is already an attendee")
+                    } else {
+                        let attendeeData: [String: Any] = [
+                            "userRef": userRef
+                        ]
+                        attendeesCollectionRef.addDocument(data: attendeeData) { error in
+                            if let error = error {
+                                print("Error adding attendee to event subcollection: \(error.localizedDescription)")
+                            } else {
+                                print("Attendee added to event subcollection successfully!")
+                            }
+                        }
+                    }
+                }
+            } else {
+                print("User document with userID \(userID) does not exist in the users collection")
+            }
+        }
+//            }
+//        let attendeeRef = attendeesCollectionRef.document(userID)
+//        attendeeRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                print("User is already an attendee")
+//                return
+//            }
+//        }
+//        let attendeeData: [String: Any] = [
+//            "userRef": userRef
+//        ]
+//
+//        attendeesCollectionRef.addDocument(data: attendeeData) { error in
+//            if let error = error {
+//                print("Error adding attendee to event subcollection: \(error.localizedDescription)")
+//            } else {
+//                print("Attendee added to event subcollection successfully!")
+//            }
+//        }
+    }
+    static func deleteEventFromFirestore(userID: String, eventID: String) {
+        let db = Firestore.firestore()
+        let eventRef = db.collection("events").document(eventID)
+        eventRef.getDocument { (document, error) in
+            if let document = document {
+                let data = document.data()
+                let ownerID = data?["ownerID"] as? String ?? ""
+                if ownerID != userID {
+                    print("User is not the owner")
+                    return
+                }
+            }
+        }
         
         eventRef.delete { error in
             if let error = error {
@@ -177,9 +284,7 @@ class FirebaseUtilities {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
         let attendeesCollectionRef = eventRef.collection("attendees")
-
         let attendeeRef = attendeesCollectionRef.document(attendeeID)
-
         attendeeRef.delete { error in
             if let error = error {
                 print("Error deleting attendee from event subcollection: \(error.localizedDescription)")
@@ -208,7 +313,6 @@ class FirebaseUtilities {
 //            }
 //        }
 //    }
-
     static func deleteAttendeesFromEvent(eventID: String) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
@@ -271,4 +375,3 @@ class FirebaseUtilities {
 //        })
 //    }
 //}
-

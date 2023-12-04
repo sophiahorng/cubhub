@@ -4,31 +4,28 @@
 //
 //  Created by Sophia Horng on 11/9/23.
 //
-
 import SwiftUI
-
 struct Event: Identifiable {
     var id = UUID()
-    var imageName: String
     var eventName: String
     var eventDate: String
-    var eventSubtitle: String
+    var eventAddress: String
     var eventLocation: String
     var eventLon: Double
     var eventLat: Double
-    var eventDescription: String
+    var eventOwner: String
+    var attendees: [String]
+//    var eventDescription: String
 }
-
 struct EventsView: View {
     @State private var events: [Event] = [
-        Event(imageName: "photo", eventName: "Jazz Night", eventDate: "10/31", eventSubtitle: "#concert #jazz", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"),
-        Event(imageName: "photo", eventName: "Broadway Show Preview", eventDate: "11/20", eventSubtitle: "#broadway #musical #opera", eventLocation: "Theatre", eventLon: -73.9855, eventLat: 40.7580, eventDescription: "Preview of Broadway show Phantom of the Opera"),
-        Event(imageName: "photo", eventName: "Art Walk", eventDate: "12/23", eventSubtitle: "#art #nature #park", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventDescription: "Take a walk through Central Park to see  art pieces")
+        Event(eventName: "Jazz Night", eventDate: "10/31", eventAddress: "411 W 116th St, New York, NY 10027", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventOwner: "", attendees: []/*, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"*/),
+        Event(eventName: "Broadway Show Preview", eventDate: "11/20", eventAddress: "411 W 116th St, New York, NY 10027", eventLocation: "Theatre", eventLon: -73.9855, eventLat: 40.7580, eventOwner: "", attendees: []/*, eventDescription: "Preview of Broadway show Phantom of the Opera"*/),
+        Event(eventName: "Art Walk", eventDate: "12/23", eventAddress: "411 W 116th St, New York, NY 10027", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventOwner: "", attendees: []/*, eventDescription: "Take a walk through Central Park to see  art pieces"*/)
     ]
     @State private var isAddEventViewPresented = false
     @State var userData: UserData
     @State private var editMode: EditMode = .inactive
-
     var body: some View {
 //            TabView {
                 VStack {
@@ -37,9 +34,7 @@ struct EventsView: View {
                             .font(.title)
                             .fontWeight(.bold)
                             .padding()
-
                         Spacer()
-
                         Button(action: {
                             isAddEventViewPresented.toggle()
                         }) {
@@ -52,7 +47,6 @@ struct EventsView: View {
                                 })
                         }
                     }
-
                     HStack {
                         Button(action: {
                             // Filter
@@ -65,11 +59,12 @@ struct EventsView: View {
                         // MapView
                         NavigationStack {
                             NavigationLink(destination: NewMapView(events: events)) {
-                                Text("See Map View")
-                                    .padding()
-                                    .foregroundColor(.blue)
+                            Text("See Map View")
+                                .padding()
+                                .foregroundColor(.blue)
                             }
                         } // NavigationStack end
+
                     }
                     NavigationStack{
                         List {
@@ -77,12 +72,12 @@ struct EventsView: View {
                                 //NavigationView{
                                 NavigationLink(destination: EventView(event: event)) {
                                     HStack {
-                                        Image(systemName: event.imageName)
-                                            .resizable()
-                                            .frame(width: 50, height: 50)
-                                            .clipShape(Circle())
-                                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                            .padding()
+//                                        Image(systemName: event.imageName)
+//                                            .resizable()
+//                                            .frame(width: 50, height: 50)
+//                                            .clipShape(Circle())
+//                                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+//                                            .padding()
                                         
                                         VStack(alignment: .leading) {
                                             Text(event.eventName + " on " + event.eventDate)
@@ -90,9 +85,9 @@ struct EventsView: View {
                                             Text(event.eventLocation)
                                                 .font(.subheadline)
                                                 .foregroundColor(.black)
-                                            Text(event.eventSubtitle)
-                                                .font(.subheadline)
-                                                .foregroundColor(.gray)
+//                                            Text(event.eventSubtitle)
+//                                                .font(.subheadline)
+//                                                .foregroundColor(.gray)
                                         }
                                         if editMode.isEditing {
                                             Button(action: {
@@ -117,9 +112,7 @@ struct EventsView: View {
                             UITableView.appearance().allowsSelectionDuringEditing = true
                         }
                     }
-
                     Spacer()
-
                 }
 //                .navigationBarHidden(true)
 //                .tabItem {
@@ -155,10 +148,8 @@ struct EventsView: View {
         }
     }
 }
-
 //struct EventsView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        EventsView()
 //    }
 //}
-

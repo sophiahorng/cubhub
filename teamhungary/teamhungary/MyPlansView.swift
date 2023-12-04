@@ -4,16 +4,12 @@
 //
 //  Created by Sophia Horng on 12/1/23.
 //
-
 import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseAuth
-
 // Define Firestore references
-
 struct MyPlansView: View {
-
     @State private var events: [Event] = [
 //        Event(imageName: "photo", eventName: "Jazz Night", eventDate: "10/31", eventSubtitle: "#concert #jazz", eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"),
 //        Event(imageName: "photo", eventName: "Broadway Show Preview", eventDate: "11/20", eventSubtitle: "#broadway #musical #opera", eventLocation: "Theatre", eventLon: -73.9855, eventLat: 40.7580, eventDescription: "Preview of Broadway show Phantom of the Opera"),
@@ -21,7 +17,6 @@ struct MyPlansView: View {
     ]
     @State var userData: UserData
     @State private var editMode: EditMode = .inactive
-
     var body: some View {
         VStack {
             NavigationView {
@@ -29,12 +24,12 @@ struct MyPlansView: View {
                     ForEach(events) { event in
                         NavigationLink(destination: EventView(event: event)) {
                             HStack {
-                                Image(systemName: event.imageName)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                    .padding()
+//                                Image(systemName: event.imageName)
+//                                    .resizable()
+//                                    .frame(width: 50, height: 50)
+//                                    .clipShape(Circle())
+//                                    .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+//                                    .padding()
                                 
                                 VStack(alignment: .leading) {
                                     Text(event.eventName + " on " + event.eventDate)
@@ -42,9 +37,9 @@ struct MyPlansView: View {
                                     Text(event.eventLocation)
                                         .font(.subheadline)
                                         .foregroundColor(.black)
-                                    Text(event.eventSubtitle)
-                                        .font(.subheadline)
-                                        .foregroundColor(.gray)
+//                                    Text(event.eventSubtitle)
+//                                        .font(.subheadline)
+//                                        .foregroundColor(.gray)
                                 }
                                 if editMode.isEditing {
                                     Button(action: {
@@ -76,6 +71,10 @@ struct MyPlansView: View {
     func fetchUserEvents() {
         let db = Firestore.firestore()
         let userId = userData.uid
+        guard !userId.isEmpty else {
+                print("Invalid userID")
+                return
+        }
         print("id: \(userId)")
         print("fetching user events, checking array contains /users/\(userId)")
         
@@ -87,7 +86,6 @@ struct MyPlansView: View {
                     print("Error fetching events: \(error.localizedDescription)")
                     return
                 }
-
                 guard let documents = querySnapshot?.documents else {
                     return
                 }
@@ -101,7 +99,8 @@ struct MyPlansView: View {
                     let address = data["address"] as? String ?? ""
                     let eventLon = data["lat"] as? Double ?? 0
                     let eventLat = data["lon"] as? Double ?? 0
-                    let newEvent = Event(imageName: "photo", eventName: eventName, eventDate: eventDate, eventSubtitle: "", eventLocation: eventLocation, eventLon: eventLon, eventLat: eventLat, eventDescription: "")
+                    let eventOwner = data["ownerID"] as? String ?? ""
+                    let newEvent = Event(eventName: eventName, eventDate: eventDate, eventAddress: address, eventLocation: eventLocation, eventLon: eventLon, eventLat: eventLat, eventOwner: eventOwner, attendees: []/*, eventDescription: ""*/)
                     return newEvent
                 }
             }
@@ -112,10 +111,8 @@ struct MyPlansView: View {
         }
     }
 }
-
 //struct MyPlansView_Previews: PreviewProvider {
 //    static var previews: some View {
 //        MyPlansView()
 //    }
 //}
-

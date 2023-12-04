@@ -14,7 +14,7 @@ enum StackViewType {
 }
 
 struct ContentView: View {
-    @State private var userData: UserData = UserData(url: nil, uid: "", name: "", email: "")
+    @State private var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", igprof: "", school: "")
     @State private var isAlert = false
     @State private var isLogin = false
     @State private var navigationPath = NavigationPath()
@@ -143,7 +143,14 @@ struct ContentView: View {
                 }
             }
             DispatchQueue.main.async {
-                self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
+                FirebaseUtilities.retrieveUserFromFirestore(userID: uid) { user in
+                    if let user = user {
+                        self.userData = user
+                    } else {
+                        
+                        self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                    }
+                }
                 self.isLogin = true
             }
         }
@@ -197,7 +204,14 @@ struct ContentView: View {
                         return
                     }
                     DispatchQueue.main.async {
-                        userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email)
+                        FirebaseUtilities.retrieveUserFromFirestore(userID: uid) { user in
+                            if let user = user {
+                                self.userData = user
+                            } else {
+                                
+                                self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                            }
+                        }
                         self.isLogin = true
                     }
                     FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email)

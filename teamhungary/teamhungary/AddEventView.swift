@@ -14,7 +14,7 @@ struct AddEventView: View {
     @State private var selectedImage: UIImage?
     @State private var newEventName = ""
     @State private var newEventDate: Date = Date()
-    @State private var newEventLocation = "Event Location"
+    @State private var newEventAddress = "Event Location"
     @State private var newEventSubtitle = ""
     @State private var newEventLon = 0.0
     @State private var newEventLat = 0.0
@@ -41,20 +41,18 @@ struct AddEventView: View {
                     let dateString = dateFormatter.string(from: newEventDate)
                     
                     // TODO: IMAGE UPLOAD
-                    
-                    
-                    // Add the new event to the Firebase database using FirebaseUtilities
-                    FirebaseUtilities.addEventToFirestore(
-                        uid: UUID().uuidString, // You can generate a unique ID for the event, or use any unique identifier
-                        image: selectedImage,
-                        name: newEventName,
-                        datetime: Timestamp(), // Use the current timestamp or set the date and time accordingly
-                        address: newEventLocation,
-                        locationName: "",
-                        lat: newEventLat,
-                        lon: newEventLon,
-                        attendees: [userData.uid]
-                    )
+                    let newEvent = Event(
+                                           eventName: newEventName,
+                                           eventDate: dateString,
+                                           eventAddress: newEventAddress,
+                                           eventLocation: "",
+                                           eventLon: newEventLon,
+                                           eventLat: newEventLat,
+                                           eventOwner: userData.uid,
+                                           attendees: [userData.uid]
+                                       )
+                    FirebaseUtilities.addEventToFirestore(event: newEvent)
+
 
                     // Optionally, you can also add the new event to the local events array if needed
 //                    let newEvent = Event(
@@ -73,7 +71,7 @@ struct AddEventView: View {
                     newEventName = ""
                     newEventDate = Date()
                     newEventSubtitle = ""
-                    newEventLocation = ""
+                    newEventAddress = ""
                     newEventDescription = ""
 
                     // Call the done action
@@ -116,7 +114,7 @@ struct AddEventView: View {
 //                .padding()
             
             VStack(spacing: 10) {
-                Text(newEventLocation)
+                Text(newEventAddress)
                     .frame(width: 300)
                     .lineLimit(2)
                 Button {
@@ -125,17 +123,17 @@ struct AddEventView: View {
                     Text("Search Address")
                 }.sheet(isPresented: $isSearchAddressViewActive) {
                     
-                    SearchAddressView(dynamicText: $newEventLocation, latitude: $newEventLat, longitude: $newEventLon)
+                    SearchAddressView(dynamicText: $newEventAddress, latitude: $newEventLat, longitude: $newEventLon)
                 }
 
             }
             
 
-            TextField("Hashtags", text: $newEventSubtitle)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .multilineTextAlignment(.center)
-                .padding()
+//            TextField("Hashtags", text: $newEventSubtitle)
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                .frame(width: 300)
+//                .multilineTextAlignment(.center)
+//                .padding()
                 //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
                 //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
             
