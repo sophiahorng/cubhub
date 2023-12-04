@@ -25,23 +25,23 @@ struct setupView: View {
     @State private var userMajor: String
     @State private var userGradYear: String
     @State private var userBio: String
-    var saveProfile:() -> Void
+    @Binding var showModal: Bool
     
-    init(user: User) {
+    init(user: User, showModal: Binding<Bool>) {
         self.user = user
         self.userName = user.userName
         self.userMajor = user.userMajor
         self.userGradYear = user.userGradYear
         self.userBio = user.userBio
-        self.saveProfile = {}
+        self._showModal = showModal
     }
     
     var body: some View {
         ZStack {
-            Image("loginPage")
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .edgesIgnoringSafeArea(.all)
+//            Image("loginPage")
+//                .resizable()
+//                .aspectRatio(contentMode: .fill)
+//                .edgesIgnoringSafeArea(.all)
             
             ScrollView {
                 VStack(spacing: 30) {
@@ -93,7 +93,7 @@ struct setupView: View {
                         userMajor = ""
                         userGradYear = ""
                         userBio = ""
-                        saveProfile()
+                        self.showModal.toggle()
                     }) {
                         Text("Save")
                     }
@@ -109,7 +109,7 @@ struct setupView: View {
 struct setupView_Preview: PreviewProvider{
     static var previews: some View{
         let practiceUser: User = User(id: nil, imageName: "", userName: "jasmine", userMajor: "cs", userGradYear: "2025", userBio: "hi")
-        return setupView(user: practiceUser)
+        return setupView(user: practiceUser, showModal: .constant(true))
     }
 }
 
