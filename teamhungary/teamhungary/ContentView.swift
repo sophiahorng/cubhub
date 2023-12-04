@@ -224,9 +224,11 @@ struct ContentView: View {
                             
                             if let imageData = data {
                                 // Upload the image data to Firebase Storage
-                                FirebaseUtilities.uploadProfilePicture(imageData: imageData, userID: uid) { downloadURL in
-                                    if let downloadURL = downloadURL {
-                                        FirebaseUtilities.saveProfilePictureURL(downloadURL, for: uid)
+                                if let image = UIImage(data: imageData) {
+                                    FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
+                                        if let downloadURL = downloadURL {
+                                            FirebaseUtilities.saveProfilePictureURL(downloadURL, for: uid)
+                                        }
                                     }
                                 }
                             } else {

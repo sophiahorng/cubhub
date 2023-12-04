@@ -8,27 +8,29 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 class FirebaseUtilities {
-    
-    static func uploadProfilePicture(imageData: Data, userID: String, completion: @escaping (String?) -> Void) {
+    static func uploadProfilePicture(imageData: UIImage, userID: String, completion: @escaping (String?) -> Void) {
         let storage = Storage.storage()
         // Adjust the path to create a user-specific folder
-        let storageRef = storage.reference().child("users/\(userID)/profilePicture.jpg")
+        let storageRef = storage.reference().child("profilePictures/\(userID).jpg")
         // Upload image data to Firebase Storage
-        _ = storageRef.putData(imageData, metadata: nil) { (metadata, error) in
-            guard metadata != nil else {
-            // Uh-oh, an error occurred!
-            return
-          }
-          // Metadata contains file metadata such as size, content-type.
-//          let _size = metadata.size
-          // You can also access to download URL after upload.
-          storageRef.downloadURL { (url, error) in
-              guard url != nil else {
-              // Uh-oh, an error occurred!
-              return
+        if let image = imageData.jpegData(compressionQuality: 0.5) {
+            storageRef.putData(image, metadata: nil) { (metadata, error) in
+                guard metadata != nil else {
+                    print("data writing error")
+                    return
+                }
             }
-          }
+            // Metadata contains file metadata such as size, content-type.
+            //          let _size = metadata.size
+            // You can also access to download URL after upload.
+            storageRef.downloadURL { (url, error) in
+                guard url != nil else {
+                    print("downloadURL error")
+                    return
+                }
+            }
         }
+    }
 //        storageRef.putData(imageData, metadata: nil) { metadata, error in
 //            if let error = error {
 //                print("Error uploading image to Firebase Storage: \(error.localizedDescription)")
@@ -47,7 +49,7 @@ class FirebaseUtilities {
 //                }
 //            }
 //        }
-    }
+//    }
     
     static func saveProfilePictureURL(_ url: String, for userID: String) {
         let db = Firestore.firestore()
@@ -61,19 +63,35 @@ class FirebaseUtilities {
         }
     }
     
-    static func retrieveProfilePictureURL(for userID: String, completion: @escaping (String?) -> Void) {
-        let db = Firestore.firestore()
-        let userRef = db.collection("users").document(userID)
-        userRef.getDocument { document, error in
-            if let document = document, document.exists {
-                let profilePictureURL = document.get("profilePictureURL") as? String
-                completion(profilePictureURL)
-            } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+    static func retrieveProfilePicture(for userID: String, completion: @escaping (UIImage?) -> Void) {
+        let storage = Storage.storage()
+        // Adjust the path to create a user-specific folder
+        let storageRef = storage.reference().child("profilePictures/\(userID).jpg")
+        
+        // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
+        storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+            if error != nil {
+                // Uh-oh, an error occurred!
+                print("error getting profile pic URL")
                 completion(nil)
+            } else {
+                let image = UIImage(data: data!)
+                completion(image)
             }
         }
     }
+//        let userRef = db.collection("users").document(userID)
+//        
+//        userRef.getDocument { document, error in
+//            if let document = document, document.exists {
+//                let profilePictureURL = document.get("profilePictureURL") as? String
+//                completion(profilePictureURL)
+//            } else {
+//                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+//                completion(nil)
+//            }
+//        }
+//    }
     static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", igProfile: String = "",  profilePic: String = "") {
         if email.suffix(13) != "@columbia.edu" {
             print("User is not in Columbia domain")
