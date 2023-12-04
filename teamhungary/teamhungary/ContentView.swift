@@ -8,13 +8,15 @@ import FirebaseAuth
 
 enum StackViewType {
     case MyPageView
+    case MyPlansView
     case MapView
     case EventView
     case EventsView
 }
 
 struct ContentView: View {
-    @State private var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", igprof: "", school: "")
+    @ObservedObject var userDataObservable = UserDataObservable()
+//    @State private var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", igprof: "", school: "")
     @State private var isAlert = false
     @State private var isLogin = false
     @State private var navigationPath = NavigationPath()
@@ -24,6 +26,7 @@ struct ContentView: View {
     @State private var isShownMapView = false
     @State private var isShownEventView = false
     @State private var isShownEventsView = false
+    @State private var isLoggedIn = false
     
     
     var body: some View {
@@ -87,7 +90,7 @@ struct ContentView: View {
                 
             } // ZStack
             .navigationDestination(for: UserData.self) { userData in
-                DefaultView(userData: userData, isLogin: isLogin)
+                DefaultView(userDataObservable: userDataObservable, isLogin: isLogin)
                     .navigationBarBackButtonHidden(true)
             }
         } // NavigationStack
@@ -96,7 +99,7 @@ struct ContentView: View {
         }
         .onChange(of: isLogin) { newValue in
             if newValue {
-                navigationPath.append(userData)
+                navigationPath.append(userDataObservable.userData)
             }
         }
         .alert(LocalizedStringKey("Login Failed"), isPresented: $isAlert) {
@@ -108,7 +111,7 @@ struct ContentView: View {
     @ViewBuilder
     func chooseDestination(userData: UserData) -> some View {
         if self.isLogin {
-            DefaultView(userData: userData, isLogin: self.isLogin)
+            DefaultView(userDataObservable: userDataObservable, isLogin: self.isLogin)
                 .navigationBarBackButtonHidden(true)
         } else {
             EmptyView()
@@ -135,7 +138,7 @@ struct ContentView: View {
                     self.isAlert = true
                     return
                 } else {
-                    let uid = authResult?.user.uid ?? ""
+                    uid = authResult?.user.uid ?? ""
                     if uid.isEmpty{
                         self.isAlert = true
                         return
@@ -145,12 +148,12 @@ struct ContentView: View {
             DispatchQueue.main.async {
                 FirebaseUtilities.retrieveUserFromFirestore(userID: uid) { user in
                     if let user = user {
-                        self.userData = user
+                        self.userDataObservable.userData = user
                     } else {
-                        
-                        self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                        self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
                     }
                 }
+                self.isLoggedIn = true
                 self.isLogin = true
             }
         }
@@ -206,16 +209,15 @@ struct ContentView: View {
                     DispatchQueue.main.async {
                         FirebaseUtilities.retrieveUserFromFirestore(userID: uid) { user in
                             if let user = user {
-                                self.userData = user
+                                self.userDataObservable.userData = user
                             } else {
-                                
-                                self.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                                self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
                             }
                         }
                         self.isLogin = true
                     }
                     FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email)
-                    if let imageURL = userData.url {
+                    if let imageURL = userDataObservable.userData.url {
                         let task = URLSession.shared.dataTask(with: imageURL) { data, response, error in
                             if let error = error {
                                 print("Error downloading image data: \(error.localizedDescription)")

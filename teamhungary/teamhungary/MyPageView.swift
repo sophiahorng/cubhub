@@ -4,7 +4,7 @@ import GoogleSignIn
 struct MyPageView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @Binding var userData: UserData
+    @ObservedObject var userDataObservable: UserDataObservable
     @Binding var isLogin: Bool
     @State private var showMapView = false
     
@@ -31,12 +31,12 @@ struct MyPageView: View {
                     }
                     
                     
-                    AsyncImage(url: userData.url)
+                    AsyncImage(url: userDataObservable.userData.url)
                         .imageScale(.small)
                         .frame(width: 180, height: 180, alignment: .center)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    Text(userData.name)
-                    Text(userData.email)
+                    Text(userDataObservable.userData.name)
+                    Text(userDataObservable.userData.email)
                     Spacer()
                     HStack {
                         Spacer()

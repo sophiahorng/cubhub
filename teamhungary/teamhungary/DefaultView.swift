@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 struct DefaultView: View {
-    @State var userData: UserData
+    @ObservedObject var userDataObservable: UserDataObservable
     @State var isLogin: Bool
     var body: some View {
         TabView {
             // EventsView
             NavigationView {
-                EventsView(userData: userData)
+                EventsView(userDataObservable: userDataObservable)
             }
             .tabItem {
                 Label("Events", systemImage: "list.bullet")
@@ -24,7 +24,7 @@ struct DefaultView: View {
             
             // MyEventsView
             NavigationView {
-                MyPlansView(userData: userData)
+                MyPlansView(userDataObservable: userDataObservable)
             }
             .tabItem {
                 Label("My Plans", systemImage: "star")
@@ -33,7 +33,7 @@ struct DefaultView: View {
             
             // MyPageView
             NavigationView {
-                MyPageView(userData: $userData, isLogin: $isLogin)
+                MyPageView(userDataObservable: userDataObservable, isLogin: $isLogin)
             }
             .tabItem {
                 Label("Profile", systemImage: "person")

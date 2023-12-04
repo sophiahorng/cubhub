@@ -28,3 +28,6 @@ struct UserData: Hashable {
         hasher.combine(school)
     }
 }
+class UserDataObservable: ObservableObject {
+    @Published var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", igprof: "", school: "")
+}
