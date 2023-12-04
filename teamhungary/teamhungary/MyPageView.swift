@@ -7,10 +7,12 @@ struct MyPageView: View {
     @Binding var userData: UserData
     @EnvironmentObject var loginState: LoginState
     @State private var showMapView = false
+    @State var showModal: Bool = false
     
     var body: some View {
         let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
         let img = UIImage(contentsOfFile: imagePath! )
+        
         NavigationStack {
             ZStack {
                 Image(uiImage: img! )
@@ -23,11 +25,18 @@ struct MyPageView: View {
                     HStack {
                         Spacer()
                         Button(action: {
-                            
+                            showModal = true
                         }) {
-                            Text("Edit Profile").padding(40).foregroundStyle(.red)
+                            Text("Edit Profile").padding(60).foregroundStyle(.red)
                         }
                         .frame(alignment: .trailing)
+                        .sheet(
+                            isPresented: $showModal,
+                            content: {
+                                setupView(user: User(id: nil, imageName: "photo", userName: "Roaree", userMajor: "Computer Science", userGradYear: "2025", userBio: "Roaree the Lion"), showModal: $showModal
+                                )
+                            }
+                        )
                     }
                     
                     
@@ -76,8 +85,8 @@ struct MyPageView: View {
 
 }
 
-//struct MyPageView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyPageView(userData: .constant(UserData(url: nil, name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
-//    }
-//}
+struct MyPageView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
+    }
+}
