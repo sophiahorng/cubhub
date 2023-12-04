@@ -105,9 +105,13 @@ class FirebaseUtilities {
         }
     }
     
-    static func addEventToFirestore(uid: String, name: String, datetime: Timestamp, address: String = "", locationName: String = "", lat: Double = 0.0, lon: Double = 0.0, attendees: [String] = []) {
+    static func addEventToFirestore(uid: String, image: UIImage? = nil, name: String, datetime: Timestamp, address: String = "", locationName: String = "", lat: Double = 0.0, lon: Double = 0.0, attendees: [String] = []) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(uid)
+        
+        if let image = image {
+            // TODO: IMAGE UPLOAD
+        }
 
         var eventInfo: [String: Any] = [
             "name": name,

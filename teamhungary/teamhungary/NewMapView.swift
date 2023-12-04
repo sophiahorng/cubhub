@@ -41,10 +41,12 @@ struct NewMapView: View {
                     MapAnnotation(coordinate: data.coordinate, anchorPoint: CGPoint(x: 0.5, y: 1)) {
                         VStack {
                             Text(data.name)
-                            Circle()
-                                .stroke(.red, lineWidth: 2)
-                                .foregroundColor(.red.opacity(0.3))
-                                .frame(width: 26, height: 26)
+                                .font(.system(size: 12))
+                                .foregroundColor(.blue)
+                            Image(systemName: "mappin")
+                                .resizable()
+                                .frame(width: 30, height: 30)
+                                .foregroundColor(.blue)
                         }
                         .onTapGesture {
                             /*

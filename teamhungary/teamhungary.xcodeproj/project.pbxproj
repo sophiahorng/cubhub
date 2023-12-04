@@ -10,6 +10,7 @@
 		0BB5C20D4851E6C11E5F7F17 /* Pods_teamhungary_teamhungaryUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D877E8DD260A6D903C5A0F02 /* Pods_teamhungary_teamhungaryUITests.framework */; };
 		241191022B0A33D900896AE2 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241191012B0A33D900896AE2 /* MyPageView.swift */; };
 		249E83092AFCFF85004A79ED /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 249E83082AFCFF85004A79ED /* Podfile */; };
+		24C89D8D2B1E0E61001671EF /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C89D8C2B1E0E61001671EF /* ImagePickerView.swift */; };
 		39720500B9AFAF0C628199F8 /* Pods_teamhungaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31907B23CAF4038DAD794F /* Pods_teamhungaryTests.framework */; };
 		71F0C4FA3152E60927F07788 /* Pods_teamhungary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */; };
 		9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7DD192AFCD4A9005BF358 /* loginPage.swift */; };
@@ -61,6 +62,7 @@
 		059CF945BC75376E2988052B /* Pods-teamhungary.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary.release.xcconfig"; path = "Target Support Files/Pods-teamhungary/Pods-teamhungary.release.xcconfig"; sourceTree = "<group>"; };
 		241191012B0A33D900896AE2 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		249E83082AFCFF85004A79ED /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		24C89D8C2B1E0E61001671EF /* ImagePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE5D911F83EBCFC3262A014 /* Pods-teamhungaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungaryTests.release.xcconfig"; path = "Target Support Files/Pods-teamhungaryTests/Pods-teamhungaryTests.release.xcconfig"; sourceTree = "<group>"; };
 		85DA3034361D1C6AF3F8BFA2 /* Pods-teamhungary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary.debug.xcconfig"; path = "Target Support Files/Pods-teamhungary/Pods-teamhungary.debug.xcconfig"; sourceTree = "<group>"; };
@@ -200,6 +202,7 @@
 				F55C538B2AFC4E7A00018B40 /* Assets.xcassets */,
 				F55C538D2AFC4E7A00018B40 /* Preview Content */,
 				A5B9A43D2B05292D00408F1C /* UserData.swift */,
+				24C89D8C2B1E0E61001671EF /* ImagePickerView.swift */,
 				A5B9A4452B1C48A300408F1C /* NewMapView.swift */,
 				A5B9A4472B1C570D00408F1C /* NewMapDetailView.swift */,
 				A5B9A4492B1C6EE700408F1C /* SearchAddressView.swift */,
@@ -478,6 +481,7 @@
 				A5B9A43E2B05292D00408F1C /* UserData.swift in Sources */,
 				D05DDCC32B1DA813003AE619 /* attendeeView.swift in Sources */,
 				D0F2B3C82B1AD18B00E73B33 /* setupView.swift in Sources */,
+				24C89D8D2B1E0E61001671EF /* ImagePickerView.swift in Sources */,
 				A5B9A44A2B1C6EE700408F1C /* SearchAddressView.swift in Sources */,
 				9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */,
 				F5EC02072B0993D800709834 /* EventView.swift in Sources */,
