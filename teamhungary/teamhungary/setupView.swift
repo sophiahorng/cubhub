@@ -25,6 +25,8 @@ struct setupView: View {
     @State private var userMajor: String
     @State private var userGradYear: String
     @State private var userBio: String
+    @State private var selectedImage: UIImage?
+    @State private var isImagePickerPresented: Bool = false
     @Binding var showModal: Bool
     
     init(user: User, showModal: Binding<Bool>) {
@@ -47,12 +49,34 @@ struct setupView: View {
                 VStack(spacing: 30) {
                     Spacer()
                     Spacer()
-                    Image(systemName: "photo")
-                        .resizable()
-                        .frame(width: 170, height: 170)
-                        .clipShape(Circle())
-                        .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
-                        .padding()
+                    
+                    if let selectedImage = selectedImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .frame(width: 170, height: 170)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
+                            .padding()
+                            .onTapGesture {
+                                isImagePickerPresented.toggle()
+                            }
+                            .sheet(isPresented: $isImagePickerPresented) {
+                                ImagePicker(selectedImage: $selectedImage)
+                            }
+                    } else {
+                        Image(systemName: "photo")
+                            .resizable()
+                            .frame(width: 170, height: 170)
+                            .clipShape(Circle())
+                            .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
+                            .padding()
+                            .onTapGesture {
+                                isImagePickerPresented.toggle()
+                            }
+                            .sheet(isPresented: $isImagePickerPresented) {
+                                ImagePicker(selectedImage: $selectedImage)
+                            }
+                    }
                     
                     TextField("Name", text: $userName)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
