@@ -308,9 +308,13 @@ struct ContentView: View {
                             if let imageData = data {
                                 // Upload the image data to Firebase Storage
                                 if let image = UIImage(data: imageData) {
-                                    FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
-                                        if let downloadURL = downloadURL {
-                                            FirebaseUtilities.saveProfilePictureURL(downloadURL, for: uid)
+                                    DispatchQueue.main.async {
+                                        FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
+                                            if let downloadURL = downloadURL {
+                                                FirebaseUtilities.saveProfilePictureURL(downloadURL, for: uid)
+                                                let user = UserData(url: downloadURL, uid: self.userDataObservable.userData.uid, name: self.userDataObservable.userData.name, email: self.userDataObservable.userData.email, gradYear: self.userDataObservable.userData.gradYear, bio: self.userDataObservable.userData.bio, igprof: self.userDataObservable.userData.igprof, school: self.userDataObservable.userData.school)
+                                                self.userDataObservable.userData = user
+                                            }
                                         }
                                     }
                                 }

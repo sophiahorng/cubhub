@@ -8,7 +8,7 @@ import Foundation
 import FirebaseFirestore
 import FirebaseStorage
 class FirebaseUtilities {
-    static func uploadProfilePicture(imageData: UIImage, userID: String, completion: @escaping (String?) -> Void) {
+    static func uploadProfilePicture(imageData: UIImage, userID: String, completion: @escaping (URL?) -> Void) {
         let storage = Storage.storage()
         // Adjust the path to create a user-specific folder
         let storageRef = storage.reference().child("profilePictures/\(userID).jpg")
@@ -26,8 +26,10 @@ class FirebaseUtilities {
             storageRef.downloadURL { (url, error) in
                 guard url != nil else {
                     print("downloadURL error")
+                    completion(nil)
                     return
                 }
+                completion(url)
             }
         }
     }
@@ -51,10 +53,10 @@ class FirebaseUtilities {
 //        }
 //    }
     
-    static func saveProfilePictureURL(_ url: String, for userID: String) {
+    static func saveProfilePictureURL(_ url: URL, for userID: String) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userID)
-        userRef.updateData(["profilePictureURL": url]) { error in
+        userRef.updateData(["profilePictureURL": url.absoluteString]) { error in
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
             } else {
