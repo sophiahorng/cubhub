@@ -20,31 +20,18 @@ struct User: Identifiable{
 
 struct setupView: View {
     
-    @State var user: User = User(id: nil, imageName: "photo", userName: "Roaree", userMajor: "Computer Science", userGradYear: "2025", userBio: "Roaree the Lion")
-    @State private var userName: String
-    @State private var userMajor: String
-    @State private var userGradYear: String
-    @State private var userBio: String
-    @State private var selectedImage: UIImage?
-    @State private var isImagePickerPresented: Bool = false
+    @Binding var userData: UserData
     @Binding var showModal: Bool
+    @State var userName: String
+    @State var userMajor: String
+    @State var userGradYear: String
+    @State var userBio: String
+    @State var selectedImage: UIImage?
+    @State var isImagePickerPresented: Bool = false
     
-    init(user: User, showModal: Binding<Bool>) {
-        self.user = user
-        self.userName = user.userName
-        self.userMajor = user.userMajor
-        self.userGradYear = user.userGradYear
-        self.userBio = user.userBio
-        self._showModal = showModal
-    }
     
     var body: some View {
         ZStack {
-//            Image("loginPage")
-//                .resizable()
-//                .aspectRatio(contentMode: .fill)
-//                .edgesIgnoringSafeArea(.all)
-            
             ScrollView {
                 VStack(spacing: 30) {
                     Spacer()
@@ -64,8 +51,7 @@ struct setupView: View {
                                 ImagePicker(selectedImage: $selectedImage)
                             }
                     } else {
-                        Image(systemName: "photo")
-                            .resizable()
+                        AsyncImage(url: userData.url)
                             .frame(width: 170, height: 170)
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
@@ -105,35 +91,49 @@ struct setupView: View {
                         .padding()
                     
                     Button(action: {
-                        let newUser = User(
-                            id: nil, imageName: "photo",
-                            userName: userName,
-                            userMajor: userMajor,
-                            userGradYear: userGradYear,
-                            userBio: userBio
+                        let newUser = UserData(
+                            url: userData.url,
+                            uid: userData.uid,
+                            name: userData.name,
+                            email: userData.email,
+                            gradYear: userGradYear,
+                            bio: userBio,
+                            igprof: userData.igprof,
+                            school: userMajor
                         )
-                        user = newUser
-                        userName = ""
-                        userMajor = ""
-                        userGradYear = ""
-                        userBio = ""
+                        userData = newUser
+                        FirebaseUtilities.updateUserInFirestore(uid: userData.uid, graduationYear: userGradYear, school: userMajor, bio: userBio)
+//                        if (selectedImage != nil) {
+//                            FirebaseUtilities.uploadProfilePicture(imageData: selectedImage!, userID: userData.uid) { downloadURL in
+//                                if let downloadURL = downloadURL {
+//                                    FirebaseUtilities.saveProfilePictureURL(downloadURL, for: userData.uid)
+//                                }
+//                            }
+//                        }
+//                            
                         self.showModal.toggle()
                     }) {
                         Text("Save")
+                            .bold()
+                            .font(Font.custom("Helvetica Neue", size: 24.0))
+                            .padding(20)
+                            .foregroundColor(Color.white)
+                            .background(Color("ButtonColor"))
+                            .cornerRadius(12)
                     }
                 }
             }
-            
         }
+        .background(Color("ColumbiaBlue"))
     }
     
     
 }
 
-struct setupView_Preview: PreviewProvider{
-    static var previews: some View{
-        let practiceUser: User = User(id: nil, imageName: "", userName: "jasmine", userMajor: "cs", userGradYear: "2025", userBio: "hi")
-        return setupView(user: practiceUser, showModal: .constant(true))
-    }
-}
+//struct setupView_Preview: PreviewProvider{
+//    static var previews: some View{
+//        let practiceUser: User = User(id: nil, imageName: "", userName: "jasmine", userMajor: "cs", userGradYear: "2025", userBio: "hi")
+//        return setupView(user: practiceUser, showModal: .constant(true))
+//    }
+//}
 
