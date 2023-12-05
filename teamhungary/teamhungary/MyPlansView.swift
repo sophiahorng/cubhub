@@ -22,7 +22,7 @@ struct MyPlansView: View {
             NavigationView {
                 List {
                     ForEach(events) { event in
-                        NavigationLink(destination: EventView(event: event)) {
+                        NavigationLink(destination: EventView(event: event, userData: $userData)) {
                             HStack {
                                 let (month, day) = formatEventDate(event.eventDate)
                                 VStack {

@@ -70,7 +70,7 @@ struct EventsView: View {
                         List {
                             ForEach(events) { event in
                                 //NavigationView{
-                                NavigationLink(destination: EventView(event: event)) {
+                                NavigationLink(destination: EventView(event: event, userData: $userData)) {
                                     HStack {
 //                                        Image(systemName: event.imageName)
 //                                            .resizable()

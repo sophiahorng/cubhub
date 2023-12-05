@@ -17,11 +17,14 @@ struct user: Identifiable {
 struct EventView: View {
     @Environment(\.presentationMode) var presentationMode
     let event: Event
-    init(event: Event) {
+    init(event: Event, userData: Binding<UserData>) {
         self.event = event
+        self._userData = userData
     }
     let images: [photo] = [photo(name: "photo"), photo(name: "photo"), photo(name: "photo"), photo(name: "photo")]
     let users: [user] = [user(name: "Name", photo: "photo"), user(name: "Name", photo: "photo")]
+    
+    @Binding var userData: UserData
     var body: some View {
         TabView {
             VStack (spacing: 2) {
@@ -49,7 +52,7 @@ struct EventView: View {
                     }
                     Spacer()
                     Button(action: {
-                        
+                        FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
                     }) {
                         Text("Add").padding(20)
                     }
@@ -120,8 +123,8 @@ struct EventView: View {
     }
     
 }
-struct EventView_Previews: PreviewProvider {
+/*struct EventView_Previews: PreviewProvider {
     static var previews: some View {
         EventView(event: Event(eventName: "Jazz Night", eventDate: "10/31",/* eventSubtitle: "#concert #jazz", */ eventAddress: "411 W 116th St, New York, NY 10027",eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventOwner: "", attendees: []/*, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"*/))
     }
-}
+}*/
