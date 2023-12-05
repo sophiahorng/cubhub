@@ -29,6 +29,7 @@ struct attendeesView: View {
                     Text(attendeeName)
                         .padding()
                         .border(Color.gray, width: 1) // Add border for better visibility
+                    
                 }
             }
         }
@@ -41,6 +42,7 @@ struct attendeesView: View {
     
     func fetchEventAttendees(eventID: String) {
         let db = Firestore.firestore()
+        let eventID = event.id
         
         // Get a reference to the event document in Firestore
         let eventRef = db.collection("events").document(eventID)
@@ -61,7 +63,7 @@ struct attendeesView: View {
             
             // Parse the document and update the event's attendees
             if let data = document.data(), let attendeesData = data["attendees"] as? [String] {
-                let updatedAttendees = attendeesData.map { attendeeID in
+                _ = attendeesData.map { attendeeID in
                     // You might want to fetch additional user details here
                     return attendeeID
                 }

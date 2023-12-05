@@ -25,6 +25,8 @@ struct EventView: View {
     let users: [user] = [user(name: "Name", photo: "photo"), user(name: "Name", photo: "photo")]
     
     @Binding var userData: UserData
+    @State private var isUserAttendee = false
+    
     var body: some View {
         TabView {
             VStack (spacing: 2) {
@@ -51,12 +53,21 @@ struct EventView: View {
                         
                     }
                     Spacer()
-                    Button(action: {
-                        FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
-                    }) {
-                        Text("Add").padding(20)
+                    // Use onAppear to check if the user is an attendee when the view appears
+                        .onAppear {
+                            DispatchQueue.main.async {
+                                isUserAttendee = event.attendees.contains(userData.uid)
+                            }
+                        }
+                    // Conditionally show the "Add" button based on isUserAttendee
+                    if !isUserAttendee {
+                        Button(action: {
+                            FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
+                        }) {
+                            Text("Add").padding(20)
+                        }
+                        .frame(alignment: .trailing)
                     }
-                    .frame(alignment: .trailing)
                 }
                 Spacer()
                 List {
@@ -124,7 +135,7 @@ struct EventView: View {
     
 }
 /*struct EventView_Previews: PreviewProvider {
-    static var previews: some View {
-        EventView(event: Event(eventName: "Jazz Night", eventDate: "10/31",/* eventSubtitle: "#concert #jazz", */ eventAddress: "411 W 116th St, New York, NY 10027",eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventOwner: "", attendees: []/*, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"*/))
-    }
-}*/
+ static var previews: some View {
+ EventView(event: Event(eventName: "Jazz Night", eventDate: "10/31",/* eventSubtitle: "#concert #jazz", */ eventAddress: "411 W 116th St, New York, NY 10027",eventLocation: "Columbia", eventLon: -73.9626, eventLat: 40.8075, eventOwner: "", attendees: []/*, eventDescription: "Jazz concert at Roone Arledge Auditorium featuring Christmas tunes"*/))
+ }
+ }*/
