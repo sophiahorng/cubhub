@@ -6,7 +6,7 @@
 //
 import SwiftUI
 struct Event: Identifiable {
-    var id = UUID()
+    var id: String = UUID().uuidString
     var eventName: String
     var eventDate: String
     var eventAddress: String
