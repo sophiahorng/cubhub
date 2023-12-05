@@ -30,7 +30,13 @@ struct MyPageView: View {
                         .sheet(
                             isPresented: $showModal,
                             content: {
-                                setupView(user: User(id: nil, imageName: "photo", userName: "Roaree", userMajor: "Computer Science", userGradYear: "2025", userBio: "Roaree the Lion"), showModal: $showModal
+                                setupView(
+                                    userData: $userData,
+                                    showModal: $showModal,
+                                    userName: userData.name,
+                                    userMajor: userData.school,
+                                    userGradYear: userData.gradYear,
+                                    userBio: userData.bio
                                 )
                             }
                         )
@@ -84,8 +90,8 @@ struct MyPageView: View {
 
 }
 
-struct MyPageView_Previews: PreviewProvider {
-    static var previews: some View {
-        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
-    }
-}
+//struct MyPageView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu")))
+//    }
+//}
