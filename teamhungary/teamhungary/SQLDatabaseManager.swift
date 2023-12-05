@@ -178,7 +178,16 @@ class FirebaseUtilities {
         }
         return
     }
-    static func addEventToFirestore(event: Event) {
+    static func addEventToFirestore(event: Event, image: UIImage? = nil) {
+        
+        // image upload
+        let storage = Storage.storage()
+        let storageRef = storage.reference().child("\(event.id)/event.jpg")
+        if let imageData = image?.jpegData(compressionQuality: 0.5) {
+            storageRef.putData(imageData)
+            
+        }
+        
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(event.id)
         let eventInfo: [String: Any] = [

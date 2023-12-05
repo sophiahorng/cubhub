@@ -40,7 +40,7 @@ struct AddEventView: View {
                     dateFormatter.dateFormat = "MM/dd"
                     let dateString = dateFormatter.string(from: newEventDate)
                     
-                    // TODO: IMAGE UPLOAD
+                
                     let newEvent = Event(
                                            eventName: newEventName,
                                            eventDate: dateString,
@@ -51,7 +51,7 @@ struct AddEventView: View {
                                            eventOwner: userData.uid,
                                            attendees: [userData.uid]
                                        )
-                    FirebaseUtilities.addEventToFirestore(event: newEvent)
+                    FirebaseUtilities.addEventToFirestore(event: newEvent, image: selectedImage)
 
 
                     // Optionally, you can also add the new event to the local events array if needed
