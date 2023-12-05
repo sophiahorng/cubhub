@@ -36,7 +36,7 @@ struct EventsView: View {
     }
 
     private var headerSection: some View {
-        VStack {
+        VStack(spacing: 0) {
             HStack {
                 TextField("Search events...", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -119,8 +119,10 @@ struct EventsView: View {
                 )
             }
         }
-        .listStyle(PlainListStyle())
+        //.listStyle(PlainListStyle())
         .environment(\.editMode, $editMode)
+        .background(Color("ColumbiaBlue"))
+        .scrollContentBackground(.hidden)
     }
 
     private var filteredEvents: [Event] {
