@@ -46,10 +46,10 @@ struct DefaultView: View {
 }
 
 
-struct DefaultView_Previews: PreviewProvider {
-    static var previews: some View {
-        DefaultView(userData: UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu"), isLogin: true)
-    }
-}
-
+//struct DefaultView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DefaultView(userData: UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu"), isLogin: true)
+//    }
+//}
+//
 

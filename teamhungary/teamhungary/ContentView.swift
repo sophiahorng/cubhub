@@ -5,7 +5,6 @@ import GoogleSignInSwift
 import FirebaseStorage
 import FirebaseFirestore
 import FirebaseAuth
-
 enum StackViewType {
     case MyPageView
     case MyPlansView
@@ -109,18 +108,18 @@ struct ContentView: View {
         }
     }
 //    var body: some View {
-//        
+//
 //        NavigationStack(path: $navigationPath) {
 //            ZStack {
 //                let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
 //                let img = UIImage(contentsOfFile: imagePath! )
-//                
+//
 //                Image(uiImage: img! )
 //                    .resizable()
 //                    .scaledToFill()
 //                    .frame(maxWidth: .infinity, maxHeight: .infinity)
 //                    .edgesIgnoringSafeArea(.all)
-//                
+//
 //                VStack {
 //                    Spacer().frame( height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/ )
 //                    HStack{
@@ -130,7 +129,7 @@ struct ContentView: View {
 //                            .foregroundColor( Color(red: 137/255 , green: 199/255 , blue: 233/255 ) )
 //                        Spacer()
 //                    }
-//                    
+//
 //                    HStack {
 //                        Spacer()
 //                        Text(" ")
@@ -139,7 +138,7 @@ struct ContentView: View {
 //                        Spacer()
 //                    } // HStack
 //                    Spacer().frame( height: 300 )
-//                    
+//
 //                    HStack {
 //                        Spacer().frame( width: 80 )
 //                        GoogleSignInButton(action: handleSignInButton)
@@ -157,7 +156,7 @@ struct ContentView: View {
 //                            Text("&").font(.system(size: 10))
 //                            Spacer()
 //                        } // HStack
-//                        
+//
 //                        HStack{
 //                            Spacer()
 //                            Text("Privacy Policy").bold()
@@ -166,7 +165,7 @@ struct ContentView: View {
 //                        } // HStack
 //                    } // VStack
 //                } // VStack
-//                
+//
 //            } // ZStack
 //            .navigationDestination(for: UserData.self) { userData in
 //                DefaultView(userData: $userDataObservable.userData, loginState: self._loginState)
@@ -257,6 +256,38 @@ struct ContentView: View {
         rootViewController?.present(alert, animated: true, completion: nil)
     }
     
+    func fetchPic(imageURL: URL, uid: String, completion: @escaping (Data?, Error?) -> Void) {
+        URLSession.shared.dataTask(with: imageURL) { data, response, error in
+            if let error = error {
+                print("Error downloading image data: \(error.localizedDescription)")
+                return
+            }
+            guard let imageData = data, let image = UIImage(data: imageData) else {
+                print("Error: Unable to convert image data")
+                return
+            }
+            print("Image data read, uploading to Firebase...")
+            // Upload the image data to Firebase Storage
+            FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
+                guard let dURL = downloadURL else {
+                    print("Error: Unable to get download URL")
+                    return
+                }
+                print("Image uploaded to Firebase, URL: \(dURL)")
+                // Save the new profile picture URL
+                FirebaseUtilities.saveProfilePictureURL(dURL, for: uid) { url in
+                    if let img = url {
+                        DispatchQueue.main.async {
+                            let user = UserData(url: URL(string: img), uid: self.userDataObservable.userData.uid, name: self.userDataObservable.userData.name, email: self.userDataObservable.userData.email, gradYear: self.userDataObservable.userData.gradYear, bio: self.userDataObservable.userData.bio, igprof: self.userDataObservable.userData.igprof, school: self.userDataObservable.userData.school)
+                            self.userDataObservable.userData = user
+                            print("new url: \(self.userDataObservable.userData.url?.absoluteString ?? "invalid string")")
+                        }
+                    }
+                }
+            }
+        }.resume()
+    }
+    
     func handleSignInButton() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let presentingViewController = windowScene.windows.first(where: { $0.isKeyWindow })?.rootViewController else { return }
@@ -297,86 +328,26 @@ struct ContentView: View {
                         }
                         loginState.isLoggedIn = true
                     }
-                    FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email)
-                    if let imageURL = userDataObservable.userData.url {
-                        let task = URLSession.shared.dataTask(with: imageURL) { data, response, error in
-                            if let error = error {
-                                print("Error downloading image data: \(error.localizedDescription)")
-                                return
-                            }
-                            
-                            if let imageData = data {
-                                // Upload the image data to Firebase Storage
-                                if let image = UIImage(data: imageData) {
-                                    DispatchQueue.main.async {
-                                        FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
-                                            if let downloadURL = downloadURL {
-                                                FirebaseUtilities.saveProfilePictureURL(downloadURL, for: uid)
-                                                let user = UserData(url: downloadURL, uid: self.userDataObservable.userData.uid, name: self.userDataObservable.userData.name, email: self.userDataObservable.userData.email, gradYear: self.userDataObservable.userData.gradYear, bio: self.userDataObservable.userData.bio, igprof: self.userDataObservable.userData.igprof, school: self.userDataObservable.userData.school)
-                                                self.userDataObservable.userData = user
-                                            }
-                                        }
+                    
+                    FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email) { success, error in
+                        if success {
+                            print("User added")
+                            if let imageURL = userDataObservable.userData.url {
+                                print("starting dataTask URLSession")
+                                fetchPic(imageURL: imageURL, uid: uid) { data, error in
+                                    if let error = error {
+                                        print("Error fetching data: \(error)")
+                                    } else {
+                                        print("data saved")
                                     }
                                 }
-                            } else {
-                                print("Error: Unable to convert image data")
+                            } else if let error = error {
+                                print("Error adding user: \(error.localizedDescription)")
                             }
                         }
-                        
-                        task.resume()
                     }
                 }
             }
         }
     }
 }
-//            let email = profile.email
-//            guard email.hasSuffix("@columbia.edu") else {
-//                // Return an error or handle the invalid email scenario
-//                showErrorMessage(message: "Error: Not a Columbia domain address")
-//                return
-//            }
-//            // Use optional binding to safely unwrap the URL
-//            let uni = email.components(separatedBy: "@").first
-//            if let uni = uni, uni.isEmpty {
-//                showErrorMessage(message: "Error: invalid UNI address")
-//                return
-//            }
-//                    if self.isLogin == true {
-//                        List {
-//                            Button {
-//                                self.isShownMyPageView.toggle()
-//                            } label: {
-//                                Text("Show My Page View")
-//                            }
-//                            .sheet(isPresented: $isShownMyPageView) {
-//                                MyPageView(userData: $userData, isLogin: $isLogin)
-//                            }
-//                            Button {
-//                                self.isShownMapView.toggle()
-//                            } label: {
-//                                Text("Show MapView")
-//                            }
-//                            .sheet(isPresented: $isShownMapView) {
-//                                MapView()
-//                            }
-//                            Button {
-//                                self.isShownEventView.toggle()
-//                            } label: {
-//                                Text("Show Event View")
-//                            }
-//                            .sheet(isPresented: $isShownEventView) {
-//                                EventsView()
-//                            }
-//                            Button {
-//                                self.isShownEventView.toggle()
-//                            } label: {
-//                                Text("Show Events View")
-//                            }
-//                            .sheet(isPresented: $isShownEventView) {
-////                                EventView()
-//                            }
-//                        }
-//                        .background(.clear)
-//                        .scrollContentBackground(.hidden)
-//                    } else {

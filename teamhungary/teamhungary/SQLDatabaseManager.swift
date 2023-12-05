@@ -9,9 +9,10 @@ import FirebaseFirestore
 import FirebaseStorage
 class FirebaseUtilities {
     static func uploadProfilePicture(imageData: UIImage, userID: String, completion: @escaping (URL?) -> Void) {
+        print("uploading profile picture")
         let storage = Storage.storage()
         // Adjust the path to create a user-specific folder
-        let storageRef = storage.reference().child("profilePictures/\(userID).jpg")
+        let storageRef = storage.reference().child("\(userID)/profilePicture.jpg")
         // Upload image data to Firebase Storage
         if let image = imageData.jpegData(compressionQuality: 0.5) {
             storageRef.putData(image, metadata: nil) { (metadata, error) in
@@ -19,56 +20,62 @@ class FirebaseUtilities {
                     print("data writing error")
                     return
                 }
+                print("data written successfully")
             }
             // Metadata contains file metadata such as size, content-type.
             //          let _size = metadata.size
             // You can also access to download URL after upload.
             storageRef.downloadURL { (url, error) in
                 guard url != nil else {
-                    print("downloadURL error")
+                    print("downloadURL error: \(String(describing: error))")
                     completion(nil)
                     return
                 }
+                print("downloadURL returned successfully")
                 completion(url)
             }
         }
+        return
     }
-//        storageRef.putData(imageData, metadata: nil) { metadata, error in
-//            if let error = error {
-//                print("Error uploading image to Firebase Storage: \(error.localizedDescription)")
-//                completion(nil)
-//                return
-//            }
-//
-//            // Get the download URL
-//            storageRef.downloadURL { url, error in
-//                if let downloadURL = url {
-//                    print("Image uploaded successfully. Download URL: \(downloadURL)")
-//                    completion(downloadURL.absoluteString)
-//                } else {
-//                    print("Error getting download URL: \(error?.localizedDescription ?? "")")
-//                    completion(nil)
-//                }
-//            }
-//        }
-//    }
+    //        storageRef.putData(imageData, metadata: nil) { metadata, error in
+    //            if let error = error {
+    //                print("Error uploading image to Firebase Storage: \(error.localizedDescription)")
+    //                completion(nil)
+    //                return
+    //            }
+    //
+    //            // Get the download URL
+    //            storageRef.downloadURL { url, error in
+    //                if let downloadURL = url {
+    //                    print("Image uploaded successfully. Download URL: \(downloadURL)")
+    //                    completion(downloadURL.absoluteString)
+    //                } else {
+    //                    print("Error getting download URL: \(error?.localizedDescription ?? "")")
+    //                    completion(nil)
+    //                }
+    //            }
+    //        }
+    //    }
     
-    static func saveProfilePictureURL(_ url: URL, for userID: String) {
+    static func saveProfilePictureURL(_ url: URL, for userID: String, completion: @escaping (String?) -> Void) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userID)
         userRef.updateData(["profilePictureURL": url.absoluteString]) { error in
             if let error = error {
                 print("Error updating document: \(error.localizedDescription)")
+                completion(nil)
             } else {
                 print("Profile picture URL updated successfully!")
+                completion(url.absoluteString)
             }
         }
+        return
     }
     
     static func retrieveProfilePicture(for userID: String, completion: @escaping (UIImage?) -> Void) {
         let storage = Storage.storage()
         // Adjust the path to create a user-specific folder
-        let storageRef = storage.reference().child("profilePictures/\(userID).jpg")
+        let storageRef = storage.reference().child("/\(userID)/profilePicture.jpg")
         
         // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
         storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
@@ -81,20 +88,21 @@ class FirebaseUtilities {
                 completion(image)
             }
         }
+        return
     }
-//        let userRef = db.collection("users").document(userID)
-//        
-//        userRef.getDocument { document, error in
-//            if let document = document, document.exists {
-//                let profilePictureURL = document.get("profilePictureURL") as? String
-//                completion(profilePictureURL)
-//            } else {
-//                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
-//                completion(nil)
-//            }
-//        }
-//    }
-    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", bio: String = "", igProfile: String = "",  profilePic: String = "") {
+    //        let userRef = db.collection("users").document(userID)
+    //
+    //        userRef.getDocument { document, error in
+    //            if let document = document, document.exists {
+    //                let profilePictureURL = document.get("profilePictureURL") as? String
+    //                completion(profilePictureURL)
+    //            } else {
+    //                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+    //                completion(nil)
+    //            }
+    //        }
+    //    }
+    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", bio: String = "", igProfile: String = "",  profilePic: String = "", completion: @escaping (Bool, Error?) -> Void) {
         if email.suffix(13) != "@columbia.edu" {
             print("User is not in Columbia domain")
             return
@@ -118,22 +126,23 @@ class FirebaseUtilities {
                 userRef.setData(userInfo) { error in
                     if let error = error {
                         print("Error adding user to Firestore: \(error.localizedDescription)")
+                        completion(false, error)
                     } else {
                         print("User added to Firestore successfully!")
+                        completion(true, nil)
                     }
                 }
             }
         }
-//        userInfo["displayName"] = name
-    
+        return
+        //        userInfo["displayName"] = name
+        
     }
     static func updateUserInFirestore(uid: String, name: String? = nil, email: String? = nil, graduationYear: String? = nil, school: String? = nil, bio: String? = nil, igProfile: String? = nil, profilePic: String? = nil) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(uid)
-
         // Prepare the data to update
         var updateData: [String: Any] = [:]
-
         if let name = name {
             updateData["name"] = name
         }
@@ -155,7 +164,6 @@ class FirebaseUtilities {
         if let profilePic = profilePic {
             updateData["profile_pic"] = profilePic
         }
-
         // Proceed with the update if there's any data to update
         if !updateData.isEmpty {
             userRef.updateData(updateData) { error in
@@ -168,6 +176,7 @@ class FirebaseUtilities {
         } else {
             print("No data provided for update")
         }
+        return
     }
     static func addEventToFirestore(event: Event) {
         let db = Firestore.firestore()
@@ -193,13 +202,12 @@ class FirebaseUtilities {
                 }
             }
         }
+        return
     }
     static func updateEventInFirestore(eventID: String, updatedEventName: String? = nil, updatedEventDate: String? = nil, updatedEventAddress: String? = nil, updatedEventLocation: String? = nil, updatedEventLat: Double? = nil, updatedEventLon: Double? = nil, updatedEventOwner: String? = nil) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
-
         var updateData: [String: Any] = [:]
-
         if let updatedEventName = updatedEventName {
             updateData["name"] = updatedEventName
         }
@@ -221,7 +229,6 @@ class FirebaseUtilities {
         if let updatedEventOwner = updatedEventOwner {
             updateData["ownerID"] = updatedEventOwner
         }
-
         if !updateData.isEmpty {
             eventRef.updateData(updateData) { error in
                 if let error = error {
@@ -233,8 +240,8 @@ class FirebaseUtilities {
         } else {
             print("No data provided for update")
         }
+        return
     }
-
     static func retrieveUserFromFirestore(userID: String, completion: @escaping (UserData?) -> Void) {
         let db = Firestore.firestore()
         
@@ -259,6 +266,7 @@ class FirebaseUtilities {
                 completion(nil)
             }
         }
+        return
     }
     static func retrieveAttendeesFromEvent(eventID: String) -> [String]{
         let db = Firestore.firestore()
@@ -294,7 +302,7 @@ class FirebaseUtilities {
                     let lon = data["school"] as? Double ?? 0
                     let ownerID = data["ownerID"] as? String ?? ""
                     let attendees = retrieveAttendeesFromEvent(eventID: eventID)
-                                
+                    
                     let event = Event(id: eventID, eventName: name, eventDate: date_time, eventAddress: address, eventLocation: location_name, eventLon: lon, eventLat: lat, eventOwner: ownerID, attendees: attendees)
                     completion(event)
                 } else {
@@ -305,6 +313,7 @@ class FirebaseUtilities {
                 completion(nil)
             }
         }
+        return
     }
     
     static func addAttendeeToEvent(eventID: String, userID: String) {
@@ -312,11 +321,9 @@ class FirebaseUtilities {
             print("Invalid userID")
             return
         }
-
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
         let userRef = db.collection("users").document(userID)
-
         userRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 // Check if user is already an attendee
@@ -345,28 +352,28 @@ class FirebaseUtilities {
                 print("User document with userID \(userID) does not exist in the users collection")
             }
         }
+        return
     }
-
-//            }
-//        let attendeeRef = attendeesCollectionRef.document(userID)
-//        attendeeRef.getDocument { (document, error) in
-//            if let document = document, document.exists {
-//                print("User is already an attendee")
-//                return
-//            }
-//        }
-//        let attendeeData: [String: Any] = [
-//            "userRef": userRef
-//        ]
-//
-//        attendeesCollectionRef.addDocument(data: attendeeData) { error in
-//            if let error = error {
-//                print("Error adding attendee to event subcollection: \(error.localizedDescription)")
-//            } else {
-//                print("Attendee added to event subcollection successfully!")
-//            }
-//        }
-//    }
+    //            }
+    //        let attendeeRef = attendeesCollectionRef.document(userID)
+    //        attendeeRef.getDocument { (document, error) in
+    //            if let document = document, document.exists {
+    //                print("User is already an attendee")
+    //                return
+    //            }
+    //        }
+    //        let attendeeData: [String: Any] = [
+    //            "userRef": userRef
+    //        ]
+    //
+    //        attendeesCollectionRef.addDocument(data: attendeeData) { error in
+    //            if let error = error {
+    //                print("Error adding attendee to event subcollection: \(error.localizedDescription)")
+    //            } else {
+    //                print("Attendee added to event subcollection successfully!")
+    //            }
+    //        }
+    //    }
     static func deleteEventFromFirestore(userID: String, eventID: String) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
@@ -388,13 +395,14 @@ class FirebaseUtilities {
                 print("Event deleted from Firestore successfully!")
             }
         }
+        return
     }
     
     static func deleteAttendeeFromEvent(eventID: String, attendeeID: String) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
         let userRef = db.collection("users").document(attendeeID)
-            
+        
         // Remove the attendee reference from the array
         eventRef.updateData([
             "attendees": FieldValue.arrayRemove([userRef])
@@ -405,87 +413,6 @@ class FirebaseUtilities {
                 print("Attendee removed from event successfully!")
             }
         }
+        return
     }
-    
-//    static func updateAttendeesInEvent(eventID: String, attendees: [String]) {
-//        let db = Firestore.firestore()
-//        let eventRef = db.collection("events").document(eventID)
-//        let attendeesCollectionRef = eventRef.collection("attendees")
-//
-//        // Clear existing attendees
-//        attendeesCollectionRef.getDocuments { snapshot, error in
-//            if let error = error {
-//                print("Error getting existing attendees: \(error.localizedDescription)")
-//            } else {
-//                for document in snapshot?.documents ?? [] {
-//                    document.reference.delete()
-//                }
-//                    // Add updated attendees
-//                for attendeeID in attendees {
-//                    addAttendeeToEvent(eventID: eventID, userID: attendeeID)
-//                }
-//            }
-//        }
-//    }
-//    static func deleteAttendeesFromEvent(eventID: String) {
-//        let db = Firestore.firestore()
-//        let eventRef = db.collection("events").document(eventID)
-//        let attendeesCollectionRef = eventRef.collection("attendees")
-//            // Delete all documents in the attendees subcollection
-//        attendeesCollectionRef.getDocuments { snapshot, error in
-//            if let error = error {
-//                print("Error getting attendees for deletion: \(error.localizedDescription)")
-//            } else {
-//                for document in snapshot?.documents ?? [] {
-//                    document.reference.delete()
-//                }
-//            }
-//        }
-//    }
 }
-//import SQLite
-//
-//class DatabaseManager {
-//    static let shared = DatabaseManager()
-//
-//    private var db: Connection?
-//
-//    private init() {
-//        do {
-//            // Initialize the SQLite database connection
-//            let path = try FileManager.default
-//                .url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-//                .appendingPathComponent("your_database.sqlite3")
-//                .path
-//
-//            db = try Connection(path)
-//
-//                // Call methods to create tables or perform any other setup
-//            try createTables()
-//        } catch {
-//            print("Error initializing database: \(error)")
-//        }
-//    }
-//
-//    private func createTables() throws {
-//        // Implement table creation logic here
-//        let users = Table("users")
-//        let id = Expression<Int>("id")
-//        let name = Expression<String>("name")
-//        let email = Expression<String>("email")
-//        let gradyear = Expression<String>("graduation_year")
-//        let school = Expression<String>("school")
-//        let iguser = Expression<String>("instagram_username")
-//        let pfPicPath = Expression<String?>("profile_picture_path")
-//
-//        try db?.run(users.create { table in
-//            table.column(id, primaryKey: .autoincrement)
-//            table.column(name)
-//            table.column(email, unique: true)
-//            table.column(gradyear, check: gradyear.like("20[2-9][0-9]"))
-//            table.column(school)
-//            table.column(iguser)
-//            table.column(pfPicPath)
-//        })
-//    }
-//}

@@ -151,8 +151,8 @@ struct EventsView: View {
     }
 }
 
-struct EventsView_Previews: PreviewProvider {
-    static var previews: some View {
-        EventsView(userData: UserData(url: nil, uid: "u", name: "test", email: "test"))
-    }
-}
+//struct EventsView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        EventsView(userData: UserData(url: nil, uid: "u", name: "test", email: "test"))
+//    }
+//}
