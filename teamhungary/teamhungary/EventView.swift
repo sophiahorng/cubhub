@@ -93,36 +93,53 @@ struct EventView: View {
                 }
                 .background(Color("ColumbiaBlue"))
                 .scrollContentBackground(.hidden)
-                List {
-                    Section(header: Text("Attendees")) {
-                        VStack {
-                            ForEach(users) { user in
-                                HStack {
-                                    Image(systemName: user.photo)
-                                        .resizable()
-                                        .aspectRatio(contentMode: .fit)
-                                        .frame(width: 40, height: 40)
-                                        .clipShape(Circle())
-                                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                        .padding(8)
-                                    Text(user.name)
+                VStack{
+                    List {
+                        Section(header: Text("Attendees")) {
+                            VStack {
+                                ForEach(users) { user in
+                                    HStack {
+                                        Image(systemName: user.photo)
+                                            .resizable()
+                                            .aspectRatio(contentMode: .fit)
+                                            .frame(width: 40, height: 40)
+                                            .clipShape(Circle())
+                                            .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                                            .padding(8)
+                                        Text(user.name)
+                                    }
                                 }
                             }
+                            
                         }
-                        
                     }
+                    .scrollContentBackground(.hidden)
+                    
+                    NavigationLink(destination: attendeesView(event: event)) {
+                        Text("See All Attendees")
+                            .foregroundColor(.white)
+                    }
+                    .buttonStyle(GrowingButton())
+                    .padding(5)
                 }
                 .background(Color("ColumbiaBlue"))
-                .scrollContentBackground(.hidden)
-                
-                NavigationLink(destination: attendeesView(event: event)) {
-                    Text("See All Attendees")
-                        .foregroundColor(.blue)
-                }
             }
+                
             .navigationBarHidden(true)
     }
     
+}
+
+struct GrowingButton: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding()
+            .background(.blue)
+            .foregroundStyle(.white)
+            .clipShape(Capsule())
+            .scaleEffect(configuration.isPressed ? 1.2 : 1)
+            .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
+    }
 }
 /*struct EventView_Previews: PreviewProvider {
  static var previews: some View {
