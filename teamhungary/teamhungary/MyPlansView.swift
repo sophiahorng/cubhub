@@ -56,6 +56,8 @@ struct MyPlansView: View {
                     }
                     
                 }
+                .scrollContentBackground(.hidden)
+                .background(Color("ColumbiaBlue"))
                 .refreshable {
                     fetchUserEvents()
                 }
@@ -69,7 +71,6 @@ struct MyPlansView: View {
                 
             }//NavigationView
             
-            .background(Color("ColumbiaBlue"))
         }//VStack
     }
     func fetchUserEvents() {
