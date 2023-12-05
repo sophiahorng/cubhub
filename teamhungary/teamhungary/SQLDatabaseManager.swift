@@ -383,27 +383,35 @@ class FirebaseUtilities {
     //            }
     //        }
     //    }
-    static func deleteEventFromFirestore(userID: String, eventID: String) {
+    static func deleteEventFromFirestore(userID: String, eventID: String, completion: @escaping (Bool?) -> Void) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
+        var isDeleted = false
         eventRef.getDocument { (document, error) in
             if let document = document {
                 let data = document.data()
                 let ownerID = data?["ownerID"] as? String ?? ""
                 if ownerID != userID {
                     print("User is not the owner")
+                    completion(isDeleted)
                     return
+                } else {
+                    eventRef.delete { error in
+                        if let error = error {
+                            completion(isDeleted)
+                            print("Error deleting event from Firestore: \(error.localizedDescription)")
+                            return
+                        } else {
+                            isDeleted = true
+                            completion(isDeleted)
+                            print("Event deleted from Firestore successfully!")
+                        }
+                    }
                 }
+                
             }
         }
-        
-        eventRef.delete { error in
-            if let error = error {
-                print("Error deleting event from Firestore: \(error.localizedDescription)")
-            } else {
-                print("Event deleted from Firestore successfully!")
-            }
-        }
+    
         return
     }
     
