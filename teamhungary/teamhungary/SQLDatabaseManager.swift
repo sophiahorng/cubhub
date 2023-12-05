@@ -92,7 +92,7 @@ class FirebaseUtilities {
 //            }
 //        }
 //    }
-    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", igProfile: String = "",  profilePic: String = "") {
+    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", bio: String = "", igProfile: String = "",  profilePic: String = "") {
         if email.suffix(13) != "@columbia.edu" {
             print("User is not in Columbia domain")
             return
@@ -104,6 +104,7 @@ class FirebaseUtilities {
             "email": email,
             "graduation_year": graduationYear,
             "school": school,
+            "bio": bio,
             "ig_profile": igProfile,
             "profile_pic": profilePic
         ]
@@ -124,7 +125,7 @@ class FirebaseUtilities {
 //        userInfo["displayName"] = name
     
     }
-    static func updateUserInFirestore(uid: String, name: String? = nil, email: String? = nil, graduationYear: String? = nil, school: String? = nil, igProfile: String? = nil, profilePic: String? = nil) {
+    static func updateUserInFirestore(uid: String, name: String? = nil, email: String? = nil, graduationYear: String? = nil, school: String? = nil, bio: String? = nil, igProfile: String? = nil, profilePic: String? = nil) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(uid)
 
@@ -139,6 +140,9 @@ class FirebaseUtilities {
         }
         if let graduationYear = graduationYear {
             updateData["graduation_year"] = graduationYear
+        }
+        if let bio = bio {
+            updateData["bio"] = bio
         }
         if let school = school {
             updateData["school"] = school
@@ -237,13 +241,14 @@ class FirebaseUtilities {
             if let document = document, document.exists {
                 let data = document.data()
                 if let data = data {
-                    let name = data["name"]
-                    let email = data["email"]
-                    let gradYear = data["graduation_year"]
-                    let igprof = data["ig_profile"]
-                    let pfp = data["profile_pic"]
-                    let school = data["school"]
-                    let user = UserData(url: pfp as? URL, uid: userID, name: name as! String, email: email as! String, gradYear: gradYear as! String, igprof: igprof as! String, school: school as! String)
+                    let name = data["name"] as? String ?? ""
+                    let email = data["email"] as? String ?? ""
+                    let gradYear = data["graduation_year"] as? String ?? ""
+                    let igprof = data["ig_profile"] as? String ?? ""
+                    let bio = data["bio"] as? String ?? ""
+                    let pfp = data["profile_pic"] as? URL ?? nil
+                    let school = data["school"] as? String ?? ""
+                    let user = UserData(url: pfp, uid: userID, name: name, email: email, gradYear: gradYear, bio: bio, igprof: igprof, school: school)
                     completion(user)
                 } else {
                     completion(nil)

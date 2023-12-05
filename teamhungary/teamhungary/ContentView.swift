@@ -231,7 +231,7 @@ struct ContentView: View {
                     if let user = user {
                         self.userDataObservable.userData = user
                     } else {
-                        self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                        self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "")
                     }
                 }
 //                self.isLoggedIn = true
@@ -292,7 +292,7 @@ struct ContentView: View {
                             if let user = user {
                                 self.userDataObservable.userData = user
                             } else {
-                                self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
+                                self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "")
                             }
                         }
                         loginState.isLoggedIn = true
