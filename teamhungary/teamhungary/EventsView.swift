@@ -24,7 +24,7 @@ struct EventsView: View {
         Event(eventName: "Art Walk", eventDate: "12/23", eventAddress: "411 W 116th St, New York, NY 10027", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventOwner: "", attendees: []/*, eventDescription: "Take a walk through Central Park to see  art pieces"*/)
     ]
     @State private var isAddEventViewPresented = false
-    @ObservedObject var userDataObservable: UserDataObservable
+    @Binding var userData: UserData
     @State private var editMode: EditMode = .inactive
     var body: some View {
 //            TabView {
@@ -42,7 +42,7 @@ struct EventsView: View {
                                 .padding()
                         }
                         .sheet(isPresented: $isAddEventViewPresented) {
-                            AddEventView(events: $events, userDataObservable: userDataObservable, doneAction: {
+                            AddEventView(events: $events, userData: $userData, doneAction: {
                                     isAddEventViewPresented.toggle()
                                 })
                         }

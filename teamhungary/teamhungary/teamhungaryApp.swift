@@ -34,12 +34,14 @@ struct YourApp: App {
     // register app delegate for Firebase setup
     @UIApplicationDelegateAdaptor(teamhungaryApp.self) var delegate
     
+    var loginState = LoginState()
     var body: some Scene {
         WindowGroup {
             ContentView()
                 .onOpenURL { url in
                     GIDSignIn.sharedInstance.handle(url)
                 }
+                .environmentObject(loginState)
             
         }
     }

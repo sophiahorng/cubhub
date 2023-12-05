@@ -19,7 +19,7 @@ struct AddEventView: View {
     @State private var newEventLon = 0.0
     @State private var newEventLat = 0.0
     @State private var newEventDescription = ""
-    @ObservedObject var userDataObservable: UserDataObservable
+    @Binding var userData: UserData
     @State private var isSearchAddressViewActive = false
     @State private var isImagePickerPresented: Bool = false
     
@@ -48,8 +48,8 @@ struct AddEventView: View {
                                            eventLocation: "",
                                            eventLon: newEventLon,
                                            eventLat: newEventLat,
-                                           eventOwner: userDataObservable.userData.uid,
-                                           attendees: [userDataObservable.userData.uid]
+                                           eventOwner: userData.uid,
+                                           attendees: [userData.uid]
                                        )
                     FirebaseUtilities.addEventToFirestore(event: newEvent)
 

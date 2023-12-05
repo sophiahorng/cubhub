@@ -9,31 +9,29 @@ import Foundation
 import SwiftUI
 
 struct DefaultView: View {
-    @ObservedObject var userDataObservable: UserDataObservable
-    @State var isLogin: Bool
+    @Binding var userData: UserData
+    @EnvironmentObject var loginState: LoginState
     var body: some View {
         TabView {
             // EventsView
             NavigationView {
-                EventsView(userDataObservable: userDataObservable)
+                EventsView(userData: $userData)
             }
             .tabItem {
                 Label("Events", systemImage: "list.bullet")
             }
             
             
-            // MyEventsView
             NavigationView {
-                MyPlansView(userDataObservable: userDataObservable)
+                MyPlansView(userData: $userData)
             }
             .tabItem {
                 Label("My Plans", systemImage: "star")
             }
             
             
-            // MyPageView
             NavigationView {
-                MyPageView(userDataObservable: userDataObservable, isLogin: $isLogin)
+                MyPageView(userData: $userData, loginState: _loginState)
             }
             .tabItem {
                 Label("Profile", systemImage: "person")

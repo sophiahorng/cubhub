@@ -15,7 +15,7 @@ struct MyPlansView: View {
 //        Event(imageName: "photo", eventName: "Broadway Show Preview", eventDate: "11/20", eventSubtitle: "#broadway #musical #opera", eventLocation: "Theatre", eventLon: -73.9855, eventLat: 40.7580, eventDescription: "Preview of Broadway show Phantom of the Opera"),
 //        Event(imageName: "photo", eventName: "Art Walk", eventDate: "12/23", eventSubtitle: "#art #nature #park", eventLocation: "Central Park", eventLon: -73.935242, eventLat: 40.730610, eventDescription: "Take a walk through Central Park to see  art pieces")
     ]
-    @ObservedObject var userDataObservable: UserDataObservable
+    @Binding var userData: UserData
     @State private var editMode: EditMode = .inactive
     var body: some View {
         VStack {
@@ -70,7 +70,7 @@ struct MyPlansView: View {
     }
     func fetchUserEvents() {
         let db = Firestore.firestore()
-        let userId = userDataObservable.userData.uid
+        let userId = userData.uid
         guard !userId.isEmpty else {
                 print("Invalid userID")
                 return

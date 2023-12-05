@@ -13,12 +13,13 @@ enum StackViewType {
     case EventView
     case EventsView
 }
-
+class LoginState: ObservableObject {
+    @Published var isLoggedIn: Bool = false
+}
 struct ContentView: View {
     @ObservedObject var userDataObservable = UserDataObservable()
 //    @State private var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", igprof: "", school: "")
     @State private var isAlert = false
-    @State private var isLogin = false
     @State private var navigationPath = NavigationPath()
     
     
@@ -26,12 +27,14 @@ struct ContentView: View {
     @State private var isShownMapView = false
     @State private var isShownEventView = false
     @State private var isShownEventsView = false
-    @State private var isLoggedIn = false
-    
+    @State private var isLogin = false
+    @EnvironmentObject var loginState: LoginState
     
     var body: some View {
-        
-        NavigationStack(path: $navigationPath) {
+        if loginState.isLoggedIn {
+            DefaultView(userData: $userDataObservable.userData, loginState: self._loginState)
+                .navigationBarBackButtonHidden(true)
+        } else {
             ZStack {
                 let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
                 let img = UIImage(contentsOfFile: imagePath! )
@@ -89,42 +92,120 @@ struct ContentView: View {
                 } // VStack
                 
             } // ZStack
-            .navigationDestination(for: UserData.self) { userData in
-                DefaultView(userDataObservable: userDataObservable, isLogin: isLogin)
-                    .navigationBarBackButtonHidden(true)
+            
+            .alert(LocalizedStringKey("Login Failed"), isPresented: $isAlert) {
+                Button("OK", role: .cancel) { print("tap ok") }
+            } message: {
+                Text("Try Again")
             }
-        } // NavigationStack
-        .onAppear {
-            self.checkState()
-        }
-        .onChange(of: isLogin) { newValue in
-            if newValue {
-                navigationPath.append(userDataObservable.userData)
+            .onAppear {
+                self.checkState()
             }
-        }
-        .alert(LocalizedStringKey("Login Failed"), isPresented: $isAlert) {
-            Button("OK", role: .cancel) { print("tap ok") }
-        } message: {
-            Text("Try Again")
+            .onChange(of: loginState.isLoggedIn) { newValue in
+                if newValue {
+                    navigationPath.append(userDataObservable.userData)
+                }
+            }
         }
     }
-    @ViewBuilder
-    func chooseDestination(userData: UserData) -> some View {
-        if self.isLogin {
-            DefaultView(userDataObservable: userDataObservable, isLogin: self.isLogin)
-                .navigationBarBackButtonHidden(true)
-        } else {
-            EmptyView()
-        }
-    }
+//    var body: some View {
+//        
+//        NavigationStack(path: $navigationPath) {
+//            ZStack {
+//                let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
+//                let img = UIImage(contentsOfFile: imagePath! )
+//                
+//                Image(uiImage: img! )
+//                    .resizable()
+//                    .scaledToFill()
+//                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .edgesIgnoringSafeArea(.all)
+//                
+//                VStack {
+//                    Spacer().frame( height: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/ )
+//                    HStack{
+//                        Spacer()
+//                        Text(" ")
+//                            .font(.system(size: 24))
+//                            .foregroundColor( Color(red: 137/255 , green: 199/255 , blue: 233/255 ) )
+//                        Spacer()
+//                    }
+//                    
+//                    HStack {
+//                        Spacer()
+//                        Text(" ")
+//                            .font(.system(size: 24))
+//                            .foregroundColor( Color(red: 137/255 , green: 199/255 , blue: 233/255 ) )
+//                        Spacer()
+//                    } // HStack
+//                    Spacer().frame( height: 300 )
+//                    
+//                    HStack {
+//                        Spacer().frame( width: 80 )
+//                        GoogleSignInButton(action: handleSignInButton)
+//                        Spacer().frame( width: 80 )
+//                    } // HStack
+//                    //                    }
+//                    Spacer().frame( height: 200 )
+//                    VStack{
+//                        HStack{
+//                            Spacer()
+//                            Text("By signing up, you agree to the ")
+//                                .font(.system(size: 10))
+//                            Text("User Agrement").bold()
+//                                .font(.system(size: 12))
+//                            Text("&").font(.system(size: 10))
+//                            Spacer()
+//                        } // HStack
+//                        
+//                        HStack{
+//                            Spacer()
+//                            Text("Privacy Policy").bold()
+//                                .font(.system(size: 12))
+//                            Spacer()
+//                        } // HStack
+//                    } // VStack
+//                } // VStack
+//                
+//            } // ZStack
+//            .navigationDestination(for: UserData.self) { userData in
+//                DefaultView(userData: $userDataObservable.userData, loginState: self._loginState)
+//                    .navigationBarBackButtonHidden(true)
+//            }
+//        } // NavigationStack
+//        .onAppear {
+//            self.checkState()
+//        }
+//        .onChange(of: loginState.isLoggedIn) { newValue in
+//            if newValue {
+//                navigationPath.append(userDataObservable.userData)
+//            }
+//        }
+//
+//        .alert(LocalizedStringKey("Login Failed"), isPresented: $isAlert) {
+//            Button("OK", role: .cancel) { print("tap ok") }
+//        } message: {
+//            Text("Try Again")
+//        }
+//    }
+//    @ViewBuilder
+//    func chooseDestination(userData: UserData) -> some View {
+//        if self.loginState.isLoggedIn {
+//            DefaultView(userDataObservable: $userDataObservable.userData, isLogin: self.$loginState.isLoggedIn)
+//                .navigationBarBackButtonHidden(true)
+//        } else {
+//            EmptyView()
+//        }
+//    }
     func checkState() {
         GIDSignIn.sharedInstance.restorePreviousSignIn { user, error in
             guard error != nil || user == nil else {
                 print("Not Sign In")
-                self.isLogin = false
+                loginState.isLoggedIn = false
                 return
             }
             
+            print("User data updated: \(userDataObservable.userData)")
             guard let profile = user?.profile else {
                 return
             }
@@ -153,8 +234,8 @@ struct ContentView: View {
                         self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
                     }
                 }
-                self.isLoggedIn = true
-                self.isLogin = true
+//                self.isLoggedIn = true
+                loginState.isLoggedIn = true
             }
         }
     }
@@ -214,7 +295,7 @@ struct ContentView: View {
                                 self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", igprof: "", school: "")
                             }
                         }
-                        self.isLogin = true
+                        loginState.isLoggedIn = true
                     }
                     FirebaseUtilities.addUsertoFirestore(uid: uid, name: profile.name, email: profile.email)
                     if let imageURL = userDataObservable.userData.url {

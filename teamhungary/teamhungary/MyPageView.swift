@@ -4,8 +4,8 @@ import GoogleSignIn
 struct MyPageView: View {
     
     @Environment(\.dismiss) private var dismiss
-    @ObservedObject var userDataObservable: UserDataObservable
-    @Binding var isLogin: Bool
+    @Binding var userData: UserData
+    @EnvironmentObject var loginState: LoginState
     @State private var showMapView = false
     
     var body: some View {
@@ -31,17 +31,18 @@ struct MyPageView: View {
                     }
                     
                     
-                    AsyncImage(url: userDataObservable.userData.url)
+                    AsyncImage(url: userData.url)
                         .imageScale(.small)
                         .frame(width: 180, height: 180, alignment: .center)
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    Text(userDataObservable.userData.name)
-                    Text(userDataObservable.userData.email)
+                    Text(userData.name)
+                    Text(userData.email)
                     Spacer()
                     HStack {
                         Spacer()
                         Button {
                             logout()
+                            
                         } label: {
                             Text("logout")
                                 .bold()
@@ -59,11 +60,17 @@ struct MyPageView: View {
             }
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
+        .onReceive(loginState.$isLoggedIn) { newValue in
+                // Handle login state changes here
+                if !newValue {
+                    print("logout triggered")
+                }
+            }
     }
     
     private func logout() {
         GIDSignIn.sharedInstance.signOut()
-        isLogin = false
+        loginState.isLoggedIn = false
         dismiss()
     }
 
