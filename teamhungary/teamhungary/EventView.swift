@@ -116,21 +116,6 @@ struct EventView: View {
                 }
             }
             .navigationBarHidden(true)
-            .tabItem {
-                Image(systemName: "list.bullet")
-                Text("Events")
-            }
-            Text("My Plans")
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("My Plans")
-                }
-            Text("Account")
-                .tabItem {
-                    Image(systemName: "person")
-                    Text("Account")
-                }
-//        }
     }
     
 }
