@@ -7,27 +7,39 @@ struct MyPageView: View {
     @Binding var userData: UserData
     @EnvironmentObject var loginState: LoginState
     @State private var showMapView = false
+    @State var showModal: Bool = false
     
     var body: some View {
         let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
         let img = UIImage(contentsOfFile: imagePath! )
+        
         NavigationStack {
             ZStack {
-                Image(uiImage: img! )
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                
                 VStack (spacing: 30) {
                     HStack {
                         Spacer()
                         Button(action: {
-                            
+                            showModal = true
                         }) {
-                            Text("Edit Profile").padding(40).foregroundStyle(.red)
+                            Text("Edit Profile \(Image(systemName: "square.and.pencil"))")
+                                .padding([.top,.vertical], 5)
+                                .foregroundStyle(.gray)
                         }
+                        .buttonStyle(.bordered)
                         .frame(alignment: .trailing)
+                        .sheet(
+                            isPresented: $showModal,
+                            content: {
+                                setupView(
+                                    userData: $userData,
+                                    showModal: $showModal,
+                                    userName: userData.name,
+                                    userMajor: userData.school,
+                                    userGradYear: userData.gradYear,
+                                    userBio: userData.bio
+                                )
+                            }
+                        )
                     }
                     
                     
@@ -37,6 +49,7 @@ struct MyPageView: View {
                         .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     Text(userData.name)
                     Text(userData.email)
+                    Spacer()
                     Spacer()
                     HStack {
                         Spacer()
@@ -49,7 +62,7 @@ struct MyPageView: View {
                                 .font(Font.custom("Helvetica Neue", size: 24.0))
                                 .padding(20)
                                 .foregroundColor(Color.white)
-                                .background(Color.purple)
+                                .background(Color("ButtonColor"))
                                 .cornerRadius(12)
                         }
                         Spacer()
@@ -58,6 +71,7 @@ struct MyPageView: View {
                     Spacer(minLength: 100)
                 }
             }
+            .background(Color("ColumbiaBlue"))
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .onReceive(loginState.$isLoggedIn) { newValue in
@@ -78,6 +92,6 @@ struct MyPageView: View {
 
 //struct MyPageView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MyPageView(userData: .constant(UserData(url: nil, name: "jasmine xin", email: "yx2810@columbia.edu")), isLogin: .constant(true))
+//        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu")))
 //    }
 //}
