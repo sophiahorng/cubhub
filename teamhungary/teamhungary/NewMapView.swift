@@ -7,6 +7,7 @@
 
 import SwiftUI
 import MapKit
+import Combine
 
 struct newMapData: Identifiable {
     let id = UUID()
@@ -17,8 +18,10 @@ struct newMapData: Identifiable {
 struct NewMapView: View {
     
     private var annotations: [newMapData] = []
-    @State private var isDetailViewActive = false
+//    @State private var isDetailViewActive = false
     @State private var isShowing = false
+    @State private var userLocation: CLLocationCoordinate2D?
+    @StateObject private var viewModel = MapViewModel()
     
     init(events: [Event]) {
         events.forEach { event in
@@ -29,15 +32,10 @@ struct NewMapView: View {
         }
     }
     
-    @State private var region = MKCoordinateRegion(
-        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
-        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
-    )
-    
     var body: some View {
 //        NavigationStack {
             ZStack {
-                Map(coordinateRegion: $region, showsUserLocation: true, annotationItems: annotations) { data in
+                Map(coordinateRegion: $viewModel.region, showsUserLocation: true, annotationItems: annotations) { data in
                     MapAnnotation(coordinate: data.coordinate, anchorPoint: CGPoint(x: 0.5, y: 1)) {
                         VStack {
                             Text(data.name)
@@ -53,7 +51,7 @@ struct NewMapView: View {
                              https://developer.apple.com/library/archive/featuredarticles/iPhoneURLScheme_Reference/MapLinks/MapLinks.html
                              */
                             //
-                            isDetailViewActive = true
+//                            isDetailViewActive = true
                             isShowing = true
                         }
                         .alert("Open in Apple Maps", isPresented: $isShowing) {
@@ -70,58 +68,43 @@ struct NewMapView: View {
                         }
                     }
                 }.onAppear {
-                    setInitialLocation()
+//                    requestLocation()
                 }
                 .navigationTitle("map")
-                .navigationDestination(isPresented: $isDetailViewActive) {
+//                .navigationDestination(isPresented: $isDetailViewActive) {
 //                    NewMapDetailView()
 //                    AdressView()
-                }
+//                }
             }
 //        }
     }
+}
+
+class MapViewModel: NSObject, ObservableObject, CLLocationManagerDelegate {
+    @Published var region = MKCoordinateRegion(
+        center: CLLocationCoordinate2D(latitude: 37.7749, longitude: -122.4194),
+        span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05)
+    )
     
-    func setInitialLocation() {
-        LocationManager.shared.getLocation { location in
-            guard let location = location else { return }
-            region.center = location.coordinate
+    @Published var userLocation: CLLocationCoordinate2D?
+
+    private var locationManager = CLLocationManager()
+
+    override init() {
+        super.init()
+        self.locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.requestLocation()
+    }
+
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first?.coordinate {
+            region.center = location
+            userLocation = location
         }
     }
-}
 
-final class LocationManager: NSObject, ObservableObject, CLLocationManagerDelegate {
-    static let shared = LocationManager()
-    
-    private var locationManager = CLLocationManager()
-    @Published var location: CLLocation?
-    
-    private override init() {
-        super.init()
-        setupLocationManager()
-    }
-    
-    func setupLocationManager() {
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-    }
-    
-    func getLocation(completion: @escaping (CLLocation?) -> Void) {
-        completion(location)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        guard let location = locations.first else { return }
-        self.location = location
-    }
-    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        print("Location Manager Error: \(error.localizedDescription)")
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
+        print("Error: \(error.localizedDescription)")
     }
 }
