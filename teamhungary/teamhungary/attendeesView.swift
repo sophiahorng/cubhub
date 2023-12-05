@@ -22,55 +22,87 @@ struct attendeesView: View {
     @State private var attendees: [String] = []
     @State private var events: [Event] = []
     
+    
+    @Binding var userData: UserData
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
-                ForEach(attendees, id: \.self) { attendeeName in
-                    Text(attendeeName)
-                        .padding()
-                        .border(Color.gray, width: 1) // Add border for better visibility
+                NavigationView{
                     
+                    List{
+                        ForEach(attendees, id: \.self) { attendeeName in
+                            //NavigationLink(destination: attendeeView(userData: $userData)) {
+                                
+                                Text(attendeeName)
+                                    .padding()
+                                    .border(Color.gray, width: 1) // Add border for better visibility
+                                
+                            //}
+                        }
+                    }
+                    .onAppear {
+                        // Fetch attendees for the given eventID when the view appears
+                        fetchEventAttendees(eventID: event.id)
+                    }
                 }
             }
         }
         .navigationBarTitle("Attendees")
-        .onAppear {
-            // Fetch attendees for the given eventID when the view appears
-            fetchEventAttendees(eventID: event.id)
-        }
+        
     }
+    
     
     func fetchEventAttendees(eventID: String) {
         let db = Firestore.firestore()
         let eventID = event.id
-        
+        print(eventID)
         // Get a reference to the event document in Firestore
-        let eventRef = db.collection("events").document(eventID)
+        //let eventRef = db.collection("events").document(eventID)
+        //let attendeesRef = eventRef.child("attendees")
         
-        // Use addSnapshotListener to listen for real-time updates on the event's attendees
-        eventRef.addSnapshotListener { documentSnapshot, error in
-            // Handle errors, if any
-            if let error = error {
-                print("Error fetching event attendees: \(error.localizedDescription)")
-                return
-            }
-            
-            // Check if the document exists
-            guard let document = documentSnapshot, document.exists else {
-                print("Event document not found")
-                return
-            }
-            
-            // Parse the document and update the event's attendees
-            if let data = document.data(), let attendeesData = data["attendees"] as? [String] {
-                _ = attendeesData.map { attendeeID in
-                    // You might want to fetch additional user details here
-                    return attendeeID
+        //let eventDocument = db.collection("events").document(eventID)
+        
+        
+        print("Retrieving attendees")
+        FirebaseUtilities.retrieveAttendeesFromEvent(eventID: eventID){
+            attendeeUserIDs in
+            print(attendeeUserIDs)
+            for id in attendeeUserIDs! {
+                FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
+                    self.attendees.append(user!.name)
                 }
+                
+                
             }
         }
     }
     
+    
+    
+    
+    /* eventDocument.addSnapshotListener { documentSnapshot, error in
+     guard let document = documentSnapshot else {
+     print("Error fetching document: \(error!)")
+     return
+     }
+     print("snapshot added")
+     var fetchedAttendees: [String] = []
+     if let attendeesData = document.data()?["attendees"] as? [String] {
+     for userID in attendeesData {
+     print(userID)
+     FirebaseUtilities.retrieveUserFromFirestore(userID: userID){ user in
+     fetchedAttendees.append(user!.name)
+     event.attendees = fetchedAttendees
+     print(attendees)
+     
+     
+     }
+     }
+     }
+     }
+     */
+    
+    
+    
 }
-
-
+    

@@ -21,33 +21,34 @@ struct EventsView: View {
     @State private var searchText = ""
     @Binding var userData: UserData
     @State private var editMode: EditMode = .inactive
-
+    
+    
     var body: some View {
-//        NavigationView {
-            VStack(spacing: 0) {
-                headerSection
-                eventsListSection
-            }
-            .navigationBarTitle("Events", displayMode: .inline)
-            .onAppear {
-                fetchEvents()
-            }
-//        }
+        //        NavigationView {
+        VStack(spacing: 0) {
+            headerSection
+            eventsListSection
+        }
+        .navigationBarTitle("Events", displayMode: .inline)
+        .onAppear {
+            fetchEvents()
+        }
+        //        }
     }
-
+    
     private var headerSection: some View {
         VStack(spacing: 0) {
             HStack {
                 TextField("Search events...", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .padding()
-
+                
                 Button("Search") {
                     fetchEvents()
                 }
                 .padding(.trailing, 10)
             }
-
+            
             HStack {
                 NavigationLink(destination: NewMapView(events: events)) {
                     Text("See Map View")
@@ -69,7 +70,7 @@ struct EventsView: View {
             }
         }
     }
-
+    
     private var eventsListSection: some View {
         List {
             ForEach(filteredEvents) { event in
@@ -94,22 +95,22 @@ struct EventsView: View {
                 }
             }
             .onDelete { indexSet in
-                    for index in indexSet {
-                        guard events.indices.contains(index) else { continue }
-                        
-                        let eventID = events[index].id
-                        DispatchQueue.main.async{
-                            FirebaseUtilities.deleteEventFromFirestore(userID: userData.uid, eventID: eventID) {isDeleted in
-                                if isDeleted! {
-                                    events.remove(at: index)
-                                }
-                                else {
-                                    showErrorAlert = true
-                                }
+                for index in indexSet {
+                    guard events.indices.contains(index) else { continue }
+                    
+                    let eventID = events[index].id
+                    DispatchQueue.main.async{
+                        FirebaseUtilities.deleteEventFromFirestore(userID: userData.uid, eventID: eventID) {isDeleted in
+                            if isDeleted! {
+                                events.remove(at: index)
+                            }
+                            else {
+                                showErrorAlert = true
                             }
                         }
-                        
                     }
+                    
+                }
             }
             .alert(isPresented: $showErrorAlert) {
                 Alert(
@@ -124,7 +125,7 @@ struct EventsView: View {
         .background(Color("ColumbiaBlue"))
         .scrollContentBackground(.hidden)
     }
-
+    
     private var filteredEvents: [Event] {
         if searchText.isEmpty {
             return events
@@ -134,7 +135,7 @@ struct EventsView: View {
             }
         }
     }
-
+    
     private func fetchEvents() {
         let db = Firestore.firestore()
         db.collection("events").getDocuments { (snapshot, error) in
@@ -167,7 +168,7 @@ struct EventsView: View {
             }
         }
     }
-
+    
     private func deleteEvent(_ event: Event) {
         if let index = events.firstIndex(where: { $0.id == event.id }) {
             events.remove(at: index)

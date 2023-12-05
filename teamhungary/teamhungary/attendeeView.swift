@@ -14,8 +14,9 @@ import FirebaseFirestore
 
 struct attendeeView: View {
     
-    
     @Binding var userData: UserData
+    
+    
     var body: some View {
         VStack{
             Spacer()

@@ -277,7 +277,7 @@ class FirebaseUtilities {
         }
         return
     }
-    static func retrieveAttendeesFromEvent(eventID: String) -> [String]{
+    static func retrieveAttendeesFromEvent(eventID: String, completion: @escaping ([String]?) -> Void){
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
         var attendeeUserIDs: [String] = []
@@ -291,9 +291,13 @@ class FirebaseUtilities {
                     // Add it to the attendeeUserIDs array
                     attendeeUserIDs.append(userID)
                 }
+                completion(attendeeUserIDs)
+            }
+            else{
+                completion(nil)
             }
         }
-        return attendeeUserIDs
+        return
     }
     
     static func retrieveEventFromFirestore(eventID: String, completion: @escaping (Event?) -> Void) {
@@ -310,7 +314,12 @@ class FirebaseUtilities {
                     let lat = data["profile_pic"] as? Double ?? 0
                     let lon = data["school"] as? Double ?? 0
                     let ownerID = data["ownerID"] as? String ?? ""
-                    let attendees = retrieveAttendeesFromEvent(eventID: eventID)
+                    var attendees: [String] = []
+                    retrieveAttendeesFromEvent(eventID: eventID) {attendeeUserIds in
+                        for id in attendeeUserIds! {
+                            attendees.append(id)
+                        }
+                    }
                     
                     let event = Event(id: eventID, eventName: name, eventDate: date_time, eventAddress: address, eventLocation: location_name, eventLon: lon, eventLat: lat, eventOwner: ownerID, attendees: attendees)
                     completion(event)
