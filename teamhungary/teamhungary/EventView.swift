@@ -91,6 +91,8 @@ struct EventView: View {
                         }.padding(8)
                     }
                 }
+                .background(Color("ColumbiaBlue"))
+                .scrollContentBackground(.hidden)
                 List {
                     Section(header: Text("Attendees")) {
                         VStack {
@@ -110,6 +112,9 @@ struct EventView: View {
                         
                     }
                 }
+                .background(Color("ColumbiaBlue"))
+                .scrollContentBackground(.hidden)
+                
                 NavigationLink(destination: attendeesView(event: event)) {
                     Text("See All Attendees")
                         .foregroundColor(.blue)
