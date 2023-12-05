@@ -24,10 +24,11 @@ struct attendeesView: View {
         ScrollView {
             VStack(alignment: .leading) {
                 ForEach(attendees, id: \.self) { attendeeName in
-                    Text(attendeeName)
-                        .padding()
-                        .border(Color.gray, width: 1) // Add border for better visibility
-                    
+                    NavigationLink(destination: attendeeView(userData: $userData)) {
+                        Text(attendeeName)
+                            .padding()
+                            .border(Color.gray, width: 1)
+                    }
                 }
             }
         }
