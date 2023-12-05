@@ -40,11 +40,11 @@ struct EventView: View {
                         Text(event.eventName)
                             .font(.largeTitle)
                             .fontWeight(.bold)
-                            //.padding()
-                            //.frame(maxWidth: .infinity, alignment: .center)
+                        //.padding()
+                        //.frame(maxWidth: .infinity, alignment: .center)
                         Text("on \(event.eventDate) at \(event.eventLocation)")
                             .font(.subheadline)
-                            //.padding()
+                        //.padding()
                         
                     }
                     Spacer()
@@ -93,20 +93,13 @@ struct EventView: View {
                                 }
                             }
                         }
-                        Button(action: {
-                            // Filter action
-                        }) {
-                            Text("See More")
-                                .foregroundColor(.blue)
-                        }
                         
                     }
                 }
-                //Button(action: {
-                    
-                //}) {
-                //    Text("Add to Calendar")
-                //}.padding()
+                NavigationLink(destination: attendeesView(event: event)) {
+                    Text("See All Attendees")
+                        .foregroundColor(.blue)
+                }
             }
             .navigationBarHidden(true)
             .tabItem {
