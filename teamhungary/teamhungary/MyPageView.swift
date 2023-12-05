@@ -10,9 +10,6 @@ struct MyPageView: View {
     @State var showModal: Bool = false
     
     var body: some View {
-        let imagePath = Bundle.main.path(forResource: "bg", ofType: "png")
-        let img = UIImage(contentsOfFile: imagePath! )
-        
         NavigationStack {
             ZStack {
                 VStack (spacing: 30) {
@@ -36,7 +33,8 @@ struct MyPageView: View {
                                     userName: userData.name,
                                     userMajor: userData.school,
                                     userGradYear: userData.gradYear,
-                                    userBio: userData.bio
+                                    userBio: userData.bio,
+                                    userIg: userData.igprof
                                 )
                             }
                         )
@@ -55,7 +53,6 @@ struct MyPageView: View {
                         Spacer()
                         Button {
                             logout()
-                            
                         } label: {
                             Text("logout")
                                 .bold()
