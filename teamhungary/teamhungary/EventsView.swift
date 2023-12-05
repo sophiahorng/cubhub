@@ -22,7 +22,7 @@ struct EventsView: View {
     @State private var editMode: EditMode = .inactive
 
     var body: some View {
-        NavigationView {
+//        NavigationView {
             VStack(spacing: 0) {
                 headerSection
                 eventsListSection
@@ -31,7 +31,7 @@ struct EventsView: View {
             .onAppear {
                 fetchEvents()
             }
-        }
+//        }
     }
 
     private var headerSection: some View {
