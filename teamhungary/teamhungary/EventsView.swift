@@ -28,7 +28,7 @@ struct EventsView: View {
     @State private var editMode: EditMode = .inactive
     var body: some View {
 //            TabView {
-                VStack {
+                VStack (spacing: 0){
                     HStack {
                         Text("Events")
                             .font(.title)
@@ -64,8 +64,8 @@ struct EventsView: View {
                                 .foregroundColor(.blue)
                             }
                         } // NavigationStack end
-
                     }
+                    
                     NavigationStack{
                         List {
                             ForEach(events) { event in
@@ -111,10 +111,13 @@ struct EventsView: View {
                         .onAppear {
                             UITableView.appearance().allowsSelectionDuringEditing = true
                         }
+                        .background(Color("ColumbiaBlue"))
+                        .scrollContentBackground(.hidden)
+                        
                     }
-                    Spacer()
+                    
+                   
                 }
-//                .navigationBarHidden(true)
 //                .tabItem {
 //                    Image(systemName: "list.bullet")
 //                    Text("Events")
@@ -139,7 +142,6 @@ struct EventsView: View {
 //                    .scaledToFill()
 //                    .edgesIgnoringSafeArea(.all)
 //            )
-        
         }
     
     func deleteEvent(_ event: Event) {
@@ -148,8 +150,9 @@ struct EventsView: View {
         }
     }
 }
-//struct EventsView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        EventsView()
-//    }
-//}
+
+struct EventsView_Previews: PreviewProvider {
+    static var previews: some View {
+        EventsView(userData: UserData(url: nil, uid: "u", name: "test", email: "test"))
+    }
+}
