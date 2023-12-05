@@ -15,20 +15,17 @@ struct MyPageView: View {
         
         NavigationStack {
             ZStack {
-                Image(uiImage: img! )
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .edgesIgnoringSafeArea(.all)
-                
                 VStack (spacing: 30) {
                     HStack {
                         Spacer()
                         Button(action: {
                             showModal = true
                         }) {
-                            Text("Edit Profile").padding(60).foregroundStyle(.red)
+                            Text("Edit Profile \(Image(systemName: "square.and.pencil"))")
+                                .padding([.top,.vertical], 5)
+                                .foregroundStyle(.gray)
                         }
+                        .buttonStyle(.bordered)
                         .frame(alignment: .trailing)
                         .sheet(
                             isPresented: $showModal,
@@ -47,6 +44,7 @@ struct MyPageView: View {
                     Text(userData.name)
                     Text(userData.email)
                     Spacer()
+                    Spacer()
                     HStack {
                         Spacer()
                         Button {
@@ -58,7 +56,7 @@ struct MyPageView: View {
                                 .font(Font.custom("Helvetica Neue", size: 24.0))
                                 .padding(20)
                                 .foregroundColor(Color.white)
-                                .background(Color.purple)
+                                .background(Color("ButtonColor"))
                                 .cornerRadius(12)
                         }
                         Spacer()
@@ -67,6 +65,7 @@ struct MyPageView: View {
                     Spacer(minLength: 100)
                 }
             }
+            .background(Color("ColumbiaBlue"))
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
         .onReceive(loginState.$isLoggedIn) { newValue in
