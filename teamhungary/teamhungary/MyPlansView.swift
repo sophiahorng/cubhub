@@ -65,9 +65,8 @@ struct MyPlansView: View {
                     fetchUserEvents()
                 }
                 .navigationBarTitle("My Plans")
+                .background(Color("ColumbiaBlue"))
             }//NavigationView
-            
-            Spacer()
         }//VStack
     }
     func fetchUserEvents() {
