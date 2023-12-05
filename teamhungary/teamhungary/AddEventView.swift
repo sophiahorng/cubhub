@@ -51,7 +51,7 @@ struct AddEventView: View {
                                            eventOwner: userData.uid,
                                            attendees: [userData.uid]
                                        )
-                    FirebaseUtilities.addEventToFirestore(event: newEvent, image: selectedImage)
+                    FirebaseUtilities.addEventToFirestore(event: newEvent, image: self.selectedImage)
 
 
                     // Optionally, you can also add the new event to the local events array if needed

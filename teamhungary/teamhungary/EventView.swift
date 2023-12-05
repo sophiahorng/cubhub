@@ -28,7 +28,7 @@ struct EventView: View {
     @State private var isUserAttendee = false
     
     var body: some View {
-        TabView {
+//        TabView {
             VStack (spacing: 2) {
                 HStack {
                     Button (action: {
@@ -130,7 +130,7 @@ struct EventView: View {
                     Image(systemName: "person")
                     Text("Account")
                 }
-        }
+//        }
     }
     
 }
