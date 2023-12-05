@@ -12,14 +12,16 @@
 
 
 import SwiftUI
+
 import FirebaseCore
 import FirebaseFirestore
+
 
 struct attendeesView: View {
     let event: Event
     @State private var attendees: [String] = []
     @State private var events: [Event] = []
-    @Binding var userData: UserData
+    
     var body: some View {
         ScrollView {
             VStack(alignment: .leading) {
@@ -40,6 +42,7 @@ struct attendeesView: View {
     
     func fetchEventAttendees(eventID: String) {
         let db = Firestore.firestore()
+        let eventID = event.id
         
         // Get a reference to the event document in Firestore
         let eventRef = db.collection("events").document(eventID)
@@ -60,17 +63,10 @@ struct attendeesView: View {
             
             // Parse the document and update the event's attendees
             if let data = document.data(), let attendeesData = data["attendees"] as? [String] {
-                // Fetch user data for each attendee using the retrieveUserFromFirestore function
-                var fetchedAttendees: [String] = []
-                
-                for userID in attendeesData {
-                    FirebaseUtilities.retrieveUserFromFirestore(userID: userID, completion: <#T##(UserData?) -> Void#>)
-                    fetchedAttendees.append(userData.name)
-                    
+                _ = attendeesData.map { attendeeID in
+                    // You might want to fetch additional user details here
+                    return attendeeID
                 }
-                // Update the attendees array with user names
-                self.attendees = fetchedAttendees
-                
             }
         }
     }

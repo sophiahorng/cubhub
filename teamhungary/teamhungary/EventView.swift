@@ -28,102 +28,99 @@ struct EventView: View {
     @State private var isUserAttendee = false
     
     var body: some View {
-        //        TabView {
-        VStack (spacing: 2) {
-            HStack {
-                Button (action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.backward")
-                        Text("Back")
-                    }.padding()
-                }
-                .frame(alignment: .leading)
-                Spacer()
-                VStack {
-                    Text(event.eventName)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2) // Set an appropriate line limit to avoid excessive text length
-                    
-                    Text("on \(event.eventDate) at \(event.eventLocation)")
-                        .font(.subheadline)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(2) // Adjust line limit as needed
-                }
-                .frame(maxWidth: .infinity, alignment: .center)
-                .padding()
-                Spacer()
-                // Use onAppear to check if the user is an attendee when the view appears
-                    .onAppear {
-                        DispatchQueue.main.async {
-                            isUserAttendee = event.attendees.contains(userData.uid)
-                        }
-                    }
-                // Conditionally show the "Add" button based on isUserAttendee
-                if !isUserAttendee {
-                    Button(action: {
-                        FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
+//        TabView {
+            VStack (spacing: 2) {
+                HStack {
+                    Button (action: {
+                        presentationMode.wrappedValue.dismiss()
                     }) {
-                        Text("Add").padding(20)
+                        HStack {
+                            Image(systemName: "chevron.backward")
+                            Text("Back")
+                        }.padding()
                     }
-                    .frame(alignment: .trailing)
-                }
-            }
-            Spacer()
-            List {
-                Section(header: Text("Event Photos")){
-                    HStack {
-                        ForEach(images) { image in
-                            Image(systemName: image.name)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 60, height: 60)
-                                .clipShape(Rectangle())
-                                .overlay(Rectangle().stroke(Color.gray, lineWidth: 2))
-                                .padding(8)
-                        }
-                    }.padding(8)
-                    Button(action: {
-                        // Filter action
-                    }) {
-                        Text("Open Photo Gallery")
-                            .foregroundColor(.blue)
-                    }.padding(8)
-                }
-            }
-            .background(Color("ColumbiaBlue"))
-            .scrollContentBackground(.hidden)
-            List {
-                Section(header: Text("Attendees")) {
+                    .frame(alignment: .leading)
+                    Spacer()
                     VStack {
-                        ForEach(users) { user in
-                            HStack {
-                                Image(systemName: user.photo)
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fit)
-                                    .frame(width: 40, height: 40)
-                                    .clipShape(Circle())
-                                    .overlay(Circle().stroke(Color.gray, lineWidth: 2))
-                                    .padding(8)
-                                Text(user.name)
+                        Text(event.eventName)
+                            .font(.largeTitle)
+                            .fontWeight(.bold)
+                        //.padding()
+                        //.frame(maxWidth: .infinity, alignment: .center)
+                        Text("on \(event.eventDate) at \(event.eventLocation)")
+                            .font(.subheadline)
+                        //.padding()
+                        
+                    }
+                    Spacer()
+                    // Use onAppear to check if the user is an attendee when the view appears
+                        .onAppear {
+                            DispatchQueue.main.async {
+                                isUserAttendee = event.attendees.contains(userData.uid)
                             }
                         }
+                    // Conditionally show the "Add" button based on isUserAttendee
+                    if !isUserAttendee {
+                        Button(action: {
+                            FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
+                        }) {
+                            Text("Add").padding(20)
+                        }
+                        .frame(alignment: .trailing)
                     }
-                    
+                }
+                Spacer()
+                List {
+                    Section(header: Text("Event Photos")){
+                        HStack {
+                            ForEach(images) { image in
+                                Image(systemName: image.name)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fit)
+                                    .frame(width: 60, height: 60)
+                                    .clipShape(Rectangle())
+                                    .overlay(Rectangle().stroke(Color.gray, lineWidth: 2))
+                                    .padding(8)
+                            }
+                        }.padding(8)
+                        Button(action: {
+                            // Filter action
+                        }) {
+                            Text("Open Photo Gallery")
+                                .foregroundColor(.blue)
+                        }.padding(8)
+                    }
+                }
+                .background(Color("ColumbiaBlue"))
+                .scrollContentBackground(.hidden)
+                List {
+                    Section(header: Text("Attendees")) {
+                        VStack {
+                            ForEach(users) { user in
+                                HStack {
+                                    Image(systemName: user.photo)
+                                        .resizable()
+                                        .aspectRatio(contentMode: .fit)
+                                        .frame(width: 40, height: 40)
+                                        .clipShape(Circle())
+                                        .overlay(Circle().stroke(Color.gray, lineWidth: 2))
+                                        .padding(8)
+                                    Text(user.name)
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+                .background(Color("ColumbiaBlue"))
+                .scrollContentBackground(.hidden)
+                
+                NavigationLink(destination: attendeesView(event: event)) {
+                    Text("See All Attendees")
+                        .foregroundColor(.blue)
                 }
             }
-            .background(Color("ColumbiaBlue"))
-            .scrollContentBackground(.hidden)
-            
-            NavigationLink(destination: attendeesView(event: event, userData: $userData)) {
-                Text("See All Attendees")
-                    .foregroundColor(.blue)
-            }
-        }
-        .navigationBarHidden(true)
+            .navigationBarHidden(true)
     }
     
 }
