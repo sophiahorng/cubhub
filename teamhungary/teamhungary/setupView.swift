@@ -26,6 +26,7 @@ struct setupView: View {
     @State var userMajor: String
     @State var userGradYear: String
     @State var userBio: String
+    @State var userIg: String
     @State var selectedImage: UIImage?
     @State var isImagePickerPresented: Bool = false
     
@@ -33,7 +34,7 @@ struct setupView: View {
     var body: some View {
         ZStack {
             ScrollView {
-                VStack(spacing: 30) {
+                VStack(spacing: 20) {
                     Spacer()
                     Spacer()
                     
@@ -69,14 +70,14 @@ struct setupView: View {
                         .frame(width: 300)
                         .multilineTextAlignment(.center)
                         .padding()
-                        .disabled(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                        .disabled(true)
                     
                     TextField("Major", text: $userMajor)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(width: 300)
                         .multilineTextAlignment(.center)
                         .padding()
-                        
+                    
                     
                     TextField("Graduation Year", text: $userGradYear)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -90,6 +91,12 @@ struct setupView: View {
                         .multilineTextAlignment(.center)
                         .padding()
                     
+                    TextField("Intagram", text: $userIg)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(width: 300)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                    
                     Button(action: {
                         let newUser = UserData(
                             url: userData.url,
@@ -98,19 +105,19 @@ struct setupView: View {
                             email: userData.email,
                             gradYear: userGradYear,
                             bio: userBio,
-                            igprof: userData.igprof,
+                            igprof: userIg,
                             school: userMajor
                         )
                         userData = newUser
-                        FirebaseUtilities.updateUserInFirestore(uid: userData.uid, graduationYear: userGradYear, school: userMajor, bio: userBio)
-//                        if (selectedImage != nil) {
-//                            FirebaseUtilities.uploadProfilePicture(imageData: selectedImage!, userID: userData.uid) { downloadURL in
-//                                if let downloadURL = downloadURL {
-//                                    FirebaseUtilities.saveProfilePictureURL(downloadURL, for: userData.uid)
-//                                }
-//                            }
-//                        }
-//                            
+                        FirebaseUtilities.updateUserInFirestore(uid: userData.uid, graduationYear: userGradYear, school: userMajor, bio: userBio, igProfile: userIg)
+                        //                        if (selectedImage != nil) {
+                        //                            FirebaseUtilities.uploadProfilePicture(imageData: selectedImage!, userID: userData.uid) { downloadURL in
+                        //                                if let downloadURL = downloadURL {
+                        //                                    FirebaseUtilities.saveProfilePictureURL(downloadURL, for: userData.uid)
+                        //                                }
+                        //                            }
+                        //                        }
+                        //                            
                         self.showModal.toggle()
                     }) {
                         Text("Save")
@@ -124,16 +131,15 @@ struct setupView: View {
                 }
             }
         }
+        .frame(width: 500)
         .background(Color("ColumbiaBlue"))
     }
-    
-    
 }
 
-//struct setupView_Preview: PreviewProvider{
-//    static var previews: some View{
-//        let practiceUser: User = User(id: nil, imageName: "", userName: "jasmine", userMajor: "cs", userGradYear: "2025", userBio: "hi")
-//        return setupView(user: practiceUser, showModal: .constant(true))
-//    }
-//}
+struct setupView_Preview: PreviewProvider{
+    static var userData = UserData(url: nil, uid: "1", name: "jasmine", email: "test", gradYear: "2015", bio: "hi", igprof: "link", school: "cs")
+    static var previews: some View{
+        setupView(userData: .constant(userData), showModal: .constant(true), userName: userData.name, userMajor: userData.school, userGradYear: userData.gradYear, userBio: userData.bio, userIg: userData.igprof)
+    }
+}
 
