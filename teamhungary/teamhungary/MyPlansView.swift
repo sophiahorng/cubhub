@@ -54,6 +54,7 @@ struct MyPlansView: View {
                             events.remove(at: index)
                         }
                     }
+                    
                 }
                 .refreshable {
                     fetchUserEvents()
@@ -65,8 +66,10 @@ struct MyPlansView: View {
                     fetchUserEvents()
                 }
                 .navigationBarTitle("My Plans")
-                .background(Color("ColumbiaBlue"))
+                
             }//NavigationView
+            
+            .background(Color("ColumbiaBlue"))
         }//VStack
     }
     func fetchUserEvents() {
