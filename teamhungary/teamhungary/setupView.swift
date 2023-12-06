@@ -110,6 +110,10 @@ struct setupView: View {
                         )
                         userData = newUser
                         FirebaseUtilities.updateUserInFirestore(uid: userData.uid, graduationYear: userGradYear, school: userMajor, bio: userBio, igProfile: userIg)
+                        
+                        if let selectedImage = selectedImage {
+                            updatePic(image: selectedImage, uid: userData.uid) {url in}
+                        }
                         //                        if (selectedImage != nil) {
                         //                            FirebaseUtilities.uploadProfilePicture(imageData: selectedImage!, userID: userData.uid) { downloadURL in
                         //                                if let downloadURL = downloadURL {
@@ -134,6 +138,24 @@ struct setupView: View {
         .frame(width: 500)
         .background(Color("ColumbiaBlue"))
     }
+    func updatePic(image: UIImage, uid: String, completion: @escaping (String?) -> Void) {
+        print("Image data read, uploading to Firebase...")
+        // Upload the image data to Firebase Storage
+        FirebaseUtilities.uploadProfilePicture(imageData: image, userID: uid) { downloadURL in
+            guard let dURL = downloadURL else {
+                print("Error: Unable to get download URL")
+                completion(nil)
+                return // Exit the function here
+            }
+            print("Image uploaded to Firebase, URL: \(dURL)")
+            // Save the new profile picture URL
+            FirebaseUtilities.saveProfilePictureURL(dURL, for: uid) { url in
+                print("profile pic url saved")
+                completion(url)
+            }
+        }
+    }
+
 }
 
 struct setupView_Preview: PreviewProvider{

@@ -75,20 +75,19 @@ class FirebaseUtilities {
     static func retrieveProfilePicture(for userID: String, completion: @escaping (UIImage?) -> Void) {
         let storage = Storage.storage()
         // Adjust the path to create a user-specific folder
-        let storageRef = storage.reference().child("/\(userID)/profilePicture.jpg")
+        let storageRef = storage.reference().child("\(userID)/profilePicture.jpg")
         
         // Download in memory with a maximum allowed size of 1MB (1 * 1024 * 1024 bytes)
-        storageRef.getData(maxSize: 1 * 1024 * 1024) { data, error in
+        storageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
             if error != nil {
                 // Uh-oh, an error occurred!
-                print("error getting profile pic URL")
+                print("error getting profile pic URL: \(error)")
                 completion(nil)
             } else {
                 let image = UIImage(data: data!)
                 completion(image)
             }
         }
-        return
     }
     
     static func uploadEventPhoto(imageData: UIImage, eventID: String, completion: @escaping (URL?) -> Void) {

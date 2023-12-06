@@ -8,6 +8,7 @@ struct MyPageView: View {
     @EnvironmentObject var loginState: LoginState
     @State private var showMapView = false
     @State var showModal: Bool = false
+    @State private var profileImage: UIImage?
     
     var body: some View {
         NavigationStack {
@@ -39,12 +40,29 @@ struct MyPageView: View {
                             }
                         )
                     }
-                    
-                    
-                    AsyncImage(url: userData.url)
-                        .imageScale(.small)
-                        .frame(width: 180, height: 180, alignment: .center)
-                        .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    if let image = profileImage {
+                        Image(uiImage: image)
+                            .resizable()
+                        // Add frame, aspectRatio, clipShape etc. as needed
+                            .clipShape(Circle())
+                    } else {
+                        // Placeholder view or default image
+                        Image(systemName: "person")
+                            .resizable()
+                            .frame(width: 180, height: 180)
+                            .clipShape(Circle())
+                    }
+//                    if let urlWithTimestamp = URL(string: "\(String(describing: userData.url?.absoluteString))?timestamp=\(Date().timeIntervalSince1970)") {
+//                        AsyncImage(url: urlWithTimestamp)
+//                            .imageScale(.small)
+//                            .frame(width: 180, height: 180, alignment: .center)
+//                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+//                    } else {
+//                        AsyncImage(url: userData.url)
+//                            .imageScale(.small)
+//                            .frame(width: 180, height: 180, alignment: .center)
+//                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+//                    }
                     Text(userData.name)
                     Text(userData.email)
                     Text("\(userData.school) \(userData.gradYear)")
@@ -75,12 +93,29 @@ struct MyPageView: View {
             .background(Color("ColumbiaBlue"))
         }
         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
-        .onReceive(loginState.$isLoggedIn) { newValue in
-                // Handle login state changes here
-                if !newValue {
-                    print("logout triggered")
-                }
+        .onAppear {
+            fetchUserData()
+            FirebaseUtilities.retrieveProfilePicture(for: userData.uid) { image in
+                print("profile image changed")
+                self.profileImage = image
             }
+        }
+        .onReceive(loginState.$isLoggedIn) { newValue in
+            // Handle login state changes here
+            if !newValue {
+                print("logout triggered")
+            }
+        }
+    }
+    private func fetchUserData() {
+        FirebaseUtilities.retrieveUserFromFirestore(userID: userData.uid) { fetchedUserData in
+            if let data = fetchedUserData {
+                // Update the userData binding
+                self.userData = data
+            } else {
+                // Handle the error or provide a default value
+            }
+        }
     }
     
     private func logout() {
