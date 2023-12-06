@@ -31,6 +31,9 @@ struct EventView: View {
     @Binding var userData: UserData
     @State private var isUserAttendee = false
     
+    @State private var isImagePickerShown: Bool = false
+    @State private var selectedImage: UIImage?
+    
     var body: some View {
         //        TabView {
         VStack (spacing: 2) {
@@ -78,6 +81,12 @@ struct EventView: View {
             }
             Spacer()
             List {
+                Section(header: Text("Event Description")){
+                    Text(event.eventDescription)
+                        .font(.subheadline)
+                        .multilineTextAlignment(.center)
+                        .lineLimit(3)
+                }
                 Section(header: Text("Event Photos")){
                     HStack {
                         ForEach(images) { image in
@@ -96,6 +105,36 @@ struct EventView: View {
                         Text("Open Photo Gallery")
                             .foregroundColor(.blue)
                     }.padding(8)
+                    
+                    if let selectedImage = selectedImage {
+                        Image(uiImage: selectedImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 200, height: 200)
+                    } else {
+                        Text("No Image Selected")
+                    }
+
+                    Button("Select Image") {
+                        isImagePickerShown.toggle()
+                    }
+                    .sheet(isPresented: $isImagePickerShown) {
+                        ImagePicker(selectedImage: $selectedImage)
+                    }
+                    .onChange(of: selectedImage) { newImage in
+                        // Upload the selected image to Firebase Storage when it changes
+                        if let newImage = newImage {
+                            FirebaseUtilities.uploadEventPhoto(imageData: newImage, eventID: event.id) { imageURL in
+                                if let imageURL = imageURL {
+                                    // You can handle the URL as needed
+                                    print("Image uploaded successfully. Download URL: \(imageURL)")
+                                } else {
+                                    print("Error uploading image to Firebase Storage")
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
             .background(Color("ColumbiaBlue"))
