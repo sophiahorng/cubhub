@@ -107,7 +107,8 @@ struct MyPlansView: View {
                     let eventLon = data["lat"] as? Double ?? 0
                     let eventLat = data["lon"] as? Double ?? 0
                     let eventOwner = data["ownerID"] as? String ?? ""
-                    let newEvent = Event(id: eventId, eventName: eventName, eventDate: eventDate, eventAddress: address, eventLocation: eventLocation, eventLon: eventLon, eventLat: eventLat, eventOwner: eventOwner, attendees: []/*, eventDescription: ""*/)
+                    let description = data["description"] as? String ?? "No description"
+                    let newEvent = Event(id: eventId, eventName: eventName, eventDate: eventDate, eventAddress: address, eventLocation: eventLocation, eventLon: eventLon, eventLat: eventLat, eventOwner: eventOwner, attendees: [], eventDescription: description)
                     print("created event id: \(newEvent.id)")
                     return newEvent
                 }

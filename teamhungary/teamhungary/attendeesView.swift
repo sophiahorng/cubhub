@@ -66,16 +66,17 @@ struct attendeesView: View {
         print("Retrieving attendees")
         FirebaseUtilities.retrieveAttendeesFromEvent(eventID: eventID){
             attendeeUserIDs in
-            print(attendeeUserIDs)
-            for id in attendeeUserIDs! {
-                FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
-                    if let userName = user?.name {
-                        self.attendees.append((id:id, name: userName))
+            print(attendeeUserIDs ?? "no attendees")
+            if let attendeeIds = attendeeUserIDs {
+                for id in attendeeIds {
+                    FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
+                        if let userName = user?.name {
+                            self.attendees.append((id:id, name: userName))
+                        }
                     }
                 }
-                
-                
             }
+            
         }
     }
     

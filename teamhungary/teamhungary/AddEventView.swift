@@ -15,7 +15,7 @@ struct AddEventView: View {
     @State private var newEventName = ""
     @State private var newEventDate: Date = Date()
     @State private var newEventAddress = "Event Location"
-    @State private var newEventSubtitle = ""
+    @State private var newEventLocation = ""
     @State private var newEventLon = 0.0
     @State private var newEventLat = 0.0
     @State private var newEventDescription = ""
@@ -45,11 +45,12 @@ struct AddEventView: View {
                                            eventName: newEventName,
                                            eventDate: dateString,
                                            eventAddress: newEventAddress,
-                                           eventLocation: "",
+                                           eventLocation: newEventLocation,
                                            eventLon: newEventLon,
                                            eventLat: newEventLat,
                                            eventOwner: userData.uid,
-                                           attendees: [userData.uid]
+                                           attendees: [userData.uid],
+                                           eventDescription: newEventDescription
                                        )
                     FirebaseUtilities.addEventToFirestore(event: newEvent, image: self.selectedImage)
 
@@ -70,7 +71,7 @@ struct AddEventView: View {
                     // Clear the input fields
                     newEventName = ""
                     newEventDate = Date()
-                    newEventSubtitle = ""
+                    newEventLocation = ""
                     newEventAddress = ""
                     newEventDescription = ""
 
@@ -129,13 +130,13 @@ struct AddEventView: View {
             }
             
 
-//            TextField("Hashtags", text: $newEventSubtitle)
-//                .textFieldStyle(RoundedBorderTextFieldStyle())
-//                .frame(width: 300)
-//                .multilineTextAlignment(.center)
-//                .padding()
-                //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
-                //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+            TextField("Location Name", text: $newEventLocation)
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .frame(width: 300)
+                .multilineTextAlignment(.center)
+                .padding()
+//                .background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+//                .foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
             
             ScrollView{
                 TextField("Event Description", text: $newEventDescription)

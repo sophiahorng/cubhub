@@ -90,6 +90,70 @@ class FirebaseUtilities {
         }
         return
     }
+    
+    static func uploadEventPhoto(imageData: UIImage, eventID: String, completion: @escaping (URL?) -> Void) {
+        print("uploading event photo")
+        let storage = Storage.storage()
+        // Adjust the path to create a user-specific folder
+        let photoId = UUID().uuidString
+        let storageRef = storage.reference().child("\(eventID)/\(photoId).jpg")
+        // Upload image data to Firebase Storage
+        if let image = imageData.jpegData(compressionQuality: 0.5) {
+            storageRef.putData(image, metadata: nil) { (metadata, error) in
+                guard metadata != nil else {
+                    print("data writing error")
+                    return
+                }
+                print("data written successfully")
+            }
+            // Metadata contains file metadata such as size, content-type.
+            //          let _size = metadata.size
+            // You can also access to download URL after upload.
+            storageRef.downloadURL { (url, error) in
+                guard url != nil else {
+                    print("downloadURL error: \(String(describing: error))")
+                    completion(nil)
+                    return
+                }
+                print("downloadURL returned successfully")
+                completion(url)
+            }
+        }
+        return
+    }
+    
+    static func retrieveEventPhotos(eventID: String, completion: @escaping ([UIImage]?) -> Void) {
+        let storage = Storage.storage()
+        let storageRef = storage.reference().child(eventID)
+
+        storageRef.listAll { (result, error) in
+            if let error = error {
+                print("Error in listing files: \(error)")
+                completion(nil)
+                return
+            }
+
+            var images = [UIImage]()
+            let group = DispatchGroup()
+            if let result = result {
+                for item in result.items {
+                    group.enter()
+                    item.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                        if let error = error {
+                            print("Error downloading image: \(error)")
+                        } else if let data = data, let image = UIImage(data: data) {
+                            images.append(image)
+                        }
+                        group.leave()
+                    }
+                }
+            }
+            group.notify(queue: .main) {
+                completion(images)
+            }
+        }
+    }
+
     //        let userRef = db.collection("users").document(userID)
     //
     //        userRef.getDocument { document, error in
@@ -198,7 +262,8 @@ class FirebaseUtilities {
             "lat": event.eventLat,
             "lon": event.eventLon,
             "ownerID": event.eventOwner,
-            "attendees": [event.eventOwner]
+            "attendees": [event.eventOwner],
+            "description": event.eventDescription
         ]
         eventRef.setData(eventInfo) { error in
             if let error = error {
@@ -213,7 +278,7 @@ class FirebaseUtilities {
         }
         return
     }
-    static func updateEventInFirestore(eventID: String, updatedEventName: String? = nil, updatedEventDate: String? = nil, updatedEventAddress: String? = nil, updatedEventLocation: String? = nil, updatedEventLat: Double? = nil, updatedEventLon: Double? = nil, updatedEventOwner: String? = nil) {
+    static func updateEventInFirestore(eventID: String, updatedEventName: String? = nil, updatedEventDate: String? = nil, updatedEventAddress: String? = nil, updatedEventLocation: String? = nil, updatedEventLat: Double? = nil, updatedEventLon: Double? = nil, updatedEventOwner: String? = nil, updatedEventDescription: String? = nil) {
         let db = Firestore.firestore()
         let eventRef = db.collection("events").document(eventID)
         var updateData: [String: Any] = [:]
@@ -237,6 +302,9 @@ class FirebaseUtilities {
         }
         if let updatedEventOwner = updatedEventOwner {
             updateData["ownerID"] = updatedEventOwner
+        }
+        if let updatedEventDescription = updatedEventDescription {
+            updateData["description"] = updatedEventDescription
         }
         if !updateData.isEmpty {
             eventRef.updateData(updateData) { error in
@@ -315,13 +383,14 @@ class FirebaseUtilities {
                     let lon = data["school"] as? Double ?? 0
                     let ownerID = data["ownerID"] as? String ?? ""
                     var attendees: [String] = []
+                    let description = data["description"] as? String ?? "No description"
                     retrieveAttendeesFromEvent(eventID: eventID) {attendeeUserIds in
                         for id in attendeeUserIds! {
                             attendees.append(id)
                         }
                     }
                     
-                    let event = Event(id: eventID, eventName: name, eventDate: date_time, eventAddress: address, eventLocation: location_name, eventLon: lon, eventLat: lat, eventOwner: ownerID, attendees: attendees)
+                    let event = Event(id: eventID, eventName: name, eventDate: date_time, eventAddress: address, eventLocation: location_name, eventLon: lon, eventLat: lat, eventOwner: ownerID, attendees: attendees, eventDescription: description)
                     completion(event)
                 } else {
                     completion(nil)

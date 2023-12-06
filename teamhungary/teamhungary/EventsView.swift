@@ -11,7 +11,7 @@ struct Event: Identifiable {
     var eventLat: Double
     var eventOwner: String
     var attendees: [String]
-    // var eventDescription: String
+    var eventDescription: String
 }
 
 struct EventsView: View {
@@ -87,7 +87,7 @@ struct EventsView: View {
                         VStack(alignment: .leading) {
                             Text(event.eventName)
                                 .font(.headline)
-                            Text("Date: \(event.eventDate) at \(event.eventLocation)")
+                            Text("\(event.eventLocation)")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                         }
@@ -154,7 +154,8 @@ struct EventsView: View {
                             eventLon: data["lon"] as? Double ?? 0.0,
                             eventLat: data["lat"] as? Double ?? 0.0,
                             eventOwner: data["ownerID"] as? String ?? "",
-                            attendees: data["attendees"] as? [String] ?? []
+                            attendees: data["attendees"] as? [String] ?? [],
+                            eventDescription: data["description"] as? String ?? "No description"
                         )
                     }
                     .sorted(by: { lhs, rhs in
