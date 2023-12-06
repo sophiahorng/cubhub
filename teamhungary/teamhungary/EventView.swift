@@ -72,7 +72,13 @@ struct EventView: View {
                 // Conditionally show the "Add" button based on isUserAttendee
                 if !isUserAttendee {
                     Button(action: {
-                        FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
+                        // Check if the user is already an attendee before adding them
+                        if !event.attendees.contains(userData.uid) {
+                            FirebaseUtilities.addAttendeeToEvent(eventID: event.id, userID: userData.uid)
+                        } else {
+                            // Handle the case where the user is already an attendee
+                            print("User is already an attendee")
+                        }
                     }) {
                         Text("Add").padding(20)
                     }
