@@ -165,7 +165,7 @@ class FirebaseUtilities {
     //            }
     //        }
     //    }
-    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", bio: String = "", igProfile: String = "",  profilePic: String = "", completion: @escaping (Bool, Error?) -> Void) {
+    static func addUsertoFirestore(uid: String, name: String, email: String, graduationYear: String = "", school: String = "", major: String = "", bio: String = "", igProfile: String = "",  profilePic: String = "", completion: @escaping (Bool, Error?) -> Void) {
         if email.suffix(13) != "@columbia.edu" {
             print("User is not in Columbia domain")
             return
@@ -177,6 +177,7 @@ class FirebaseUtilities {
             "email": email,
             "graduation_year": graduationYear,
             "school": school,
+            "major": major,
             "bio": bio,
             "ig_profile": igProfile,
             "profile_pic": profilePic
@@ -201,7 +202,7 @@ class FirebaseUtilities {
         //        userInfo["displayName"] = name
         
     }
-    static func updateUserInFirestore(uid: String, name: String? = nil, email: String? = nil, graduationYear: String? = nil, school: String? = nil, bio: String? = nil, igProfile: String? = nil, profilePic: String? = nil) {
+    static func updateUserInFirestore(uid: String, name: String? = nil, email: String? = nil, graduationYear: String? = nil, school: String? = nil, major: String? = nil, bio: String? = nil, igProfile: String? = nil, profilePic: String? = nil) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(uid)
         // Prepare the data to update
@@ -220,6 +221,9 @@ class FirebaseUtilities {
         }
         if let school = school {
             updateData["school"] = school
+        }
+        if let major = major {
+            updateData["major"] = major
         }
         if let igProfile = igProfile {
             updateData["ig_profile"] = igProfile
@@ -333,7 +337,8 @@ class FirebaseUtilities {
                     let bio = data["bio"] as? String ?? ""
                     let pfp = data["profile_pic"] as? URL ?? nil
                     let school = data["school"] as? String ?? ""
-                    let user = UserData(url: pfp, uid: userID, name: name, email: email, gradYear: gradYear, bio: bio, igprof: igprof, school: school)
+                    let major = data["major"] as? String ?? ""
+                    let user = UserData(url: pfp, uid: userID, name: name, email: email, gradYear: gradYear, bio: bio, igprof: igprof, school: school, major: major)
                     completion(user)
                 } else {
                     completion(nil)

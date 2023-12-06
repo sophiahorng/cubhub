@@ -124,6 +124,10 @@ struct EventsView: View {
         .environment(\.editMode, $editMode)
         .background(Color("ColumbiaBlue"))
         .scrollContentBackground(.hidden)
+        .refreshable {
+                fetchEvents()
+            }
+
     }
     
     private var filteredEvents: [Event] {

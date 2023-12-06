@@ -9,8 +9,9 @@ struct UserData: Hashable {
     let bio: String
     let igprof: String
     let school: String
+    let major: String
     
-    init(url: URL?, uid: String, name: String, email: String, gradYear: String, bio: String, igprof: String, school: String) {
+    init(url: URL?, uid: String, name: String, email: String, gradYear: String, bio: String, igprof: String, school: String, major: String) {
         self.url = url
         self.uid = uid
         self.name = name
@@ -19,6 +20,7 @@ struct UserData: Hashable {
         self.bio = bio
         self.igprof = igprof
         self.school = school
+        self.major = major
     }
     func hash(into hasher: inout Hasher) {
         hasher.combine(url)
@@ -29,8 +31,9 @@ struct UserData: Hashable {
         hasher.combine(igprof)
         hasher.combine(school)
         hasher.combine(bio)
+        hasher.combine(major)
     }
 }
 class UserDataObservable: ObservableObject {
-    @Published var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", bio: "", igprof: "", school: "")
+    @Published var userData: UserData = UserData(url: nil, uid: "", name: "", email: "", gradYear: "", bio: "", igprof: "", school: "", major: "")
 }

@@ -230,7 +230,7 @@ struct ContentView: View {
                     if let user = user {
                         self.userDataObservable.userData = user
                     } else {
-                        self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "")
+                        self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "", major: "")
                     }
                 }
 //                self.isLoggedIn = true
@@ -278,7 +278,7 @@ struct ContentView: View {
                 FirebaseUtilities.saveProfilePictureURL(dURL, for: uid) { url in
                     if let img = url {
                         DispatchQueue.main.async {
-                            let user = UserData(url: URL(string: img), uid: self.userDataObservable.userData.uid, name: self.userDataObservable.userData.name, email: self.userDataObservable.userData.email, gradYear: self.userDataObservable.userData.gradYear, bio: self.userDataObservable.userData.bio, igprof: self.userDataObservable.userData.igprof, school: self.userDataObservable.userData.school)
+                            let user = UserData(url: URL(string: img), uid: self.userDataObservable.userData.uid, name: self.userDataObservable.userData.name, email: self.userDataObservable.userData.email, gradYear: self.userDataObservable.userData.gradYear, bio: self.userDataObservable.userData.bio, igprof: self.userDataObservable.userData.igprof, school: self.userDataObservable.userData.school, major: self.userDataObservable.userData.major)
                             self.userDataObservable.userData = user
                             print("new url: \(self.userDataObservable.userData.url?.absoluteString ?? "invalid string")")
                         }
@@ -323,7 +323,7 @@ struct ContentView: View {
                             if let user = user {
                                 self.userDataObservable.userData = user
                             } else {
-                                self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "")
+                                self.userDataObservable.userData = UserData(url: profile.imageURL(withDimension: 180), uid: uid, name: profile.name, email: profile.email, gradYear: "", bio: "", igprof: "", school: "", major: "")
                             }
                         }
                         loginState.isLoggedIn = true
