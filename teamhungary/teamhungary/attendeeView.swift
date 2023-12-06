@@ -12,26 +12,47 @@ import SwiftUI
 import FirebaseCore
 import FirebaseFirestore
 
-struct attendeeView: View {
+struct AttendeeView: View {
     
-    @Binding var userData: UserData
-    
-    
+    @StateObject private var viewModel = AttendeeViewModel()
+    let attendeeID: String
     var body: some View {
-        VStack{
+        VStack {
             Spacer()
             
-            AsyncImage(url: userData.url)
-                .imageScale(.small)
-                .frame(width: 180, height: 180, alignment: .center)
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-            Text(userData.name)
-            Text(userData.email)
-            Text("\(userData.school) \(userData.gradYear)")
-            if (!userData.igprof.isEmpty) {
-                Link("Instagram", destination: URL(string: "https://www.instagram.com/\(userData.igprof)")!)
+            if let attendeeData = viewModel.attendeeData {
+                AsyncImage(url: attendeeData.url)
+                    .imageScale(.small)
+                    .frame(width: 180, height: 180, alignment: .center)
+                    .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                Text(attendeeData.name)
+                Text(attendeeData.email)
+                Text("\(attendeeData.school) \(attendeeData.gradYear)")
+                if (!attendeeData.igprof.isEmpty) {
+                    Link("Instagram", destination: URL(string: "https://www.instagram.com/\(attendeeData.igprof)")!)
+                }
+            } else {
+                Text("Loading user data...")
             }
+            
             Spacer()
+        }
+        .onAppear {
+            // Replace "exampleUserID" with the actual user ID you want to display
+            viewModel.fetchAttendeeData(userID: attendeeID)
+        }
+    }
+}
+
+class AttendeeViewModel: ObservableObject {
+    
+    @Published var attendeeData: UserData?
+    
+    func fetchAttendeeData(userID: String) {
+        FirebaseUtilities.retrieveUserFromFirestore(userID: userID) { user in
+            DispatchQueue.main.async {
+                self.attendeeData = user
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ import FirebaseFirestore
 
 struct attendeesView: View {
     let event: Event
-    @State private var attendees: [String] = []
+    @State private var attendees: [(id: String, name: String)] = []
     @State private var events: [Event] = []
     
     
@@ -30,14 +30,14 @@ struct attendeesView: View {
                 NavigationView{
                     
                     List{
-                        ForEach(attendees, id: \.self) { attendeeName in
-                            //NavigationLink(destination: attendeeView(userData: $userData)) {
+                        ForEach(attendees, id: \.id) { attendee in
+                            NavigationLink(destination: AttendeeView(attendeeID: attendee.id)) {
                                 
-                                Text(attendeeName)
+                                Text(attendee.name)
                                     .padding()
                                     .border(Color.gray, width: 1) // Add border for better visibility
                                 
-                            //}
+                            }
                         }
                     }
                     .onAppear {
@@ -53,9 +53,9 @@ struct attendeesView: View {
     
     
     func fetchEventAttendees(eventID: String) {
-        let db = Firestore.firestore()
-        let eventID = event.id
-        print(eventID)
+        //let db = Firestore.firestore()
+        //let eventID = event.id
+        //print(eventID)
         // Get a reference to the event document in Firestore
         //let eventRef = db.collection("events").document(eventID)
         //let attendeesRef = eventRef.child("attendees")
@@ -69,7 +69,9 @@ struct attendeesView: View {
             print(attendeeUserIDs)
             for id in attendeeUserIDs! {
                 FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
-                    self.attendees.append(user!.name)
+                    if let userName = user?.name {
+                        self.attendees.append((id:id, name: userName))
+                    }
                 }
                 
                 
