@@ -11,6 +11,7 @@
 		241191022B0A33D900896AE2 /* MyPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 241191012B0A33D900896AE2 /* MyPageView.swift */; };
 		249E83092AFCFF85004A79ED /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = 249E83082AFCFF85004A79ED /* Podfile */; };
 		24C89D8D2B1E0E61001671EF /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 24C89D8C2B1E0E61001671EF /* ImagePickerView.swift */; };
+		24FF06712B221C4D007E17FA /* Proxima Nova Font.otf in Resources */ = {isa = PBXBuildFile; fileRef = 24FF06702B221C4D007E17FA /* Proxima Nova Font.otf */; };
 		39720500B9AFAF0C628199F8 /* Pods_teamhungaryTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FE31907B23CAF4038DAD794F /* Pods_teamhungaryTests.framework */; };
 		71F0C4FA3152E60927F07788 /* Pods_teamhungary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */; };
 		9DE7DD1A2AFCD4A9005BF358 /* loginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DE7DD192AFCD4A9005BF358 /* loginPage.swift */; };
@@ -36,7 +37,6 @@
 		F55C53992AFC4E7A00018B40 /* teamhungaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53982AFC4E7A00018B40 /* teamhungaryTests.swift */; };
 		F55C53A32AFC4E7B00018B40 /* teamhungaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */; };
 		F55C53A52AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */; };
-		F5DF1A3E2B213B2600DFBCB6 /* Proxima Nova Font.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */; };
 		F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02042B0993AF00709834 /* AddEventView.swift */; };
 		F5EC02072B0993D800709834 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02062B0993D800709834 /* EventView.swift */; };
 		F5EC02092B0993E100709834 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02082B0993E100709834 /* EventsView.swift */; };
@@ -65,6 +65,7 @@
 		241191012B0A33D900896AE2 /* MyPageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyPageView.swift; sourceTree = "<group>"; };
 		249E83082AFCFF85004A79ED /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		24C89D8C2B1E0E61001671EF /* ImagePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
+		24FF06702B221C4D007E17FA /* Proxima Nova Font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Proxima Nova Font.otf"; sourceTree = "<group>"; };
 		4D0E0B9FA1648992E1D20780 /* Pods_teamhungary.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_teamhungary.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DE5D911F83EBCFC3262A014 /* Pods-teamhungaryTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungaryTests.release.xcconfig"; path = "Target Support Files/Pods-teamhungaryTests/Pods-teamhungaryTests.release.xcconfig"; sourceTree = "<group>"; };
 		85DA3034361D1C6AF3F8BFA2 /* Pods-teamhungary.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-teamhungary.debug.xcconfig"; path = "Target Support Files/Pods-teamhungary/Pods-teamhungary.debug.xcconfig"; sourceTree = "<group>"; };
@@ -99,7 +100,6 @@
 		F55C539E2AFC4E7B00018B40 /* teamhungaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teamhungaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITests.swift; sourceTree = "<group>"; };
 		F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Proxima Nova Font.otf"; path = "../../../../../../../../Downloads/Proxima Nova Font.otf"; sourceTree = "<group>"; };
 		F5EC02042B0993AF00709834 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		F5EC02062B0993D800709834 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		F5EC02082B0993E100709834 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
@@ -184,7 +184,7 @@
 		F55C53862AFC4E7700018B40 /* teamhungary */ = {
 			isa = PBXGroup;
 			children = (
-				F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */,
+				24FF06702B221C4D007E17FA /* Proxima Nova Font.otf */,
 				BFEF501F2AFD29DC00245169 /* bg.png */,
 				BFEF501E2AFD274200245169 /* Info.plist */,
 				F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */,
@@ -352,11 +352,11 @@
 			files = (
 				249E83092AFCFF85004A79ED /* Podfile in Resources */,
 				F55C538F2AFC4E7A00018B40 /* Preview Assets.xcassets in Resources */,
-				F5DF1A3E2B213B2600DFBCB6 /* Proxima Nova Font.otf in Resources */,
 				BFEF50202AFD29DC00245169 /* bg.png in Resources */,
 				BFEF50182AFD238000245169 /* Lib in Resources */,
 				F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */,
 				F50C3C302B1D39D9003FCA15 /* GoogleService-Info.plist in Resources */,
+				24FF06712B221C4D007E17FA /* Proxima Nova Font.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
