@@ -45,6 +45,9 @@ struct attendeesView: View {
                         // Fetch attendees for the given eventID when the view appears
                         fetchEventAttendees(eventID: event.id)
                     }
+                    .refreshable {
+                        fetchEventAttendees(eventID: event.id)
+                    }
                 }
             }
         }
@@ -64,19 +67,25 @@ struct attendeesView: View {
         //let eventDocument = db.collection("events").document(eventID)
         
         
-        print("Retrieving attendees")
+        print("Retrieving attendees for event \(eventID)")
         FirebaseUtilities.retrieveAttendeesFromEvent(eventID: eventID){
             attendeeUserIDs in
             print(attendeeUserIDs ?? "no attendees")
-            if let attendeeIds = attendeeUserIDs {
-                for id in attendeeIds {
-                    FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
-                        if let userName = user?.name {
-                            self.attendees.append((id:id, name: userName))
+            DispatchQueue.main.async {
+                self.attendees = []
+                if let attendeeIds = attendeeUserIDs {
+                    for id in attendeeIds {
+                        FirebaseUtilities.retrieveUserFromFirestore(userID: id) {user in
+                            DispatchQueue.main.async{
+                                if let userName = user?.name {
+                                    self.attendees.append((id:id, name: userName))
+                                }
+                            }
                         }
                     }
                 }
             }
+            
             
         }
     }

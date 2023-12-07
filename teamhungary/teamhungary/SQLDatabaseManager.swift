@@ -137,7 +137,7 @@ class FirebaseUtilities {
             if let result = result {
                 for item in result.items {
                     group.enter()
-                    item.getData(maxSize: 1 * 1024 * 1024) { data, error in
+                    item.getData(maxSize: 3 * 1024 * 1024) { data, error in
                         if let error = error {
                             print("Error downloading image: \(error)")
                         } else if let data = data, let image = UIImage(data: data) {

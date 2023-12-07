@@ -54,17 +54,32 @@ struct setupView: View {
                                 ImagePicker(selectedImage: $selectedImage)
                             }
                     } else {
-                        Image(uiImage: currentPic!)
-                            .resizable()
-                            .frame(width: 180, height: 180)
-                            .clipShape(Circle())
-                            .padding(.vertical, 4)
-                            .onTapGesture {
-                                isImagePickerPresented.toggle()
-                            }
-                            .sheet(isPresented: $isImagePickerPresented) {
-                                ImagePicker(selectedImage: $selectedImage)
-                            }
+                        if (currentPic != nil) {
+                            Image(uiImage: currentPic!)
+                                .resizable()
+                                .frame(width: 180, height: 180)
+                                .clipShape(Circle())
+                                .padding(.vertical, 4)
+                                .onTapGesture {
+                                    isImagePickerPresented.toggle()
+                                }
+                                .sheet(isPresented: $isImagePickerPresented) {
+                                    ImagePicker(selectedImage: $selectedImage)
+                                }
+                        }
+                        else {
+                            Image(systemName: "person")
+                                .resizable()
+                                .frame(width: 180, height: 180)
+                                .clipShape(Circle())
+                                .padding(.vertical, 4)
+                                .onTapGesture {
+                                    isImagePickerPresented.toggle()
+                                }
+                                .sheet(isPresented: $isImagePickerPresented) {
+                                    ImagePicker(selectedImage: $selectedImage)
+                                }
+                        }
                     }
                     
                     HStack {

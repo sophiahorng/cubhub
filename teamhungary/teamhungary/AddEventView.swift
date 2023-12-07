@@ -52,6 +52,10 @@ struct AddEventView: View {
                                            eventDescription: newEventDescription
                                        )
                     FirebaseUtilities.addEventToFirestore(event: newEvent, image: self.selectedImage)
+//                    if let image = self.selectedImage {
+//                        FirebaseUtilities.uploadEventPhoto(imageData: self.selectedImage!, eventID: newEvent.id) {url in
+//                        }
+//                    }
 
 
                     // Optionally, you can also add the new event to the local events array if needed

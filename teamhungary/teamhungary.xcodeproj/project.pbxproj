@@ -28,6 +28,7 @@
 		F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */; };
 		F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F32B1AC0D2009078A5 /* DefaultView.swift */; };
 		F511A9F62B1AC29F009078A5 /* MyPlansView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F511A9F52B1AC29F009078A5 /* MyPlansView.swift */; };
+		F53A6D122B2203A80022D324 /* PhotosView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F53A6D112B2203A80022D324 /* PhotosView.swift */; };
 		F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */; };
 		F55C538A2AFC4E7700018B40 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53892AFC4E7700018B40 /* ContentView.swift */; };
 		F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F55C538B2AFC4E7A00018B40 /* Assets.xcassets */; };
@@ -87,6 +88,7 @@
 		F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLDatabaseManager.swift; sourceTree = "<group>"; };
 		F511A9F32B1AC0D2009078A5 /* DefaultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultView.swift; sourceTree = "<group>"; };
 		F511A9F52B1AC29F009078A5 /* MyPlansView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPlansView.swift; sourceTree = "<group>"; };
+		F53A6D112B2203A80022D324 /* PhotosView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotosView.swift; sourceTree = "<group>"; };
 		F55C53842AFC4E7700018B40 /* teamhungary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = teamhungary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53872AFC4E7700018B40 /* teamhungaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryApp.swift; sourceTree = "<group>"; };
 		F55C53892AFC4E7700018B40 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 				F511A9F12B1AB6BA009078A5 /* SQLDatabaseManager.swift */,
 				F5EC02042B0993AF00709834 /* AddEventView.swift */,
 				F5EC02062B0993D800709834 /* EventView.swift */,
+				F53A6D112B2203A80022D324 /* PhotosView.swift */,
 				D05DDCC02B1DA7E9003AE619 /* attendeesView.swift */,
 				D05DDCC22B1DA813003AE619 /* attendeeView.swift */,
 				F5EC02082B0993E100709834 /* EventsView.swift */,
@@ -498,6 +501,7 @@
 				F511A9F42B1AC0D2009078A5 /* DefaultView.swift in Sources */,
 				D05DDCC12B1DA7E9003AE619 /* attendeesView.swift in Sources */,
 				F5EC020B2B0993E600709834 /* MapView.swift in Sources */,
+				F53A6D122B2203A80022D324 /* PhotosView.swift in Sources */,
 				F55C53882AFC4E7700018B40 /* teamhungaryApp.swift in Sources */,
 				F511A9F22B1AB6BA009078A5 /* SQLDatabaseManager.swift in Sources */,
 				A5B9A4462B1C48A300408F1C /* NewMapView.swift in Sources */,

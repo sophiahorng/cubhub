@@ -19,6 +19,8 @@ struct user: Identifiable {
 }
 struct EventView: View {
     @Environment(\.presentationMode) var presentationMode
+    @State private var navigateToPhotos = false
+    @State private var navigationPath = NavigationPath()
     var event: Event
     init(event: Event, userData: Binding<UserData>) {
         self.event = event
@@ -44,21 +46,21 @@ struct EventView: View {
                     HStack {
                         Image(systemName: "chevron.backward")
                         Text("Back")
+                            .font(Font.custom("Avenir", size: 16.0))
                     }.padding()
                 }
                 .frame(alignment: .leading)
                 Spacer()
                 VStack {
                     Text(event.eventName)
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+                        .font(Font.custom("Avenir-Black", size: 24.0))
                         .multilineTextAlignment(.center)
-                        .lineLimit(3) // Set an appropriate line limit to avoid excessive text length
+                        .lineLimit(2)
                     
                     Text("on \(event.eventDate) at \(event.eventLocation)")
-                        .font(.subheadline)
+                        .font(Font.custom("Avenir", size: 14.0))
                         .multilineTextAlignment(.center)
-                        .lineLimit(3) // Adjust line limit as needed
+                        .lineLimit(1)
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
                 .padding()
@@ -81,48 +83,70 @@ struct EventView: View {
                         }
                     }) {
                         Text("Add").padding(20)
+                            .font(Font.custom("Avenir", size: 16.0))
                     }
                     .frame(alignment: .trailing)
                 }
             }
             Spacer()
             List {
-                Section(header: Text("Event Description")){
-                    Text(event.eventDescription)
-                        .font(.subheadline)
-                        .multilineTextAlignment(.center)
-                        .lineLimit(3)
-                }
-                Section(header: Text("Event Photos")){
-                    HStack {
-                        ForEach(images) { image in
-                            Image(systemName: image.name)
-                                .resizable()
-                                .aspectRatio(contentMode: .fit)
-                                .frame(width: 60, height: 60)
-                                .clipShape(Rectangle())
-                                .overlay(Rectangle().stroke(Color.gray, lineWidth: 2))
-                                .padding(8)
-                        }
-                    }.padding(8)
-                    Button(action: {
-                        // Filter action
-                    }) {
-                        Text("Open Photo Gallery")
-                            .foregroundColor(.blue)
-                    }.padding(8)
-                    
-                    if let selectedImage = selectedImage {
-                        Image(uiImage: selectedImage)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 200, height: 200)
-                    } else {
-                        Text("No Image Selected")
+                Section(header: Text("Event Description")
+                    .font(Font.custom("Avenir", size: 16.0))){
+                        Text(event.eventDescription)
+                            .font(Font.custom("Avenir", size: 16.0))
+                            .multilineTextAlignment(.center)
+                            .lineLimit(3)
                     }
+                Section(header: Text("Event Photos")
+                    .font(Font.custom("Avenir", size: 16.0))){
+//                        HStack {
+//                            ForEach(images) { image in
+//                                Image(systemName: image.name)
+//                                    .resizable()
+//                                    .aspectRatio(contentMode: .fit)
+//                                    .frame(width: 60, height: 60)
+//                                    .clipShape(Rectangle())
+//                                    .overlay(Rectangle().stroke(Color.gray, lineWidth: 2))
+//                                    .padding(8)
+//                            }
+//                        }.padding(8)
+                        VStack{
+                            
+                            NavigationLink(destination: EventPhotosView(eventId: event.id)) {
+                                Text("Open Photo Gallery")
+                                    .font(Font.custom("Avenir", size: 16.0))
+                                    .foregroundColor(Color("ButtonColor"))
+                            }
+                            .padding(5)
+//                            Button(action: {
+//                                self.navigateToPhotos = true
+//                                navigationPath.append(event.id)
+//                            }) {
+//                                Text("Open Photo Gallery")
+//                                    .font(Font.custom("Avenir", size: 16.0))
+//                                    .foregroundColor(.blue)
+//                            }.padding(8)
+//                                .navigationDestination(for: String.self) { id in
+//                                    EventPhotosView(eventId: event.id)
+//                                }
+                        }
+                    
+                    
+//                    if let selectedImage = selectedImage {
+//                        Image(uiImage: selectedImage)
+//                            .resizable()
+//                            .scaledToFit()
+//                            .frame(width: 200, height: 200)
+//                    } else {
+//                        Text("No Image Selected")
+//                            .font(Font.custom("Avenir", size: 16.0))
+//                    }
 
-                    Button("Select Image") {
-                        isImagePickerShown.toggle()
+                    Button(action: {isImagePickerShown.toggle()})
+                    {
+                        Text("Add Image")
+                            .font(Font.custom("Avenir", size: 16.0))
+                            .foregroundColor(Color("ButtonColor"))
                     }
                     .sheet(isPresented: $isImagePickerShown) {
                         ImagePicker(selectedImage: $selectedImage)
@@ -148,10 +172,12 @@ struct EventView: View {
             VStack{
                 NavigationLink(destination: attendeesView(event: event, userData: $userData)) {
                     Text("See All Attendees")
+                        .font(Font.custom("Avenir", size: 18.0))
                         .foregroundColor(.white)
                 }
                 .buttonStyle(GrowingButton())
                 .padding(5)
+                .background(Color("ColumbiaBlue"))
             }
             .background(Color("ColumbiaBlue"))
             .onAppear {
@@ -161,7 +187,6 @@ struct EventView: View {
         }
         .navigationBarHidden(true)
     }
-    
     
     
     /*eventRef.getDocument{ (document, error) in
