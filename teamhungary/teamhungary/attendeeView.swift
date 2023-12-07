@@ -18,7 +18,7 @@ struct AttendeeView: View {
     @StateObject private var viewModel = AttendeeViewModel()
     let attendeeID: String
     var body: some View {
-        VStack (spacing: 5){
+        VStack (spacing: 10){
             Spacer()
             
             if let attendeeData = viewModel.attendeeData {
@@ -26,15 +26,36 @@ struct AttendeeView: View {
                     .imageScale(.small)
                     .frame(width: 180, height: 180, alignment: .center)
                     .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                Text(attendeeData.name)
+                Text(attendeeData.name).frame(maxWidth: .infinity)
                 Text(attendeeData.email)
                 Text("\(attendeeData.school) \(attendeeData.gradYear)")
+                
                 if (!attendeeData.igprof.isEmpty) {
-                    Link("Instagram", destination: URL(string: "https://www.instagram.com/\(attendeeData.igprof)")!)
+                    Button {
+                        if let url = URL(string: "https://www.instagram.com/\(attendeeData.igprof)"),
+                                       UIApplication.shared.canOpenURL(url) {
+                                        UIApplication.shared.open(url)
+                            }
+                    } label: {
+                        Image("InstagramIcon")
+                            .resizable()
+                            .frame(width: 32.0, height: 32.0)
+                            .zIndex(1)
+                        
+                        Text("Instagram")
+                            .background(
+                                RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                    .fill(Color.white)
+                                    .scaleEffect(x: 1.5, y:1.4)
+                            )
+                            
+                    }
                 }
+                
                 Button (action: {self.presentation.wrappedValue.dismiss()}) {
-                    Text("Back to Attendees List")
+                    Text("\(Image(systemName: "chevron.left"))Back to Attendees List")
                 }
+                .buttonStyle(GrowingButton())
             } else {
                 Text("Loading user data...")
             }
@@ -46,6 +67,8 @@ struct AttendeeView: View {
             // Replace "exampleUserID" with the actual user ID you want to display
             viewModel.fetchAttendeeData(userID: attendeeID)
         }
+        .background(Color("ColumbiaBlue"))
+        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
     }
 }
 

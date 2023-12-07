@@ -52,7 +52,9 @@ struct attendeesView: View {
                     }
                 }
             }
+            .frame(maxHeight: .infinity)
         }
+        
         .navigationBarTitle("Attendees")
         .background(Color("ColumbiaBlue"))
     }
