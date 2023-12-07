@@ -38,7 +38,7 @@ struct EventView: View {
     
     var body: some View {
         //        TabView {
-        VStack (spacing: 2) {
+        VStack (spacing: 0) {
             HStack {
                 Button (action: {
                     presentationMode.wrappedValue.dismiss()
@@ -148,6 +148,7 @@ struct EventView: View {
                             .font(Font.custom("Avenir", size: 16.0))
                             .foregroundColor(Color("ButtonColor"))
                     }
+                    .padding(5)
                     .sheet(isPresented: $isImagePickerShown) {
                         ImagePicker(selectedImage: $selectedImage)
                     }
@@ -179,6 +180,7 @@ struct EventView: View {
                 .padding(5)
                 .background(Color("ColumbiaBlue"))
             }
+            .frame(width: 500)
             .background(Color("ColumbiaBlue"))
             .onAppear {
                 // Fetch attendees for the given eventID when the view appears
