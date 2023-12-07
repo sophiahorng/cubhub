@@ -34,8 +34,9 @@ struct attendeesView: View {
                             NavigationLink(destination: AttendeeView(attendeeID: attendee.id)) {
                                 
                                 Text(attendee.name)
+                                    .font(Font.custom("Avenir", size: 16.0))
                                     .padding()
-                                    .border(Color.gray, width: 1) // Add border for better visibility
+//                                    .border(Color.gray, width: 1) // Add border for better visibility
                                 
                             }
                         }

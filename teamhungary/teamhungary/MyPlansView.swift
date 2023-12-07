@@ -27,17 +27,20 @@ struct MyPlansView: View {
                                 let (month, day) = formatEventDate(event.eventDate)
                                 VStack {
                                     Text(month)
-                                        .font(.headline)
+                                        .bold()
+                                        .font(Font.custom("Avenir", size: 16.0))
                                     Text(day)
-                                        .font(.subheadline)
+                                        .font(Font.custom("Avenir", size: 14.0))
                                 }
                                 .padding(.trailing, 10)
                                 
                                 VStack(alignment: .leading) {
                                     Text(event.eventName)
-                                        .font(.headline)
+//                                        .font(.caption)
+                                        .bold()
+                                        .font(Font.custom("Avenir", size: 18.0))
                                     Text(event.eventLocation)
-                                        .font(.subheadline)
+                                        .font(Font.custom("Avenir", size: 14.0))
                                         .foregroundColor(.black)
                                 }
                             }
@@ -67,10 +70,13 @@ struct MyPlansView: View {
                     //                    UITableView.appearance().allowsSelectionDuringEditing = true
                     fetchUserEvents()
                 }
+                
+                .padding(.top, 1)
                 .navigationBarTitle("My Plans")
+                .font(Font.custom("Avenir", size: 20.0))
                 
             }//NavigationView
-            
+            .navigationBarHidden(true)
         }//VStack
     }
     func fetchUserEvents() {
@@ -79,6 +85,10 @@ struct MyPlansView: View {
         guard !userId.isEmpty else {
             print("Invalid userID")
             return
+        }
+        for family in UIFont.familyNames.sorted() {
+            let names = UIFont.fontNames(forFamilyName: family)
+            print("Family: \(family) Font names: \(names)")
         }
         print("id: \(userId)")
         print("fetching user events, checking array contains /users/\(userId)")
@@ -152,8 +162,8 @@ struct MyPlansView: View {
 //        }
 //    }
 //}
-//struct MyPlansView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        MyPlansView()
-//    }
-//}
+struct MyPlansView_Previews: PreviewProvider {
+    static var previews: some View {
+        MyPlansView(userData: .constant(UserData(url: URL(string: "gmail.com"), uid: "kMLv7myZh9PBLijrvy3hP6NZjkA2", name: "Sophia Horng", email: "sh4230@columbia.edu", gradYear: "2025", bio: ":D", igprof: "sophiaah8", school: "SEAS", major: "Computer Science")))
+    }
+}

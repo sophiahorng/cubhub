@@ -28,8 +28,7 @@ struct AddEventView: View {
     var body: some View {
         VStack(spacing: 30) {
             HStack{
-                Text("Add New Event")
-                    .font(.title)
+                Text("Add New Event").font(Font.custom("Avenir-Black", size: 30.0))
                     .fontWeight(.bold)
                     .padding(20.0)
                 Spacer()
@@ -80,6 +79,7 @@ struct AddEventView: View {
                 }) {
                     Text("Done")
                         .padding(20.0)
+                        .font(Font.custom("Avenir", size: 16.0))
                 }
             }
 
@@ -91,6 +91,7 @@ struct AddEventView: View {
                         .frame(width: 200, height: 200)
                 } else {
                     Text("No Image Selected")
+                        .font(Font.custom("Avenir", size: 16.0))
                 }
                 
                 Button("Select Image") {
@@ -99,6 +100,7 @@ struct AddEventView: View {
                 .sheet(isPresented: $isImagePickerPresented) {
                     ImagePicker(selectedImage: $selectedImage)
                 }
+                .font(Font.custom("Avenir", size: 16.0))
             }
 
             TextField("Event Name", text: $newEventName)
@@ -106,22 +108,26 @@ struct AddEventView: View {
                 .frame(width: 300)
                 .multilineTextAlignment(.center)
                 .padding()
+                .font(Font.custom("Avenir", size: 16.0))
                 //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
                 //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
 
             DatePicker("Event Date", selection: $newEventDate, displayedComponents: [.date])
                 .frame(width: 300)
                 .multilineTextAlignment(.center)
+                .font(Font.custom("Avenir", size: 16.0))
 //                .padding()
             
             VStack(spacing: 10) {
                 Text(newEventAddress)
                     .frame(width: 300)
                     .lineLimit(2)
+                    .font(Font.custom("Avenir", size: 16.0))
                 Button {
                     isSearchAddressViewActive = true
                 } label: {
                     Text("Search Address")
+                        .font(Font.custom("Avenir", size: 16.0))
                 }.sheet(isPresented: $isSearchAddressViewActive) {
                     
                     SearchAddressView(dynamicText: $newEventAddress, latitude: $newEventLat, longitude: $newEventLon)
@@ -154,16 +160,16 @@ struct AddEventView: View {
             
         }
         .background(
-            Color(hue: 0.521, saturation: 0.6, brightness: 0.8, opacity: 0.541)
+            Color("ColumbiaBlue")
                 .edgesIgnoringSafeArea(.all)
         )
     }
 }
 
-//struct AddEventView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        let dummyEvents: [Event] = []
-//
-//        return AddEventView(events: .constant(dummyEvents), doneAction: {})
-//    }
-//}
+struct AddEventView_Previews: PreviewProvider {
+    static var previews: some View {
+        let dummyEvents: [Event] = []
+
+        return AddEventView(events: .constant(dummyEvents), userData: .constant(UserData(url: URL(string: "gmail.com"), uid: "kMLv7myZh9PBLijrvy3hP6NZjkA2", name: "Sophia Horng", email: "sh4230@columbia.edu", gradYear: "2025", bio: ":D", igprof: "sophiaah8", school: "SEAS", major: "Computer Science")), doneAction: {})
+    }
+}

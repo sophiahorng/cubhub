@@ -39,12 +39,12 @@ struct NewMapView: View {
                     MapAnnotation(coordinate: data.coordinate, anchorPoint: CGPoint(x: 0.5, y: 1)) {
                         VStack {
                             Text(data.name)
-                                .font(.system(size: 12))
+                                .font(Font.custom("Avenir", size: 12.0))
                                 .foregroundColor(.blue)
                             Image(systemName: "mappin")
                                 .resizable()
                                 .frame(width: 30, height: 30)
-                                .foregroundColor(.blue)
+                                .foregroundColor(Color("ColumbiaBlue"))
                         }
                         .onTapGesture {
                             /*
@@ -64,13 +64,13 @@ struct NewMapView: View {
                             }
                             Button("cancel", role: .cancel) {
                                 
-                            }
+                            }.font(Font.custom("Avenir", size: 16.0))
                         }
                     }
                 }.onAppear {
 //                    requestLocation()
                 }
-                .navigationTitle("map")
+                .navigationTitle("Map")
 //                .navigationDestination(isPresented: $isDetailViewActive) {
 //                    NewMapDetailView()
 //                    AdressView()

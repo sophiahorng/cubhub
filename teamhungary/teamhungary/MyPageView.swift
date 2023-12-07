@@ -22,6 +22,7 @@ struct MyPageView: View {
                             }) {
                                 Text("Edit Profile \(Image(systemName: "square.and.pencil"))")
                                     .padding([.top,.vertical], 5)
+                                    .font(Font.custom("Avenir", size: 16.0))
                                     .foregroundStyle(.gray)
                             }
                             .buttonStyle(.bordered)
@@ -48,7 +49,6 @@ struct MyPageView: View {
                             Image(uiImage: image)
                                 .resizable()
                                 .frame(width: 180, height: 180)
-                            // Add frame, aspectRatio, clipShape etc. as needed
                                 .clipShape(Circle())
                         } else {
                             // Placeholder view or default image
@@ -68,12 +68,54 @@ struct MyPageView: View {
                         //                            .frame(width: 180, height: 180, alignment: .center)
                         //                            .padding(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                         //                    }
-                        Text(userData.name)
-                        Text(userData.email)
+                        HStack{
+                            
+                            Text(userData.name)
+                                .font(Font.custom("Avenir", size: 20.0))
+                                .bold()
+                            Button {
+                                
+                                if let url = URL(string: "mailto:\(userData.email)"),
+                                   UIApplication.shared.canOpenURL(url) {
+                                    UIApplication.shared.open(url)
+                                }
+                            } label: {
+                                
+                                Image(systemName: "mail")
+                                //                            HStack{
+                                //                                Image(systemName: "mail")
+                                //                                Text(userData.email)
+                                //                                    .bold()
+                                //                                    .font(Font.custom("Avenir", size: 18.0))
+                                //                                    .padding(20)
+                                //                                    .foregroundColor(Color.white)
+                                //                                    .background(Color.purple)
+                                //                                    .cornerRadius(12)
+                                //                            }
+                            }
+                        }
+//                            .bold()
+//                        Text(userData.email)
+//                            .font(Font.custom("Avenir", size: 18.0))
                         Text("\(userData.school) \(userData.gradYear)")
+                            .font(Font.custom("Avenir", size: 18.0))
                         Text("Major: \(userData.major)")
+                            .font(Font.custom("Avenir", size: 18.0))
                         if (!userData.igprof.isEmpty) {
-                            Link("Instagram", destination: URL(string: "https://www.instagram.com/\(userData.igprof)")!)
+                            Button {
+                                if let url = URL(string: "https://www.instagram.com/\(userData.igprof)"),
+                                               UIApplication.shared.canOpenURL(url) {
+                                                UIApplication.shared.open(url)
+                                    }
+                            } label: {
+                                Text("Instagram")
+                                    .bold()
+                                    .font(Font.custom("Avenir", size: 18.0))
+                                    .padding(20)
+                                    .foregroundColor(Color.white)
+                                    .background(Color.purple)
+                                    .cornerRadius(12)
+                            }
                         }
                         //                    Spacer()
                         //                    Spacer()
@@ -84,7 +126,7 @@ struct MyPageView: View {
                             } label: {
                                 Text("logout")
                                     .bold()
-                                    .font(Font.custom("Helvetica Neue", size: 24.0))
+                                    .font(Font.custom("Avenir", size: 24.0))
                                     .padding(20)
                                     .foregroundColor(Color.white)
                                     .background(Color("ButtonColor"))
@@ -122,6 +164,13 @@ struct MyPageView: View {
             }
         }
     }
+    
+    
+    private func sendEmail() {
+        if let url = URL(string: "mailto:\(userData.email)"), UIApplication.shared.canOpenURL(url) {
+            UIApplication.shared.open(url)
+        }
+    }
     private func fetchUserData() {
         FirebaseUtilities.retrieveUserFromFirestore(userID: userData.uid) { fetchedUserData in
             if let data = fetchedUserData {
@@ -143,6 +192,6 @@ struct MyPageView: View {
 
 //struct MyPageView_Previews: PreviewProvider {
 //    static var previews: some View {
-//        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu")))
+//        MyPageView(userData: .constant(UserData(url: nil, uid: "yx2810", name: "jasmine xin", email: "yx2810@columbia.edu", gradYear: "2024", bio: "hi",  igprof: "jasmine", school: "GSAS",major: "CS")))
 //    }
 //}

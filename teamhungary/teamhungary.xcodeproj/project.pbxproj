@@ -35,6 +35,7 @@
 		F55C53992AFC4E7A00018B40 /* teamhungaryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53982AFC4E7A00018B40 /* teamhungaryTests.swift */; };
 		F55C53A32AFC4E7B00018B40 /* teamhungaryUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */; };
 		F55C53A52AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */; };
+		F5DF1A3E2B213B2600DFBCB6 /* Proxima Nova Font.otf in Resources */ = {isa = PBXBuildFile; fileRef = F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */; };
 		F5EC02052B0993AF00709834 /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02042B0993AF00709834 /* AddEventView.swift */; };
 		F5EC02072B0993D800709834 /* EventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02062B0993D800709834 /* EventView.swift */; };
 		F5EC02092B0993E100709834 /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5EC02082B0993E100709834 /* EventsView.swift */; };
@@ -96,6 +97,7 @@
 		F55C539E2AFC4E7B00018B40 /* teamhungaryUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = teamhungaryUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F55C53A22AFC4E7B00018B40 /* teamhungaryUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITests.swift; sourceTree = "<group>"; };
 		F55C53A42AFC4E7B00018B40 /* teamhungaryUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = teamhungaryUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Proxima Nova Font.otf"; path = "../../../../../../../../Downloads/Proxima Nova Font.otf"; sourceTree = "<group>"; };
 		F5EC02042B0993AF00709834 /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		F5EC02062B0993D800709834 /* EventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventView.swift; sourceTree = "<group>"; };
 		F5EC02082B0993E100709834 /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 		F55C53862AFC4E7700018B40 /* teamhungary */ = {
 			isa = PBXGroup;
 			children = (
+				F5DF1A3D2B213B2600DFBCB6 /* Proxima Nova Font.otf */,
 				BFEF501F2AFD29DC00245169 /* bg.png */,
 				BFEF501E2AFD274200245169 /* Info.plist */,
 				F50C3C2F2B1D39D9003FCA15 /* GoogleService-Info.plist */,
@@ -346,6 +349,7 @@
 			files = (
 				249E83092AFCFF85004A79ED /* Podfile in Resources */,
 				F55C538F2AFC4E7A00018B40 /* Preview Assets.xcassets in Resources */,
+				F5DF1A3E2B213B2600DFBCB6 /* Proxima Nova Font.otf in Resources */,
 				BFEF50202AFD29DC00245169 /* bg.png in Resources */,
 				BFEF50182AFD238000245169 /* Lib in Resources */,
 				F55C538C2AFC4E7A00018B40 /* Assets.xcassets in Resources */,

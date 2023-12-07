@@ -17,6 +17,7 @@ struct Event: Identifiable {
 struct EventsView: View {
     @State private var events: [Event] = []
     @State private var isAddEventViewPresented = false
+    @State private var isSearchBarExpanded = false
     @State private var showErrorAlert = false
     @State private var searchText = ""
     @Binding var userData: UserData
@@ -26,47 +27,88 @@ struct EventsView: View {
     var body: some View {
         //        NavigationView {
         VStack(spacing: 0) {
+            Spacer(minLength: 20)
             headerSection
             eventsListSection
         }
         .navigationBarTitle("Events", displayMode: .inline)
+        .navigationBarItems(trailing: addEvent)
         .onAppear {
             fetchEvents()
         }
         //        }
     }
-    
+    private var addEvent: some View {
+        Button(action: {
+            isAddEventViewPresented.toggle()
+        }) {
+            Image(systemName: "plus")
+                .padding()
+        }
+        .sheet(isPresented: $isAddEventViewPresented, onDismiss: fetchEvents) {
+            AddEventView(events: $events, userData: $userData) {
+                isAddEventViewPresented = false
+            }
+        }
+    }
+    private var searchBar: some View {
+        HStack {
+            if isSearchBarExpanded {
+                TextField("Search events...", text: $searchText)
+                    .font(Font.custom("Avenir", size: 16.0))
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .transition(.move(edge: .trailing))
+                    .animation(.default, value: isSearchBarExpanded)
+                
+                Button("Cancel") {
+                    isSearchBarExpanded = false
+                    searchText = ""
+                }.padding()
+                .font(Font.custom("Avenir", size: 16.0))
+            } else {
+                Image(systemName: "magnifyingglass")
+                    .onTapGesture {
+                        isSearchBarExpanded = true
+                    }
+                    .padding()
+            }
+        }
+    }
     private var headerSection: some View {
         VStack(spacing: 0) {
-            HStack {
-                TextField("Search events...", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding()
-                
-                Button("Search") {
-                    fetchEvents()
-                }
-                .padding(.trailing, 10)
-            }
+//            HStack {
+//                TextField("Search events...", text: $searchText)
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+//                    .padding()
+//                    .font(Font.custom("Avenir", size: 16.0))
+//                
+//                Button("Search") {
+//                    fetchEvents()
+//                }
+//                .padding(.trailing, 10)
+//                .font(Font.custom("Avenir", size: 16.0))
+//            }
             
             HStack {
                 NavigationLink(destination: NewMapView(events: events)) {
-                    Text("See Map View")
+                    Text("See Map")
                         .padding()
-                        .foregroundColor(.blue)
+                        .font(Font.custom("Avenir", size: 16.0))
+//                        .foregroundColor(Color("Columbia Blue"))
                 }
                 Spacer()
-                Button(action: {
-                    isAddEventViewPresented.toggle()
-                }) {
-                    Image(systemName: "plus")
-                        .padding()
-                }
-                .sheet(isPresented: $isAddEventViewPresented, onDismiss: fetchEvents) {
-                    AddEventView(events: $events, userData: $userData) {
-                        isAddEventViewPresented = false
-                    }
-                }
+                searchBar
+//                Button(action: {
+//                    isAddEventViewPresented.toggle()
+//                }) {
+//                    Image(systemName: "plus")
+//                        .padding()
+//                }
+//                .sheet(isPresented: $isAddEventViewPresented, onDismiss: fetchEvents) {
+//                    AddEventView(events: $events, userData: $userData) {
+//                        isAddEventViewPresented = false
+//                    }
+//                }
             }
         }
     }
@@ -79,16 +121,18 @@ struct EventsView: View {
                         let (month, day) = formatEventDate(event.eventDate)
                         VStack {
                             Text(month)
-                                .font(.headline)
+                                .bold()
+                                .font(Font.custom("Avenir", size: 16.0))
                             Text(day)
-                                .font(.subheadline)
+                                .font(Font.custom("Avenir", size: 14.0))
                         }
                         .padding(.trailing, 10)
                         VStack(alignment: .leading) {
                             Text(event.eventName)
-                                .font(.headline)
+                                .bold()
+                                .font(Font.custom("Avenir", size: 18.0))
                             Text("\(event.eventLocation)")
-                                .font(.subheadline)
+                                .font(Font.custom("Avenir", size: 14.0))
                                 .foregroundColor(.gray)
                         }
                     }

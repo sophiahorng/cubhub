@@ -43,7 +43,7 @@ struct setupView: View {
                     if let selectedImage = selectedImage {
                         Image(uiImage: selectedImage)
                             .resizable()
-                            .frame(width: 170, height: 170)
+                            .frame(width: 180, height: 180)
                             .clipShape(Circle())
                             .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
                             .padding(.vertical, 4)
@@ -67,46 +67,100 @@ struct setupView: View {
                             }
                     }
                     
-                    TextField("Name", text: $userName)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
-                        .disabled(true)
+                    HStack {
+                        Text("Name")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("", text: $userName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
+                    HStack {
+                        Text("Major")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("Major", text: $userMajor)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
                     
-                    TextField("Major", text: $userMajor)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
+                    HStack {
+                        Text("School")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("School", text: $userSchool)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
+                    HStack {
+                        Text("Graduation Year")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("Graduation Year", text: $userGradYear)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
+                    HStack {
+                        Text("Bio")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("Bio", text: $userBio)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
                     
-                
-                    TextField("School", text: $userSchool)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
-                    
-                    
-                    TextField("Graduation Year", text: $userGradYear)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
-                    
-                    TextField("Bio", text: $userBio)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
-                        .autocapitalization(.none)
-                    
-                    TextField("Instagram", text: $userIg)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .frame(width: 300)
-                        .multilineTextAlignment(.center)
-                        .padding(.vertical, 4)
-                        .autocapitalization(.none)
+                    HStack {
+                        Text("Instagram Username")
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 100, alignment: .leading)
+
+                        TextField("Instagram Username", text: $userIg)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .font(Font.custom("Avenir", size: 18.0))
+                            .frame(width: 200)
+                            .multilineTextAlignment(.leading)
+                            .padding(.vertical, 4)
+                            .disabled(true)
+                            .autocapitalization(.none)
+                        
+                    }
+                    .frame(width: 350)
+                    .padding(.vertical, -2.0)
                     
                     Button(action: {
                         let newUser = UserData(
@@ -136,9 +190,9 @@ struct setupView: View {
                         //                            
                         self.showModal.toggle()
                     }) {
-                        Text("Save")
+                        Text("save")
                             .bold()
-                            .font(Font.custom("Helvetica Neue", size: 24.0))
+                            .font(Font.custom("Avenir", size: 24.0))
                             .padding(20)
                             .foregroundColor(Color.white)
                             .background(Color("ButtonColor"))
