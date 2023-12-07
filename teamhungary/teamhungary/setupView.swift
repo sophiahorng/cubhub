@@ -58,9 +58,6 @@ struct setupView: View {
                             .resizable()
                             .frame(width: 180, height: 180)
                             .clipShape(Circle())
-//                            .frame(width: 170, height: 170)
-//                            .clipShape(Circle())
-//                            .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
                             .padding(.vertical, 4)
                             .onTapGesture {
                                 isImagePickerPresented.toggle()
@@ -96,7 +93,6 @@ struct setupView: View {
                             .frame(width: 200)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 4)
-                            .disabled(true)
                     }
                     .frame(width: 350)
                     .padding(.vertical, -2.0)
@@ -112,10 +108,10 @@ struct setupView: View {
                             .frame(width: 200)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 4)
-                            .disabled(true)
                     }
                     .frame(width: 350)
                     .padding(.vertical, -2.0)
+
                     HStack {
                         Text("Graduation Year")
                             .font(Font.custom("Avenir", size: 18.0))
@@ -127,10 +123,10 @@ struct setupView: View {
                             .frame(width: 200)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 4)
-                            .disabled(true)
                     }
                     .frame(width: 350)
                     .padding(.vertical, -2.0)
+
                     HStack {
                         Text("Bio")
                             .font(Font.custom("Avenir", size: 18.0))
@@ -142,7 +138,6 @@ struct setupView: View {
                             .frame(width: 200)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 4)
-                            .disabled(true)
                     }
                     .frame(width: 350)
                     .padding(.vertical, -2.0)
@@ -158,9 +153,7 @@ struct setupView: View {
                             .frame(width: 200)
                             .multilineTextAlignment(.leading)
                             .padding(.vertical, 4)
-                            .disabled(true)
                             .autocapitalization(.none)
-                        
                     }
                     .frame(width: 350)
                     .padding(.vertical, -2.0)
@@ -181,16 +174,11 @@ struct setupView: View {
                         FirebaseUtilities.updateUserInFirestore(uid: userData.uid, graduationYear: userGradYear, school: userSchool, major: userMajor, bio: userBio, igProfile: userIg)
                         
                         if let selectedImage = selectedImage {
-                            updatePic(image: selectedImage, uid: userData.uid) {url in}
+                            updatePic(image: selectedImage, uid: userData.uid) {url in
+                                currentPic = selectedImage
+                            }
                         }
-                        //                        if (selectedImage != nil) {
-                        //                            FirebaseUtilities.uploadProfilePicture(imageData: selectedImage!, userID: userData.uid) { downloadURL in
-                        //                                if let downloadURL = downloadURL {
-                        //                                    FirebaseUtilities.saveProfilePictureURL(downloadURL, for: userData.uid)
-                        //                                }
-                        //                            }
-                        //                        }
-                        //                            
+                    
                         self.showModal.toggle()
                     }) {
                         Text("save")
