@@ -265,7 +265,7 @@ class FirebaseUtilities {
             "lat": event.eventLat,
             "lon": event.eventLon,
             "ownerID": event.eventOwner,
-            "attendees": [event.eventOwner],
+            "attendees": [],
             "description": event.eventDescription
         ]
         eventRef.setData(eventInfo) { error in
