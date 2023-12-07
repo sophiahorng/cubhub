@@ -14,10 +14,11 @@ import FirebaseFirestore
 
 struct AttendeeView: View {
     
+    @Environment(\.presentationMode) var presentation
     @StateObject private var viewModel = AttendeeViewModel()
     let attendeeID: String
     var body: some View {
-        VStack {
+        VStack (spacing: 5){
             Spacer()
             
             if let attendeeData = viewModel.attendeeData {
@@ -31,12 +32,16 @@ struct AttendeeView: View {
                 if (!attendeeData.igprof.isEmpty) {
                     Link("Instagram", destination: URL(string: "https://www.instagram.com/\(attendeeData.igprof)")!)
                 }
+                Button (action: {self.presentation.wrappedValue.dismiss()}) {
+                    Text("Back to Attendees List")
+                }
             } else {
                 Text("Loading user data...")
             }
             
             Spacer()
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             // Replace "exampleUserID" with the actual user ID you want to display
             viewModel.fetchAttendeeData(userID: attendeeID)
