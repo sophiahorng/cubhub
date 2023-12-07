@@ -81,7 +81,7 @@ class FirebaseUtilities {
         storageRef.getData(maxSize: 3 * 1024 * 1024) { data, error in
             if error != nil {
                 // Uh-oh, an error occurred!
-                print("error getting profile pic URL: \(error)")
+                print("error getting profile pic URL: \(String(describing: error))")
                 completion(nil)
             } else {
                 let image = UIImage(data: data!)

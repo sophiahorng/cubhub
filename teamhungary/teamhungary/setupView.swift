@@ -55,9 +55,12 @@ struct setupView: View {
                             }
                     } else {
                         Image(uiImage: currentPic!)
-                            .frame(width: 170, height: 170)
+                            .resizable()
+                            .frame(width: 180, height: 180)
                             .clipShape(Circle())
-                            .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
+//                            .frame(width: 170, height: 170)
+//                            .clipShape(Circle())
+//                            .overlay(Circle().stroke(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541), lineWidth: 5))
                             .padding(.vertical, 4)
                             .onTapGesture {
                                 isImagePickerPresented.toggle()

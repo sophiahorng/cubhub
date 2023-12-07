@@ -102,59 +102,105 @@ struct AddEventView: View {
                 }
                 .font(Font.custom("Avenir", size: 16.0))
             }
+            HStack {
+                Text("Event Name")
+                    .font(Font.custom("Avenir", size: 18.0))
+                    .frame(width: 100, alignment: .leading)
 
-            TextField("Event Name", text: $newEventName)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .multilineTextAlignment(.center)
-                .padding()
-                .font(Font.custom("Avenir", size: 16.0))
+                TextField("Event Name", text: $newEventName)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .font(Font.custom("Avenir", size: 18.0))
+                    .frame(width: 200)
+                    .multilineTextAlignment(.leading)
+                    .padding(.vertical, 4)
+            }
+            .frame(width: 350)
+            .padding(.vertical, -2.0)
+//            TextField("Event Name", text: $newEventName)
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                .frame(width: 300)
+//                .multilineTextAlignment(.center)
+//                .padding()
+//                .font(Font.custom("Avenir", size: 16.0))
                 //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
                 //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
 
             DatePicker("Event Date", selection: $newEventDate, displayedComponents: [.date])
                 .frame(width: 300)
                 .multilineTextAlignment(.center)
-                .font(Font.custom("Avenir", size: 16.0))
+                .font(Font.custom("Avenir", size: 18.0))
 //                .padding()
             
-            VStack(spacing: 10) {
+            HStack(/*spacing: 10*/) {
                 Text(newEventAddress)
-                    .frame(width: 300)
+                    .padding(.leading, 15.0)
+                    .frame(width: 150, alignment: .leading)
                     .lineLimit(2)
-                    .font(Font.custom("Avenir", size: 16.0))
+                    .font(Font.custom("Avenir", size: 18.0))
                 Button {
                     isSearchAddressViewActive = true
                 } label: {
                     Text("Search Address")
                         .font(Font.custom("Avenir", size: 16.0))
+                        .frame(alignment: .trailing)
+                        .lineLimit(2)
+                        .padding(.trailing, 10.0)
                 }.sheet(isPresented: $isSearchAddressViewActive) {
                     
                     SearchAddressView(dynamicText: $newEventAddress, latitude: $newEventLat, longitude: $newEventLon)
                 }
+                .padding()
+                .frame(width: 200)
 
             }
             
+            HStack {
+                Text("Location Name")
+                    .font(Font.custom("Avenir", size: 18.0))
+                    .frame(width: 100, alignment: .leading)
 
-            TextField("Location Name", text: $newEventLocation)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 300)
-                .multilineTextAlignment(.center)
-                .padding()
+                TextField("Location Name", text: $newEventLocation)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .font(Font.custom("Avenir", size: 18.0))
+                    .frame(width: 200)
+                    .multilineTextAlignment(.leading)
+                    .padding(.vertical, 4)
+            }
+            .frame(width: 350)
+            .padding(.vertical, -2.0)
+//            TextField("Location Name", text: $newEventLocation)
+//                .textFieldStyle(RoundedBorderTextFieldStyle())
+//                .frame(width: 300)
+//                .multilineTextAlignment(.center)
+//                .padding()
 //                .background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
 //                .foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
-            
-            ScrollView{
-                TextField("Event Description", text: $newEventDescription)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 300)
-                    .multilineTextAlignment(.center)
-                    .padding()
-                    //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
-                    //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
-                    
-                    
+            HStack {
+                Text("Event Description")
+                    .font(Font.custom("Avenir", size: 18.0))
+                    .frame(width: 100, alignment: .leading)
+                
+                ScrollView {
+                    TextEditor(text: $newEventDescription)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .font(Font.custom("Avenir", size: 18.0))
+                        .frame(minHeight: 100)
+                        .frame(width: 200)
+                        .padding(.vertical, 4)
+                }
             }
+            .padding(.vertical, -2.0)
+//            ScrollView{
+//                TextField("Event Description", text: $newEventDescription)
+//                    .textFieldStyle(RoundedBorderTextFieldStyle())
+//                    .frame(width: 300)
+//                    .multilineTextAlignment(.center)
+//                    .padding()
+//                    //.background(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+//                    //.foregroundColor(Color(hue: 0.571, saturation: 1.0, brightness: 1.0, opacity: 0.541))
+//                    
+//                    
+//            }
 
             Spacer().frame(height: 10.0)
             

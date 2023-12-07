@@ -26,6 +26,7 @@ struct MyPageView: View {
                                     .foregroundStyle(.gray)
                             }
                             .buttonStyle(.bordered)
+                            .padding(.trailing, 10)
                             .accentColor(Color("ColumbiaBlue"))
                             .frame(alignment: .trailing)
                             .sheet(
