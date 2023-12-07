@@ -41,6 +41,8 @@ struct attendeesView: View {
                             }
                         }
                     }
+                    .scrollContentBackground(.hidden)
+                    .background(Color("ColumbiaBlue"))
                     .onAppear {
                         // Fetch attendees for the given eventID when the view appears
                         fetchEventAttendees(eventID: event.id)
@@ -52,7 +54,7 @@ struct attendeesView: View {
             }
         }
         .navigationBarTitle("Attendees")
-        
+        .background(Color("ColumbiaBlue"))
     }
     
     
