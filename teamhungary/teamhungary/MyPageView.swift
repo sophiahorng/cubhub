@@ -98,10 +98,16 @@ struct MyPageView: View {
 //                            .bold()
 //                        Text(userData.email)
 //                            .font(Font.custom("Avenir", size: 18.0))
-                        Text("\(userData.school) \(userData.gradYear)")
-                            .font(Font.custom("Avenir", size: 18.0))
-                        Text("Major: \(userData.major)")
-                            .font(Font.custom("Avenir", size: 18.0))
+                        if (!(userData.school.isEmpty || userData.gradYear.isEmpty)){
+                            Text("\(userData.school) \(userData.gradYear)")
+                                .font(Font.custom("Avenir", size: 18.0))
+                        }
+                        
+                        if (!userData.major.isEmpty) {
+                            Text("Major: \(userData.major)")
+                                .font(Font.custom("Avenir", size: 18.0))
+                        }
+                        
                         if (!userData.igprof.isEmpty) {
                             Button {
                                 if let url = URL(string: "https://www.instagram.com/\(userData.igprof)"),
@@ -109,17 +115,22 @@ struct MyPageView: View {
                                                 UIApplication.shared.open(url)
                                     }
                             } label: {
+                                Image("InstagramIcon")
+                                    .resizable()
+                                    .frame(width: 32.0, height: 32.0)
+                                    .zIndex(1)
+                                
                                 Text("Instagram")
-                                    .bold()
-                                    .font(Font.custom("Avenir", size: 18.0))
-                                    .padding(20)
-                                    .foregroundColor(Color.white)
-                                    .background(Color.purple)
-                                    .cornerRadius(12)
+                                    .background(
+                                        RoundedRectangle(cornerRadius: /*@START_MENU_TOKEN@*/25.0/*@END_MENU_TOKEN@*/)
+                                            .fill(Color.white)
+                                            .scaleEffect(x: 1.5, y:1.4)
+                                    )
+                                    
                             }
                         }
-                        //                    Spacer()
-                        //                    Spacer()
+
+                        Spacer()
                         HStack {
                             Spacer()
                             Button {
@@ -127,8 +138,8 @@ struct MyPageView: View {
                             } label: {
                                 Text("logout")
                                     .bold()
-                                    .font(Font.custom("Avenir", size: 24.0))
-                                    .padding(20)
+                                    .font(Font.custom("Avenir", size: 18.0))
+                                    .padding(10)
                                     .foregroundColor(Color.white)
                                     .background(Color("ButtonColor"))
                                     .cornerRadius(12)
